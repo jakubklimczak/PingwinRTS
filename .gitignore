@@ -33,4 +33,6 @@ Penguin War/sysinfo.txt
 Penguin War/*.apk
 Penguin War/*.unitypackage
 Penguin War/crashlytics-build.properties
+Penguin War/UserSettings/*
+Penguin War/Assets/TextMesh Pro/*
 

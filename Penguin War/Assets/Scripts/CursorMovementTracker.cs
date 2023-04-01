@@ -6,6 +6,7 @@ using System;
 public class CursorMovementTracker : MonoBehaviour
 {
     public Camera mainCamera;
+    public LayerMask layerMask;
     public GameObject Igloo;
     GridLogic gridScript;
 
@@ -19,15 +20,20 @@ public class CursorMovementTracker : MonoBehaviour
     void Update()
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit raycastHit))
+        if(Physics.Raycast(ray, out RaycastHit raycastHit,float.MaxValue , layerMask))
         {
-            transform.position = raycastHit.point;
-            if(Input.GetMouseButtonDown(0))
+            Vector3 tmp = new Vector3(((float)Math.Round(raycastHit.point.x)), 0.2f, ((float)Math.Round(raycastHit.point.z)));
+            transform.position = tmp;
+            
+            if(Input.GetMouseButtonDown(0) && (int)tmp.x >= 0 && (int)tmp.z >= 0 && (int)tmp.x < 100 && (int)tmp.x < 100)
             {
-                Vector3 tmp = new Vector3((float)System.Math.Floor(raycastHit.point.x), 0, (float)System.Math.Floor(raycastHit.point.z));
-                GameObject parent = GameObject.Find("Infrastructure");
-                Instantiate(Igloo, tmp, new Quaternion(), parent.transform);
-                gridScript.grid[(int)tmp.x, (int)tmp.z] = 1;
+                if (gridScript.grid[(int)tmp.x, (int)tmp.z] == 0)
+                {
+                    GameObject parent = GameObject.Find("Infrastructure");
+                    Instantiate(Igloo, tmp, new Quaternion(), parent.transform);
+                    gridScript.grid[(int)tmp.x, (int)tmp.z] = 1;
+                    Debug.Log("boop");
+                }
             }
         }
 

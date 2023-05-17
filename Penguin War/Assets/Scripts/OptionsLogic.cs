@@ -4,29 +4,31 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class OptionsMenuFunctionality : MonoBehaviour
+public class OptionsLogic : MonoBehaviour
 {
 
-    public AudioMixer AudioMixer;
+    public AudioSource AudioMixer;
     public Dropdown ResolutionDropdown;
     public Dropdown QualityDropdown;
     public Dropdown TextureDropdown;
     public Dropdown AntiAliasingDropdown;
     public Slider VolumeSlider;
+    public Toggle Fullscreen;
     float CurrentVolume;
     Resolution[] Resolutions;
 
     //This method sets the volume to a specified volume value (max volume -> 1.0, min volume -> 0.0)
     public void SetVolume(float Volume)
     {
-        AudioMixer.SetFloat("Volume", Volume);
+        AudioMixer.volume = Volume;
         CurrentVolume = Volume;
     }
 
+
     // This method allows for switching on fullscreen mode (1=fullscreen enabled, 0=fullscreen disabled)
-    public void ToggleFullscreen(bool FullscreenEnabled)
+    public void ToggleFullscreen()
     {
-        Screen.fullScreen = FullscreenEnabled;
+        Screen.fullScreen = !Screen.fullScreen;
     }
 
     //This method uses a value passed in from the drop-down menu to set the resolution to. 
@@ -127,30 +129,34 @@ public class OptionsMenuFunctionality : MonoBehaviour
         if (PlayerPrefs.HasKey("SavedFullscreen"))
             Screen.fullScreen = Convert.ToBoolean(PlayerPrefs.GetInt("FullscreenPreference"));
         else
-            Screen.fullScreen = true;
+            Screen.fullScreen = false;
         if (PlayerPrefs.HasKey("SavedVolume"))
             VolumeSlider.value = PlayerPrefs.GetFloat("SavedVolume");
         else
-            VolumeSlider.value = PlayerPrefs.GetFloat("SavedVolume");
+            VolumeSlider.value = 50.0f;
     }
 
     private void Start()
     {
         ResolutionDropdown.ClearOptions();
-        List<string> options = new List<string>();
+        List<string> resOptions = new List<string>();
         Resolutions = Screen.resolutions;
         int CurrentResolution = 0;
 
         for (int i = 0; i < Resolutions.Length; i++)
         {
             string option = Resolutions[i].width + "x" + Resolutions[i].height + "  " + Resolutions[i].refreshRate + "Hz";
-            options.Add(option);
+            resOptions.Add(option);
             if (Resolutions[i].width == Screen.width && Resolutions[i].height == Screen.height)
                 CurrentResolution = i;
         }
 
-        ResolutionDropdown.AddOptions(options);
+        ResolutionDropdown.AddOptions(resOptions);
         ResolutionDropdown.RefreshShownValue();
         LoadSettings(CurrentResolution);
+
+
+
+
     }
 }

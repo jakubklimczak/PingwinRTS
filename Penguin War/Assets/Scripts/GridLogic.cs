@@ -10,12 +10,12 @@ using UnityEngine;
 
 public class GridLogic : MonoBehaviour
 {
-    const int worldSize = 100;
-    public GameObject tile0;
+    const int worldSize = 200;
+    public GameObject[] houses = new GameObject[10];
 
 
     //This is the grid for 'placed' objects
-    public int[,] grid = new int[worldSize, worldSize];
+    //public int[,] grid = new int[worldSize, worldSize];
     /*
         -1 is beyond the island
         0 is a empty space
@@ -36,8 +36,9 @@ public class GridLogic : MonoBehaviour
     void Start()
     {
 
-        //GenerateCsv("potato.csv");
+        GenerateCsv("potato.csv");
 
+        //reads the save "map.csv"
         using (var reader = new StreamReader(@"..\\Penguin War\\Assets\\Save\\map.csv"))
         {
             int iter = 0;
@@ -54,12 +55,13 @@ public class GridLogic : MonoBehaviour
             }
         }
 
+        //spawns read data
         StartCoroutine(SpawnTiles());
 
 
-        for (int i=0;i<worldSize;i++)
+        /*for (int i = 0; i < worldSize; i++)//prob copies data from map to grid , but idk ?
         {
-            for(int j=0;j< worldSize; j++)
+            for(int j = 0; j < worldSize; j++)
             {
                 if (map[i,j]!=0)
                 {
@@ -69,7 +71,7 @@ public class GridLogic : MonoBehaviour
                     grid[i, j] = -1;
                 }    
             }
-        }
+        }*/
     }
 
     // Update is called once per frame
@@ -78,7 +80,7 @@ public class GridLogic : MonoBehaviour
         
     }
 
-    public static Texture2D LoadPNG(string filePath)
+    public static Texture2D LoadPNG(string filePath)//load a texture from png
     {
         Texture2D tex = null;
         byte[] fileData;
@@ -96,7 +98,7 @@ public class GridLogic : MonoBehaviour
         return tex;
     }
 
-    public IEnumerator SpawnTiles()
+    public IEnumerator SpawnTiles()//change to spawn houses and other stuff          and later mobs
     {
         GameObject parent = GameObject.Find("TilesMap");
         for(int i = 0; i<map.GetLength(0);i++)
@@ -105,11 +107,11 @@ public class GridLogic : MonoBehaviour
             {
                 if (map[i, j] != 0)
                 {
-                    string tmpPath = @"..\\Penguin War\\Assets\\Images\\Tiles\\tile0.png";
+                    //string tmpPath = @"..\\Penguin War\\Assets\\Images\\Tiles\\tile0.png";
                     Vector3 tmpPos = new(Mathf.Floor(i), 0.1f, Mathf.Floor(j));
-                    GameObject tmpObj = Instantiate(tile0, tmpPos, new Quaternion());
+                    GameObject tmpObj = Instantiate(houses[map[i, j] -1], tmpPos, new Quaternion());//change this later to be able to spawn more things
                     tmpObj.transform.SetParent(parent.transform);
-                    tmpObj.GetComponent<Renderer>().material.mainTexture = LoadPNG(tmpPath);
+                    //tmpObj.GetComponent<Renderer>().material.mainTexture = LoadPNG(tmpPath);
                 }
             }
             yield return new WaitForSeconds(0);
@@ -120,30 +122,34 @@ public class GridLogic : MonoBehaviour
     public static void GenerateCsv(string filename)
     {
         // Create a 100x100 array of zeros
-        int[,] data = new int[100, 100];
+        int[,] data = new int[worldSize, worldSize];
 
         // Set the values within the circle to 1
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < worldSize; i++)
         {
-            for (int j = 0; j < 100; j++)
+            for (int j = 0; j < worldSize; j++)
             {
-                double distance = Math.Sqrt(Math.Pow(i - 50, 2) + Math.Pow(j - 50, 2));
+                /*double distance = Math.Sqrt(Math.Pow(i - 50, 2) + Math.Pow(j - 50, 2));
                 if (distance < 25)
                 {
                     data[i, j] = 1;
-                }
+                }*/
+                if(i==j)
+                    data[i, j] = 1;
+                else
+                    data[i, j] = 0;
             }
         }
 
         // Write the data to a CSV file
         using (var writer = new StreamWriter(filename))
         {
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < worldSize; i++)
             {
-                for (int j = 0; j < 100; j++)
+                for (int j = 0; j < worldSize; j++)
                 {
                     writer.Write(data[i, j]);
-                    if (j < 99)
+                    if (j < worldSize - 1)
                     {
                         writer.Write(",");
                     }

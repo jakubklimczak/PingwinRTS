@@ -7,13 +7,15 @@ public class CursorMovementTracker : MonoBehaviour
 {
     public Camera mainCamera;
     public LayerMask layerMask;
-    public GameObject Igloo;
+    public GameObject[] houses;
     GridLogic gridScript;
+    int worldSize = 200;
 
     // Start is called before the first frame update
     void Start()
     {
         gridScript = GameObject.Find("Grid").GetComponent<GridLogic>();
+        houses = gridScript.houses;
     }
 
     // Update is called once per frame
@@ -25,13 +27,13 @@ public class CursorMovementTracker : MonoBehaviour
             Vector3 tmp = new Vector3(((float)Math.Round(raycastHit.point.x)), 0.2f, ((float)Math.Round(raycastHit.point.z)));
             transform.position = tmp;
             
-            if(Input.GetMouseButtonDown(0) && (int)tmp.x >= 0 && (int)tmp.z >= 0 && (int)tmp.x < 100 && (int)tmp.x < 100)
+            if(Input.GetMouseButtonDown(0) && (int)tmp.x >= 0 && (int)tmp.z >= 0 && (int)tmp.x < worldSize && (int)tmp.x < worldSize)
             {
-                if (gridScript.grid[(int)tmp.x, (int)tmp.z] == 0)
+                if (gridScript.map[(int)tmp.x, (int)tmp.z] == 0)
                 {
                     GameObject parent = GameObject.Find("Infrastructure");
-                    Instantiate(Igloo, tmp, new Quaternion(), parent.transform);
-                    gridScript.grid[(int)tmp.x, (int)tmp.z] = 1;
+                    Instantiate(houses[1], tmp, new Quaternion(), parent.transform);
+                    gridScript.map[(int)tmp.x, (int)tmp.z] = 1;
                     Debug.Log("boop");
                 }
             }

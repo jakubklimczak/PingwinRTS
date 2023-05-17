@@ -110,30 +110,72 @@ public class OptionsLogic : MonoBehaviour
 
     public void LoadSettings(int CurrentResolution)
     {
+        //Quality
         if (PlayerPrefs.HasKey("SavedQualitySetting"))
+        {
             QualityDropdown.value = PlayerPrefs.GetInt("SavedQualitySetting");
+        }
         else
+        {
             QualityDropdown.value = 3;
+
+        }
+        QualitySettings.SetQualityLevel(QualityDropdown.value);
+
+        //Resolution
         if (PlayerPrefs.HasKey("SavedResolution"))
+        {
             ResolutionDropdown.value = PlayerPrefs.GetInt("SavedResolution");
+        }
         else
+        {
             ResolutionDropdown.value = CurrentResolution;
+        }
+        SetResolution(ResolutionDropdown.value);
+
+        //Texture quality
         if (PlayerPrefs.HasKey("SavedTextureQuality"))
+        {
             TextureDropdown.value = PlayerPrefs.GetInt("SavedTextureQuality");
+        }
         else
+        {
             TextureDropdown.value = 3;
+        }
+        SetTextureQuality(TextureDropdown.value);
+
+
+        //AA
         if (PlayerPrefs.HasKey("SavedAntiAliasing"))
+        {
             AntiAliasingDropdown.value = PlayerPrefs.GetInt("SavedAntiAliasing");
+        }
         else
+        {
             AntiAliasingDropdown.value = 1;
+        }
+        SetAntiAliasing(AntiAliasingDropdown.value);
+
+        //Fullscreen 
         if (PlayerPrefs.HasKey("SavedFullscreen"))
+        {
             Screen.fullScreen = Convert.ToBoolean(PlayerPrefs.GetInt("FullscreenPreference"));
+        }
         else
+        {
             Screen.fullScreen = false;
+        }
+
+        //Volume
         if (PlayerPrefs.HasKey("SavedVolume"))
+        {
             VolumeSlider.value = PlayerPrefs.GetFloat("SavedVolume");
-        else
-            VolumeSlider.value = 50.0f;
+        }
+        else 
+        {
+        VolumeSlider.value = 0.50f;
+        }
+        SetVolume(VolumeSlider.value);
     }
 
     private void Start()
@@ -154,9 +196,5 @@ public class OptionsLogic : MonoBehaviour
         ResolutionDropdown.AddOptions(resOptions);
         ResolutionDropdown.RefreshShownValue();
         LoadSettings(CurrentResolution);
-
-
-
-
     }
 }

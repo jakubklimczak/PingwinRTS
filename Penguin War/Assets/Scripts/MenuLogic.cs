@@ -17,7 +17,7 @@ public class MenuLogic : MonoBehaviour
     public void NewGameButton()
     {
         //we will initialize our game here (so load a new scene), like:
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("TheGame");
     }
 
     public void LoadGameButton()

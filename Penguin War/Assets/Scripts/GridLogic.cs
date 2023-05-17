@@ -76,11 +76,9 @@ public class GridLogic : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        
-    }
+    {}
 
-    public static Texture2D LoadPNG(string filePath)//load a texture from png
+    public Texture2D LoadPNG(string filePath)//load a texture from png
     {
         Texture2D tex = null;
         byte[] fileData;
@@ -119,7 +117,26 @@ public class GridLogic : MonoBehaviour
         
     }
 
-    public static void GenerateCsv(string filename)
+    public void SaveWorld(string filename)
+    {
+        // Write the data to a CSV file
+        using (var writer = new StreamWriter(filename))
+        {
+            for (int i = 0; i < worldSize; i++)
+            {
+                for (int j = 0; j < worldSize; j++)
+                {
+                    writer.Write(map[i, j]);
+                    if (j < worldSize - 1)
+                    {
+                        writer.Write(",");
+                    }
+                }
+                writer.WriteLine();
+            }
+        }//nwm czy to dzia³a xd
+    }
+    public void GenerateCsv(string filename)
     {
         // Create a 100x100 array of zeros
         int[,] data = new int[worldSize, worldSize];

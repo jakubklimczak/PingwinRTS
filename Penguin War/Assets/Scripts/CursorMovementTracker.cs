@@ -6,7 +6,8 @@ using System;
 public class CursorMovementTracker : MonoBehaviour
 {
     public Camera mainCamera;
-    public LayerMask layerMask;
+    public LayerMask groundLayerMask;
+    public LayerMask houseLayerMask;
     public GameObject[] houses;
     GridLogic gridScript;
     int worldSize = 200;
@@ -21,24 +22,34 @@ public class CursorMovementTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit raycastHit,float.MaxValue , layerMask))
+        Ray groundRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(groundRay, out RaycastHit groundRaycastHit, float.MaxValue, groundLayerMask))
         {
-            Vector3 tmp = new Vector3(((float)Math.Round(raycastHit.point.x)), 0.2f, ((float)Math.Round(raycastHit.point.z)));
+            Vector3 tmp = new Vector3(((float)Math.Round(groundRaycastHit.point.x)), 0.2f, ((float)Math.Round(groundRaycastHit.point.z)));
             transform.position = tmp;
-            
-            if(Input.GetMouseButtonDown(0) && (int)tmp.x >= 0 && (int)tmp.z >= 0 && (int)tmp.x < worldSize && (int)tmp.x < worldSize)
+
+            if (Input.GetMouseButtonDown(0) && (int)tmp.x >= 0 && (int)tmp.z >= 0 && (int)tmp.x < worldSize && (int)tmp.x < worldSize)
             {
                 if (gridScript.map[(int)tmp.x, (int)tmp.z] == 0)
                 {
                     GameObject parent = GameObject.Find("Infrastructure");
-                    Instantiate(houses[1], tmp, new Quaternion(), parent.transform);
+                    GameObject child = Instantiate(houses[1], tmp, new Quaternion(), parent.transform);
+                    HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
+                    childHouseInfo.type = "igloo";
+                    childHouseInfo.counter = 2;
                     gridScript.map[(int)tmp.x, (int)tmp.z] = 1;
-                    Debug.Log("boop");
                 }
             }
         }
 
-        
+
+        Ray houseRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(houseRay, out RaycastHit houseRaycastHit, float.MaxValue, houseLayerMask))
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                Debug.Log(houseRaycastHit.collider.GetComponentInParent<HouseInfo>().type);
+            }
+        }
     }
 }

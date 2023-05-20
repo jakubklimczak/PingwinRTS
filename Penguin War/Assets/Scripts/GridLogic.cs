@@ -56,7 +56,7 @@ public class GridLogic : MonoBehaviour
         }
 
         //spawns read data
-        StartCoroutine(SpawnTiles());
+        StartCoroutine(SpawnHouses());
 
 
         /*for (int i = 0; i < worldSize; i++)//prob copies data from map to grid , but idk ?
@@ -96,7 +96,7 @@ public class GridLogic : MonoBehaviour
         return tex;
     }
 
-    public IEnumerator SpawnTiles()//change to spawn houses and other stuff          and later mobs
+    public IEnumerator SpawnHouses()//change to spawn houses and other stuff          and later mobs
     {
         GameObject parent = GameObject.Find("TilesMap");
         for(int i = 0; i<map.GetLength(0);i++)
@@ -109,6 +109,9 @@ public class GridLogic : MonoBehaviour
                     Vector3 tmpPos = new(Mathf.Floor(i), 0.1f, Mathf.Floor(j));
                     GameObject tmpObj = Instantiate(houses[map[i, j] -1], tmpPos, new Quaternion());//change this later to be able to spawn more things
                     tmpObj.transform.SetParent(parent.transform);
+                    HouseInfo tmpHouseInfo = tmpObj.GetComponent<HouseInfo>();
+                    tmpHouseInfo.type = houses[map[i, j] - 1].name;
+                    tmpHouseInfo.counter = i;
                     //tmpObj.GetComponent<Renderer>().material.mainTexture = LoadPNG(tmpPath);
                 }
             }

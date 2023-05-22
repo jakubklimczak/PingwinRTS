@@ -6,7 +6,8 @@ using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
-
+using static Inventory;
+using static UnityEditor.Progress;
 
 public class GridLogic : MonoBehaviour
 {
@@ -31,9 +32,8 @@ public class GridLogic : MonoBehaviour
         2 is a border etc
    */
 
-
-    // Start is called before the first frame update
-    void Start()
+// Start is called before the first frame update
+void Start()
     {
 
         GenerateCsv("potato.csv");
@@ -57,21 +57,6 @@ public class GridLogic : MonoBehaviour
 
         //spawns read data
         StartCoroutine(SpawnHouses());
-
-
-        /*for (int i = 0; i < worldSize; i++)//prob copies data from map to grid , but idk ?
-        {
-            for(int j = 0; j < worldSize; j++)
-            {
-                if (map[i,j]!=0)
-                {
-                    grid[i, j] = 0;
-                }else
-                {
-                    grid[i, j] = -1;
-                }    
-            }
-        }*/
     }
 
     // Update is called once per frame

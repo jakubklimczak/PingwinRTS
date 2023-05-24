@@ -15,8 +15,7 @@ public class CursorMovementTracker : MonoBehaviour
     int worldSize = 200;
     public int whatToBuild = 1;
 
-    //on the index 0 is the cost of a house with index 0 in houses[]
-    public Inventory.Item[][] costs = new Inventory.Item[2][];
+    public Dictionary<string, Dictionary<string, int>> costs = new Dictionary<string, Dictionary<string, int>>();
 
     // Start is called before the first frame update
     void Start()
@@ -25,18 +24,17 @@ public class CursorMovementTracker : MonoBehaviour
         houses = gridScript.houses;
         inv = invObj.GetComponent<Inventory>();
 
+        //costs initialization
 
-        //for some reason you can't initialize it while you create it
-        //here the old_igloo which is houses[0] costs 10 ice for example
-        costs[0] = new Inventory.Item[1] {
-            new Inventory.Item { Type = "ice", Amount = -20 },
-        };
+        //names from prefabs
+        costs.Add("old_igloo", new Dictionary<string, int>() {
+            {"ice", -20}
+        });
 
-        //here the igloo which is houses[1] costs 20 ice and 10 wood for example
-        costs[1] = new Inventory.Item[2] {
-            new Inventory.Item { Type = "ice", Amount = -20 },
-            new Inventory.Item { Type = "wood", Amount = -10 }
-        };
+        costs.Add("igloo", new Dictionary<string, int>() {
+            {"ice", -20},
+            {"wood", -10}
+        });
     }
 
     // Update is called once per frame
@@ -52,18 +50,17 @@ public class CursorMovementTracker : MonoBehaviour
             {
                 bool canPlace = true;
 
-                for (int i = 0; i < costs[whatToBuild].Length; i++)
+                //check if has enough resources
+                foreach (KeyValuePair<string, Dictionary<String, int>> houseCost in costs)
                 {
-                    for(int j=0;j<inv.inventory.Length;j++)
+                    if (houseCost.Key == houses[whatToBuild].name.ToLower())
                     {
-                        if (inv.inventory[j].Type == costs[whatToBuild][i].Type)
+                        foreach (KeyValuePair<string, int> resource in houseCost.Value)
                         {
-                            //Debug.Log("inv: " + inv.inventory[j].Amount +" and " + costs[whatToBuild][i].Amount + " daje " + (inv.inventory[j].Amount + costs[whatToBuild][i].Amount));
-                            //Debug.Log(costs[whatToBuild][i].Amount);
-                            if (inv.inventory[j].Amount + costs[whatToBuild][i].Amount < 0)
+                            if (resource.Value + inv.inventory[resource.Key] < 0)
                             {
                                 canPlace = false;
-                                Debug.Log("Not enough");
+                                Debug.Log("Not enough " + resource.Key);
                             }
                         }
                     }
@@ -78,16 +75,14 @@ public class CursorMovementTracker : MonoBehaviour
                     childHouseInfo.counter = 2;//nwm co to xd
                     gridScript.map[(int)tmp.x, (int)tmp.z] = 1;
 
-                    for(int i = 0; i < costs[whatToBuild].Length;i++)
-                    {
-                        //Debug.Log(costs[whatToBuild][i].Type);
-                        inv.ChangeAmmount(costs[whatToBuild][i].Type, costs[whatToBuild][i].Amount);
-                    }
 
-                    //to tak musi byæ bo to inv to component który ma zmienn¹ inventory...
-                    //Debug.Log(inv.inventory[0].Amount);
-                    //Debug.Log(inv.inventory[1].Amount);
-                    //Debug.Log(inv.inventory[2].Amount);
+                    //removing from inventory
+                    Dictionary<string, int> houseCost = costs[houses[whatToBuild].name.ToLower()];
+
+                    foreach (KeyValuePair<string, int> resource in houseCost)
+                    {
+                        inv.inventory[resource.Key] += resource.Value;
+                    }
                 }
             }
         }

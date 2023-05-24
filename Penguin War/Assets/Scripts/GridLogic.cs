@@ -36,7 +36,7 @@ public class GridLogic : MonoBehaviour
 void Start()
     {
 
-        GenerateCsv("potato.csv");
+        //GenerateCsv("potato.csv");
 
         //reads the save "map.csv"
         using (var reader = new StreamReader(@"..\\Penguin War\\Assets\\Save\\map.csv"))
@@ -88,7 +88,7 @@ void Start()
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                if (map[i, j] != 0)
+                if (map[i, j] != 0 && map[i, j] != 3)
                 {
                     //string tmpPath = @"..\\Penguin War\\Assets\\Images\\Tiles\\tile0.png";
                     Vector3 tmpPos = new(Mathf.Floor(i), 0.1f, Mathf.Floor(j));
@@ -139,10 +139,27 @@ void Start()
                 {
                     data[i, j] = 1;
                 }*/
-                if(i==j)
+
+                double distance1 = Math.Sqrt(Math.Pow(i - worldSize/2, 2) + Math.Pow(j - worldSize/2, 2));
+                double distance2 = Math.Sqrt(Math.Pow(i - worldSize / 2 -5, 2) + Math.Pow(j - worldSize / 2 - 32, 2));
+                double distance3 = Math.Sqrt(Math.Pow(i - worldSize / 2 +5, 2) + Math.Pow(j - worldSize / 2 + 32, 2));
+                
+                if (i==j)
                     data[i, j] = 1;
+                else if (distance1 < 30)
+                {
+                    data[i, j] = 2;
+                }else if (distance2 < 26)
+                {
+                    data[i, j] = 2;
+                }else if (distance3 < 26)
+                {
+                    data[i, j] = 2;
+                }
                 else
                     data[i, j] = 0;
+
+
             }
         }
 

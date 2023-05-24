@@ -73,7 +73,7 @@ public class CursorMovementTracker : MonoBehaviour
                     HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                     childHouseInfo.type = houses[whatToBuild].name;
                     childHouseInfo.counter = 2;//nwm co to xd
-                    gridScript.map[(int)tmp.x, (int)tmp.z] = 1;
+                    gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
 
 
                     //removing from inventory

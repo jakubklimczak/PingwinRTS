@@ -10,6 +10,9 @@ public class CameraMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //vsync
+        QualitySettings.vSyncCount = 1;
+
         cameraObject = GameObject.Find("CameraObject");
         mainCamera = cameraObject.transform.GetChild(0).gameObject;
     }

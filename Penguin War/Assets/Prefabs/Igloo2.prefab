@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4485604462276314714}
   - component: {fileID: 6926030626220224022}
   - component: {fileID: 1907328173676867924}
+  - component: {fileID: 8126028316457326099}
   m_Layer: 0
   m_Name: Igloo2
   m_TagString: Untagged
@@ -97,3 +98,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8126028316457326099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112189054338553826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df49d7b1ee56314d873cdaf8fdba185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 
+  hasPinguinAssigned: 0
+  counter: 0

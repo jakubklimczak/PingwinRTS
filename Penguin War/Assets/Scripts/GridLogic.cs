@@ -143,18 +143,28 @@ void Start()
                 double distance1 = Math.Sqrt(Math.Pow(i - worldSize/2, 2) + Math.Pow(j - worldSize/2, 2));
                 double distance2 = Math.Sqrt(Math.Pow(i - worldSize / 2 -5, 2) + Math.Pow(j - worldSize / 2 - 32, 2));
                 double distance3 = Math.Sqrt(Math.Pow(i - worldSize / 2 +5, 2) + Math.Pow(j - worldSize / 2 + 32, 2));
+                double distance4 = Math.Sqrt(Math.Pow(i - worldSize / 2 -2, 2) + Math.Pow(j - worldSize / 2 - 16, 2));
+                double distance5 = Math.Sqrt(Math.Pow(i - worldSize / 2 +2, 2) + Math.Pow(j - worldSize / 2 + 16, 2));
                 
                 if (i==j)
                     data[i, j] = 1;
                 else if (distance1 < 30)
                 {
-                    data[i, j] = 2;
+                    data[i, j] = 3;
                 }else if (distance2 < 26)
                 {
-                    data[i, j] = 2;
+                    data[i, j] = 3;
                 }else if (distance3 < 26)
                 {
-                    data[i, j] = 2;
+                    data[i, j] = 3;
+                }
+                else if (distance4 < 26)
+                {
+                    data[i, j] = 3;
+                }
+                else if (distance5 < 26)
+                {
+                    data[i, j] = 3;
                 }
                 else
                     data[i, j] = 0;

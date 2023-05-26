@@ -28,8 +28,6 @@ public class PenguinLogic : MonoBehaviour
         {
             Vector3 move = new Vector3(0, 0, 0);
 
-            Vector3 dir = pos - destination;
-
             move.x = pos.x < destination.x ? step : -step;
             move.z = pos.z < destination.z ? step : -step;
 
@@ -37,6 +35,9 @@ public class PenguinLogic : MonoBehaviour
             move.z = pos.z - step < destination.z && pos.z + step > destination.z ? 0 : move.z;
 
             this.transform.Translate(move);
+
+            this.transform.GetChild(0).transform.LookAt(new Vector3(destination.x, 2, destination.z));
+            this.transform.GetChild(1).transform.LookAt(new Vector3(destination.x, 2, destination.z));
         }
     }
 }

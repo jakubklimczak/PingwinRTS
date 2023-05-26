@@ -36,7 +36,7 @@ public class GridLogic : MonoBehaviour
 void Start()
     {
 
-        //GenerateCsv("potato.csv");
+        //GenerateCsv("Assets/Save/potato.csv");
 
         //reads the save "map.csv"
         using (var reader = new StreamReader(@"..\\Penguin War\\Assets\\Save\\map.csv"))
@@ -88,7 +88,7 @@ void Start()
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                if (map[i, j] != 0 && map[i, j] != 3)
+                if (map[i, j] != 0 && map[i, j] != 3 && map[i, j] != 4)
                 {
                     //string tmpPath = @"..\\Penguin War\\Assets\\Images\\Tiles\\tile0.png";
                     Vector3 tmpPos = new(Mathf.Floor(i), 0.1f, Mathf.Floor(j));
@@ -122,7 +122,7 @@ void Start()
                 }
                 writer.WriteLine();
             }
-        }//nwm czy to dzia³a xd
+        }//nwm czy to dziaï¿½a xd
     }
     public void GenerateCsv(string filename)
     {
@@ -145,7 +145,7 @@ void Start()
                 double distance3 = Math.Sqrt(Math.Pow(i - worldSize / 2 +5, 2) + Math.Pow(j - worldSize / 2 + 32, 2));
                 double distance4 = Math.Sqrt(Math.Pow(i - worldSize / 2 -2, 2) + Math.Pow(j - worldSize / 2 - 16, 2));
                 double distance5 = Math.Sqrt(Math.Pow(i - worldSize / 2 +2, 2) + Math.Pow(j - worldSize / 2 + 16, 2));
-                
+                //lake
                 if (i==j)
                     data[i, j] = 1;
                 else if (distance1 < 30)
@@ -166,10 +166,51 @@ void Start()
                 {
                     data[i, j] = 3;
                 }
-                else
+                else//default
                     data[i, j] = 0;
 
+            }
+        }
 
+        //boat (x6 * z3) 
+        int x = 30;
+        int y = 150;
+
+        for(int k = 0; k < 3 ; k++)
+        {
+            for(int l = 0; l < 6 ; l++)
+            {
+                data[x + k, y + l] = 4;
+            }
+        }
+
+        x = 60;
+        y = 20;
+        for(int k = 0; k < 3 ; k++)
+        {
+            for(int l = 0; l < 6 ; l++)
+            {
+                data[x + k, y + l] = 4;
+            }
+        }
+
+        x = 130;
+        y = 40;
+        for(int k = 0; k < 3 ; k++)
+        {
+            for(int l = 0; l < 6 ; l++)
+            {
+                data[x + k, y + l] = 4;
+            }
+        }
+
+        x = 170;
+        y = 130;
+        for(int k = 0; k < 3 ; k++)
+        {
+            for(int l = 0; l < 6 ; l++)
+            {
+                data[x + k, y + l] = 4;
             }
         }
 

@@ -40,6 +40,10 @@ public class CursorMovementTracker : MonoBehaviour
             {"ice", -20},
             {"wood", -10}
         });
+
+        costs.Add("molo", new Dictionary<string, int>() {
+            {"wood", -20}
+        });
     }
 
     // Update is called once per frame
@@ -104,7 +108,8 @@ public class CursorMovementTracker : MonoBehaviour
                     }
                 }
 
-                if (gridScript.map[(int)tmp.x, (int)tmp.z] == 0 && canPlace)
+                //4 to molo
+                if (gridScript.map[(int)tmp.x, (int)tmp.z] == 0 && canPlace && whatToBuild != 4)
                 {
                     GameObject parent = GameObject.Find("Infrastructure");
                     GameObject child = Instantiate(houses[whatToBuild], tmp, new Quaternion(), parent.transform);
@@ -121,7 +126,92 @@ public class CursorMovementTracker : MonoBehaviour
                     {
                         inv.inventory[resource.Key] += resource.Value;
                     }
+                }else if(gridScript.map[(int)tmp.x, (int)tmp.z] == 0 && canPlace && whatToBuild == 4)
+                {
+                    if(gridScript.map[(int)tmp.x, (int)tmp.z - 1] == 3)
+                    {
+                        GameObject parent = GameObject.Find("Infrastructure");
+                        GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, -90, 0), parent.transform);
+                        HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
+                        childHouseInfo.type = houses[whatToBuild].name;
+                        childHouseInfo.counter = 2;//nwm co to xd
+                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
+
+
+                        //removing from inventory
+                        Dictionary<string, int> houseCost = costs[houses[whatToBuild].name.ToLower()];
+
+                        foreach (KeyValuePair<string, int> resource in houseCost)
+                        {
+                            inv.inventory[resource.Key] += resource.Value;
+                        }
+                    }else if(gridScript.map[(int)tmp.x, (int)tmp.z + 1] == 3)
+                    {
+                        GameObject parent = GameObject.Find("Infrastructure");
+                        GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, 90, 0), parent.transform);
+                        HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
+                        childHouseInfo.type = houses[whatToBuild].name;
+                        childHouseInfo.counter = 2;//nwm co to xd
+                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
+
+
+                        //removing from inventory
+                        Dictionary<string, int> houseCost = costs[houses[whatToBuild].name.ToLower()];
+
+                        foreach (KeyValuePair<string, int> resource in houseCost)
+                        {
+                            inv.inventory[resource.Key] += resource.Value;
+                        }
+                    }else if(gridScript.map[(int)tmp.x + 1, (int)tmp.z] == 3)
+                    {
+                        GameObject parent = GameObject.Find("Infrastructure");
+                        GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, -180, 0), parent.transform);
+                        HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
+                        childHouseInfo.type = houses[whatToBuild].name;
+                        childHouseInfo.counter = 2;//nwm co to xd
+                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
+
+
+                        //removing from inventory
+                        Dictionary<string, int> houseCost = costs[houses[whatToBuild].name.ToLower()];
+
+                        foreach (KeyValuePair<string, int> resource in houseCost)
+                        {
+                            inv.inventory[resource.Key] += resource.Value;
+                        }
+                    }else if(gridScript.map[(int)tmp.x - 1, (int)tmp.z] == 3)
+                    {
+                        GameObject parent = GameObject.Find("Infrastructure");
+                        GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, 180, 0), parent.transform);
+                        HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
+                        childHouseInfo.type = houses[whatToBuild].name;
+                        childHouseInfo.counter = 2;//nwm co to xd
+                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
+
+
+                        //removing from inventory
+                        Dictionary<string, int> houseCost = costs[houses[whatToBuild].name.ToLower()];
+
+                        foreach (KeyValuePair<string, int> resource in houseCost)
+                        {
+                            inv.inventory[resource.Key] += resource.Value;
+                        }
+                    }
                 }
+
+                /*if (map[i, j] == 5)
+                {
+                    if(map[i + 1, j] == 3)
+                    {
+                        //string tmpPath = @"..\\Penguin War\\Assets\\Images\\Tiles\\tile0.png";
+                        Vector3 tmpPos = new(Mathf.Floor(i), 0.1f, Mathf.Floor(j));
+                        GameObject tmpObj3 = Instantiate(houses[map[i, j] -1], tmpPos, Quaternion.LookRotation(Vector3.forward,Vector3.up));//change this later to be able to spawn more things
+                        tmpObj3.transform.SetParent(parent.transform);
+                        HouseInfo tmpHouseInfo3 = tmpObj3.GetComponent<HouseInfo>();
+                        tmpHouseInfo3.type = houses[map[i, j] - 1].name;
+                        tmpHouseInfo3.counter = i;
+                    }
+                }*/
             }
         }
     }

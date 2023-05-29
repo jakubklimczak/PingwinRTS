@@ -20,6 +20,10 @@ public class CursorMovementTracker : MonoBehaviour
     bool penguinSelected = false;
     PenguinLogic selectedPenguin = null;
 
+    bool selectingArea = false;
+    bool areaSelected = false;
+    Vector3 firstAreaPoint,lastAreaPoint;
+
     public Dictionary<string, Dictionary<string, int>> costs = new Dictionary<string, Dictionary<string, int>>();
 
     // Start is called before the first frame update
@@ -49,6 +53,8 @@ public class CursorMovementTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
         Ray houseRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(houseRay, out RaycastHit houseRaycastHit, float.MaxValue, houseLayerMask))
         {
@@ -59,25 +65,37 @@ public class CursorMovementTracker : MonoBehaviour
             return;
         }
 
-
-
         Ray penguinRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(houseRay, out RaycastHit penguinRaycastHit, float.MaxValue, penguinLayerMask))
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log(penguinRaycastHit.collider.GetComponentInParent<PenguinLogic>().destination);
                 penguinSelected = true;
                 selectedPenguin = penguinRaycastHit.collider.GetComponentInParent<PenguinLogic>();
             }
             return;
         }
 
+        Ray areaRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(areaRay, out RaycastHit areaRaycastHit, float.MaxValue, groundLayerMask))
+        {
+            if(!selectingArea && Input.GetMouseButtonDown(2))
+            {
+                firstAreaPoint = areaRaycastHit.point;
+                selectingArea = true;
+            }else if(selectingArea && Input.GetMouseButtonUp(2))
+            {
+                selectingArea = false;
+                lastAreaPoint = areaRaycastHit.point;
+                areaSelected = true;
+            }
+        }
+
 
         Ray groundRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(groundRay, out RaycastHit groundRaycastHit, float.MaxValue, groundLayerMask))
         {
-            if(penguinSelected && selectedPenguin!=null && Input.GetMouseButtonDown(0))
+            if(penguinSelected && selectedPenguin!=null && Input.GetMouseButtonDown(0) && !areaSelected)
             {
                 Vector3 tmp2 = new Vector3(((float)Math.Round(groundRaycastHit.point.x)), (float)Math.Round(groundRaycastHit.point.y), ((float)Math.Round(groundRaycastHit.point.z)));
                 selectedPenguin.destination = tmp2;
@@ -88,7 +106,7 @@ public class CursorMovementTracker : MonoBehaviour
             Vector3 tmp = new Vector3(((float)Math.Round(groundRaycastHit.point.x)), 0.2f, ((float)Math.Round(groundRaycastHit.point.z)));
             transform.position = tmp;
 
-            if (Input.GetMouseButtonDown(0) && (int)tmp.x >= 0 && (int)tmp.z >= 0 && (int)tmp.x < worldSize && (int)tmp.x < worldSize)
+            if (Input.GetMouseButtonDown(0) && (int)tmp.x >= 0 && (int)tmp.z >= 0 && (int)tmp.x < worldSize && (int)tmp.x < worldSize && !areaSelected)
             {
                 bool canPlace = true;
 
@@ -212,6 +230,27 @@ public class CursorMovementTracker : MonoBehaviour
                         tmpHouseInfo3.counter = i;
                     }
                 }*/
+            }
+
+             if(areaSelected == true && Input.GetMouseButtonDown(0))
+            {
+                GameObject[] pinguins = GameObject.FindGameObjectsWithTag("pingu");
+                Vector3 tmp2 = new Vector3(((float)Math.Round(groundRaycastHit.point.x)), (float)Math.Round(groundRaycastHit.point.y), ((float)Math.Round(groundRaycastHit.point.z)));
+
+                foreach(GameObject p in pinguins)
+                {
+                    bool isBetweenX = (p.transform.position.x >= Mathf.Min(firstAreaPoint.x, lastAreaPoint.x)) && (p.transform.position.x <= Mathf.Max(firstAreaPoint.x, lastAreaPoint.x));
+                    bool isBetweenZ = (p.transform.position.z >= Mathf.Min(firstAreaPoint.z, lastAreaPoint.z)) && (p.transform.position.z <= Mathf.Max(firstAreaPoint.z, lastAreaPoint.z));
+
+                    if(isBetweenX && isBetweenZ)
+                    {
+                        System.Random random = new System.Random();
+                        double rand1 = random.NextDouble() * (1.5 - 0.8) + 0.8;
+                        double rand2 = random.NextDouble() * (1.5 - 0.8) + 0.8;
+                        p.GetComponent<PenguinLogic>().destination = new Vector3((float)(tmp2.x + rand1), tmp2.y, (float)(tmp.z + rand2));
+                    }
+                }
+                areaSelected = false;
             }
         }
     }

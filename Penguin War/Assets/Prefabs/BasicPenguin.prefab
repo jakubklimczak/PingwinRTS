@@ -2002,7 +2002,7 @@ GameObject:
   - component: {fileID: 530874778435997682}
   m_Layer: 8
   m_Name: BasicPenguin
-  m_TagString: Untagged
+  m_TagString: pingu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2037,6 +2037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 
+  health: 20
   destination: {x: 0, y: 0, z: 0}
 --- !u!65 &530874778435997682
 BoxCollider:

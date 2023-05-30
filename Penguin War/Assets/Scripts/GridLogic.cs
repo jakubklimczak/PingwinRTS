@@ -66,6 +66,9 @@ void Start()
                 }
             }
 
+            //spawns read data
+            StartCoroutine(SpawnHouses());
+
             //read Pinguin Data
             if (File.Exists(penguinFilePath))
             {
@@ -77,7 +80,6 @@ void Start()
 
                 foreach(PinguInfo p in loadedData.info)
                 {
-                    Debug.Log(p.health);
                     SavedPinguins.info.Add(p);
                     Vector3 tmpPos = new Vector3(p.position[0], p.position[1], p.position[2]);
                     Vector3 tmpDest = new Vector3(p.destination[0], p.destination[1], p.destination[2]);
@@ -88,9 +90,6 @@ void Start()
             }
 
         }
-
-        //spawns read data
-        StartCoroutine(SpawnHouses());
     }
 
     // Update is called once per frame

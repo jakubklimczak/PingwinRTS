@@ -17,13 +17,17 @@ public class MenuLogic : MonoBehaviour
     public void NewGameButton()
     {
         //we will initialize our game here (so load a new scene), like:
+        PlayerPrefs.SetString("GameMode", "newGame");
         UnityEngine.SceneManagement.SceneManager.LoadScene("TheGame");
+        
     }
 
     public void LoadGameButton()
     {
         //we will initialize our game here (so load a new scene), like:
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+        PlayerPrefs.SetString("GameMode", "loadGame");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("TheGame");
+        
     }
 
     public void CreditsButton()

@@ -5,7 +5,7 @@ public class PenguinLogic : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public string type;
+    public int type;
     public int health = 20;
     public Vector3 destination;
 

@@ -20,7 +20,7 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(2))
         {
             Vector3 tmp = cameraObject.transform.position;
             tmp.x = -Input.GetAxis("Mouse X");
@@ -38,9 +38,9 @@ public class CameraMovement : MonoBehaviour
             }
 
             cameraObject.transform.Translate(tmp);
+        }
 
-
-            if (Input.mouseScrollDelta.y != 0)
+        if (Input.mouseScrollDelta.y != 0)
             {
                 Vector3 tmp2 = new Vector3(0, 0, 0);
                 tmp2.z = Input.mouseScrollDelta.y*5;
@@ -55,6 +55,5 @@ public class CameraMovement : MonoBehaviour
                 }
                 
             }
-        }
     }
 }

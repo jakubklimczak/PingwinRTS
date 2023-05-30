@@ -53,8 +53,7 @@ public class CursorMovementTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
+        //wybieranie domków
         Ray houseRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(houseRay, out RaycastHit houseRaycastHit, float.MaxValue, houseLayerMask))
         {
@@ -65,6 +64,7 @@ public class CursorMovementTracker : MonoBehaviour
             return;
         }
 
+        //wybieranie pingwina
         Ray penguinRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(houseRay, out RaycastHit penguinRaycastHit, float.MaxValue, penguinLayerMask))
         {
@@ -76,14 +76,15 @@ public class CursorMovementTracker : MonoBehaviour
             return;
         }
 
+        //wybieranie terenu
         Ray areaRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(areaRay, out RaycastHit areaRaycastHit, float.MaxValue, groundLayerMask))
+        if (Physics.Raycast(areaRay, out RaycastHit areaRaycastHit, float.MaxValue, groundLayerMask) && whatToBuild == 0)
         {
-            if(!selectingArea && Input.GetMouseButtonDown(2))
+            if(!selectingArea && Input.GetMouseButtonDown(0))
             {
                 firstAreaPoint = areaRaycastHit.point;
                 selectingArea = true;
-            }else if(selectingArea && Input.GetMouseButtonUp(2))
+            }else if(selectingArea && Input.GetMouseButtonUp(0))
             {
                 selectingArea = false;
                 lastAreaPoint = areaRaycastHit.point;
@@ -91,11 +92,12 @@ public class CursorMovementTracker : MonoBehaviour
             }
         }
 
-
+        //stawianie domków
         Ray groundRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(groundRay, out RaycastHit groundRaycastHit, float.MaxValue, groundLayerMask))
         {
-            if(penguinSelected && selectedPenguin!=null && Input.GetMouseButtonDown(0) && !areaSelected)
+            //ustawainie dest pingu
+            if(penguinSelected && selectedPenguin!=null && Input.GetMouseButtonDown(1) && !areaSelected)
             {
                 Vector3 tmp2 = new Vector3(((float)Math.Round(groundRaycastHit.point.x)), (float)Math.Round(groundRaycastHit.point.y), ((float)Math.Round(groundRaycastHit.point.z)));
                 selectedPenguin.destination = tmp2;
@@ -103,10 +105,12 @@ public class CursorMovementTracker : MonoBehaviour
                 return;
             }
 
+            //ustawianie objectu pod cursorem
             Vector3 tmp = new Vector3(((float)Math.Round(groundRaycastHit.point.x)), 0.2f, ((float)Math.Round(groundRaycastHit.point.z)));
             transform.position = tmp;
 
-            if (Input.GetMouseButtonDown(0) && (int)tmp.x >= 0 && (int)tmp.z >= 0 && (int)tmp.x < worldSize && (int)tmp.x < worldSize && !areaSelected)
+            //stawianie domków
+            if (Input.GetMouseButtonDown(0) && (int)tmp.x >= 0 && (int)tmp.z >= 0 && (int)tmp.x < worldSize && (int)tmp.x < worldSize && !areaSelected && whatToBuild != 0)
             {
                 bool canPlace = true;
 
@@ -232,7 +236,7 @@ public class CursorMovementTracker : MonoBehaviour
                 }*/
             }
 
-             if(areaSelected == true && Input.GetMouseButtonDown(0))
+            if(areaSelected == true && Input.GetMouseButtonDown(1))
             {
                 GameObject[] pinguins = GameObject.FindGameObjectsWithTag("pingu");
                 Vector3 tmp2 = new Vector3(((float)Math.Round(groundRaycastHit.point.x)), (float)Math.Round(groundRaycastHit.point.y), ((float)Math.Round(groundRaycastHit.point.z)));

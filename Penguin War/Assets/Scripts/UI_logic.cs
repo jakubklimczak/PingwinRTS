@@ -18,8 +18,8 @@ public class UI_logic : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        text_wood.text = "wood: "+inv.inventory["wood"].ToString();
-        text_ice.text = "ice: "+inv.inventory["ice"].ToString();
-        text_fish.text = "fish: "+inv.inventory["fish"].ToString();
+        text_wood.text = inv.inventory["wood"].ToString();
+        text_ice.text = inv.inventory["ice"].ToString();
+        text_fish.text = inv.inventory["fish"].ToString();
     }
 }

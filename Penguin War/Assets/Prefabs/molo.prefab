@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 2580313168465155998}
   m_Layer: 0
   m_Name: molo
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -221,7 +221,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 
   hasPinguinAssigned: 0
-  counter: 0
+  health: 50
+  resources: 0
 --- !u!1 &1533596016117402343
 GameObject:
   m_ObjectHideFlags: 0

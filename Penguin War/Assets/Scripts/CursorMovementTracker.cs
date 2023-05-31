@@ -30,7 +30,7 @@ public class CursorMovementTracker : MonoBehaviour
     void Start()
     {
         gridScript = GameObject.Find("Grid").GetComponent<GridLogic>();
-        houses = gridScript.houses;
+        houses = gridScript.housesPrefabs;
         inv = invObj.GetComponent<Inventory>();
 
         //costs initialization
@@ -66,7 +66,7 @@ public class CursorMovementTracker : MonoBehaviour
 
         //wybieranie pingwina
         Ray penguinRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(houseRay, out RaycastHit penguinRaycastHit, float.MaxValue, penguinLayerMask))
+        if (Physics.Raycast(penguinRay, out RaycastHit penguinRaycastHit, float.MaxValue, penguinLayerMask))
         {
             if (Input.GetMouseButtonDown(0) && !penguinRaycastHit.collider.GetComponentInParent<PenguinLogic>().isBot)
             {
@@ -114,6 +114,8 @@ public class CursorMovementTracker : MonoBehaviour
             {
                 bool canPlace = true;
 
+                Debug.Log(gridScript.map[(int)tmp.x, (int)tmp.z]);
+
                 //check if has enough resources
                 foreach (KeyValuePair<string, Dictionary<String, int>> houseCost in costs)
                 {
@@ -138,7 +140,7 @@ public class CursorMovementTracker : MonoBehaviour
                     HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                     childHouseInfo.type = houses[whatToBuild].name;
                     //childHouseInfo.counter = 2;//nwm co to xd
-                    gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
+                    gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild +1;
 
 
                     //removing from inventory
@@ -157,7 +159,7 @@ public class CursorMovementTracker : MonoBehaviour
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
                         //childHouseInfo.counter = 2;//nwm co to xd
-                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
+                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild +1;
 
 
                         //removing from inventory
@@ -174,7 +176,7 @@ public class CursorMovementTracker : MonoBehaviour
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
                         //childHouseInfo.counter = 2;//nwm co to xd
-                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
+                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild +1;
 
 
                         //removing from inventory
@@ -191,7 +193,7 @@ public class CursorMovementTracker : MonoBehaviour
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
                         //childHouseInfo.counter = 2;//nwm co to xd
-                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
+                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild +1;
 
 
                         //removing from inventory
@@ -208,7 +210,7 @@ public class CursorMovementTracker : MonoBehaviour
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
                         //childHouseInfo.counter = 2;//nwm co to xd
-                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
+                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild +1;
 
 
                         //removing from inventory

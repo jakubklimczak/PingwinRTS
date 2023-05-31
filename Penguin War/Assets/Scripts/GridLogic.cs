@@ -13,13 +13,15 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class GridLogic : MonoBehaviour
 {
     const int worldSize = 200;
-    public GameObject[] houses = new GameObject[10];
+    public GameObject[] housesPrefabs = new GameObject[10];
     public GameObject[] pinguinsPrefabs = new GameObject[5];
     [SerializeField]
 
     public PinguData SavedPinguins = new PinguData();
+    public HouseData Savedhouses = new HouseData();
 
     string penguinFilePath = "Assets/Save/penguinData.pingu";
+    string houseFilePath = "Assets/Save/housesData.pingu";
 
     //This is the grid for 'placed' objects
     //public int[,] grid = new int[worldSize, worldSize];
@@ -78,9 +80,7 @@ void Start()
                 fileStream.Close();
                 GameObject zoo = GameObject.Find("Zoo");
 
-                Debug.Log(loadedData.info.Count);
-
-                foreach(PinguInfo p in loadedData.info)
+                foreach(PinguInfoStruct p in loadedData.info)
                 {
                     SavedPinguins.info.Add(p);
                     Vector3 tmpPos = new Vector3(p.position[0], p.position[1], p.position[2]);
@@ -126,7 +126,7 @@ void Start()
     public IEnumerator SpawnHouses()//change to spawn houses and other stuff          and later mobs
     {
         GameObject parent = GameObject.Find("TilesMap");
-        for(int i = 0; i<map.GetLength(0);i++)
+        for(int i = 0; i < map.GetLength(0); i++)
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
@@ -134,14 +134,45 @@ void Start()
                 {
                     //string tmpPath = @"..\\Penguin War\\Assets\\Images\\Tiles\\tile0.png";
                     Vector3 tmpPos = new(Mathf.Floor(i), 0.1f, Mathf.Floor(j));
-                    GameObject tmpObj = Instantiate(houses[map[i, j] -1], tmpPos, new Quaternion());//change this later to be able to spawn more things
+                    GameObject tmpObj = Instantiate(housesPrefabs[map[i, j] -1], tmpPos, new Quaternion());//change this later to be able to spawn more things
                     tmpObj.transform.SetParent(parent.transform);
                     HouseInfo tmpHouseInfo = tmpObj.GetComponent<HouseInfo>();
-                    tmpHouseInfo.type = houses[map[i, j] - 1].name;
+                    tmpHouseInfo.type = housesPrefabs[map[i, j] - 1].name;
                     //tmpObj.GetComponent<Renderer>().material.mainTexture = LoadPNG(tmpPath);
                 }
             }
             yield return new WaitForSeconds(0);
+        }
+
+        if (File.Exists(houseFilePath))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream fileStream = File.Open(houseFilePath, FileMode.Open);
+            HouseData loadedData = (HouseData)formatter.Deserialize(fileStream);
+            fileStream.Close();
+            
+            GameObject[] spawnedHouses = GameObject.FindGameObjectsWithTag("houses");
+
+            foreach(HouseInfoStruct h in loadedData.info)
+            {
+                Savedhouses.info.Add(h);
+                Vector3 tmpPos = new Vector3(h.position[0], h.position[1], h.position[2]);
+                Quaternion tmpRotation = new Quaternion(h.rotation[0], h.rotation[1], h.rotation[2], h.rotation[3]);
+
+                foreach(GameObject GO in spawnedHouses)
+                {
+                    if(GO.transform.position.x == h.position[0] && 
+                     GO.transform.position.y == h.position[1] &&
+                     GO.transform.position.z == h.position[2])
+                    {
+                        GO.transform.rotation = new Quaternion(h.rotation[0], h.rotation[1], h.rotation[2], h.rotation[3]);
+                        GO.GetComponent<HouseInfo>().health = h.health;
+                        GO.GetComponent<HouseInfo>().resources = h.resources;
+                        GO.GetComponent<HouseInfo>().hasPinguinAssigned = h.hasPinguinAssigned;
+                        GO.GetComponent<HouseInfo>().hasPinguinAssigned = h.hasPinguinAssigned;
+                    }
+                }
+            }
         }
         
     }
@@ -153,6 +184,11 @@ void Start()
             if (File.Exists(penguinFilePath))
             {
                 File.Delete(penguinFilePath);
+            }
+
+            if (File.Exists(houseFilePath))
+            {
+                File.Delete(houseFilePath);
             }
         }
         catch (IOException ex)
@@ -167,7 +203,7 @@ void Start()
             {
                 for (int j = 0; j < worldSize; j++)
                 {
-                    writer.Write(map[i, j]);
+                    writer.Write(map[j, i]);
                     if (j < worldSize - 1)
                     {
                         writer.Write(",");
@@ -175,20 +211,19 @@ void Start()
                 }
                 writer.WriteLine();
             }
-        }//nwm czy to dzia�a xd
+        }
 
         //save pinguins data
         GameObject[] pinguinsObjs = GameObject.FindGameObjectsWithTag("pingu");
 
         foreach(GameObject p in pinguinsObjs)
         {
-            PinguInfo tmp = new PinguInfo();
+            PinguInfoStruct tmp = new PinguInfoStruct();
 
             tmp.health = p.GetComponent<PenguinLogic>().health;
             tmp.position[0] = p.transform.position.x;
             tmp.position[1] = p.transform.position.y;
             tmp.position[2] = p.transform.position.z;
-            tmp.rotation[0] = p.transform.rotation.x;
 
             tmp.rotation[0] = p.transform.rotation.x;
             tmp.rotation[1] = p.transform.rotation.y;
@@ -204,11 +239,41 @@ void Start()
             SavedPinguins.info.Add(tmp);
         }
 
-        BinaryFormatter formatter = new BinaryFormatter();
+        BinaryFormatter formatterForPenguins = new BinaryFormatter();
 
-        FileStream fileStream = File.Create(penguinFilePath);
-        formatter.Serialize(fileStream, SavedPinguins);
-        fileStream.Close();
+        FileStream fileStreamforPenguins = File.Create(penguinFilePath);
+        formatterForPenguins.Serialize(fileStreamforPenguins, SavedPinguins);
+        fileStreamforPenguins.Close();
+
+        // //save houses data
+        GameObject[] housesObjs = GameObject.FindGameObjectsWithTag("houses");
+
+        foreach(GameObject h in housesObjs)
+        {
+            HouseInfoStruct tmp = new HouseInfoStruct();
+            
+            tmp.position[0] = h.transform.position.x;
+            tmp.position[1] = h.transform.position.y;
+            tmp.position[2] = h.transform.position.z;
+
+            tmp.rotation[0] = h.transform.rotation.x;
+            tmp.rotation[1] = h.transform.rotation.y;
+            tmp.rotation[2] = h.transform.rotation.z;
+            tmp.rotation[3] = h.transform.rotation.w;
+
+            tmp.type = h.GetComponent<HouseInfo>().type;
+            tmp.health = h.GetComponent<HouseInfo>().health;
+            tmp.hasPinguinAssigned = h.GetComponent<HouseInfo>().hasPinguinAssigned;
+            tmp.resources = h.GetComponent<HouseInfo>().resources;
+
+            Savedhouses.info.Add(tmp);
+        }
+
+        BinaryFormatter formatterForHouses = new BinaryFormatter();
+
+        FileStream fileStreamForHouses = File.Create(houseFilePath);
+        formatterForHouses.Serialize(fileStreamForHouses, Savedhouses);
+        fileStreamForHouses.Close();
     }
     public void GenerateCsv(string filename)
     {
@@ -319,7 +384,7 @@ void Start()
     }
 
     [Serializable]
-    public class PinguInfo
+    public class PinguInfoStruct
     {
         [SerializeField]
         public int type;
@@ -339,8 +404,31 @@ void Start()
     public class PinguData
     {
         [SerializeField]
-        public List<PinguInfo> info = new List<PinguInfo>();
+        public List<PinguInfoStruct> info = new List<PinguInfoStruct>();
     }
 
 
+    [Serializable]
+    public class HouseInfoStruct
+    {
+        [SerializeField]
+        public string type;
+        [SerializeField]
+        public bool hasPinguinAssigned;
+        [SerializeField]
+        public int health;
+        [SerializeField]
+        public int resources;
+        [SerializeField]
+        public float[] position = new float[3];
+        [SerializeField]
+        public float[] rotation = new float[4];
+    }
+
+    [Serializable]
+    public class HouseData
+    {
+        [SerializeField]
+        public List<HouseInfoStruct> info = new List<HouseInfoStruct>();
+    }
 }

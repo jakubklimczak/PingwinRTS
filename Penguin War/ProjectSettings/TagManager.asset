@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MenuButton
   - pingu
+  - houses
   layers:
   - Default
   - TransparentFX

@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 3640802322447111592}
   m_Layer: 7
   m_Name: Igloo
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -467,7 +467,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 
   hasPinguinAssigned: 0
-  counter: 0
+  health: 50
+  resources: 0
 --- !u!136 &3640802322447111592
 CapsuleCollider:
   m_ObjectHideFlags: 0

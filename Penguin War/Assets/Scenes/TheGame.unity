@@ -1260,7 +1260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d6bc6946ba7a549b5569fdab2006a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  houses:
+  housesPrefabs:
   - {fileID: 3985908970274287968, guid: 09ca865f7957f2f4dbf5e3d6df9078e0, type: 3}
   - {fileID: 7735341703980362089, guid: 8e0834f9eddefc641849a97c270ed4db, type: 3}
   - {fileID: 5112189054338553826, guid: 192a95b795aa2b140bb809b852c542a3, type: 3}
@@ -1278,6 +1278,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   SavedPinguins:
+    info: []
+  Savedhouses:
     info: []
 --- !u!64 &1142890382
 MeshCollider:

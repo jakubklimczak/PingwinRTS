@@ -78,14 +78,17 @@ void Start()
                 fileStream.Close();
                 GameObject zoo = GameObject.Find("Zoo");
 
+                Debug.Log(loadedData.info.Count);
+
                 foreach(PinguInfo p in loadedData.info)
                 {
                     SavedPinguins.info.Add(p);
                     Vector3 tmpPos = new Vector3(p.position[0], p.position[1], p.position[2]);
                     Vector3 tmpDest = new Vector3(p.destination[0], p.destination[1], p.destination[2]);
                     Quaternion tmpRotation = new Quaternion(p.rotation[0], p.rotation[1], p.rotation[2], p.rotation[3]);
-                    GameObject tmpObj = Instantiate(pinguinsPrefabs[p.type],tmpPos,tmpRotation, zoo.transform);
+                    GameObject tmpObj = Instantiate(pinguinsPrefabs[p.type], tmpPos, tmpRotation, zoo.transform);
                     tmpObj.GetComponent<PenguinLogic>().destination = tmpDest;
+                    tmpObj.GetComponent<PenguinLogic>().isBot = p.isBot;
                 }
             }
 
@@ -97,6 +100,7 @@ void Start()
     {
         if (Input.GetKeyDown("space"))
         {
+            Debug.Log("Saving");
             SaveWorld("Assets/Save/map.csv");
         }
     }
@@ -134,7 +138,6 @@ void Start()
                     tmpObj.transform.SetParent(parent.transform);
                     HouseInfo tmpHouseInfo = tmpObj.GetComponent<HouseInfo>();
                     tmpHouseInfo.type = houses[map[i, j] - 1].name;
-                    tmpHouseInfo.counter = i;
                     //tmpObj.GetComponent<Renderer>().material.mainTexture = LoadPNG(tmpPath);
                 }
             }
@@ -145,6 +148,18 @@ void Start()
 
     public void SaveWorld(string filename)
     {
+        try//delete file so it doesn't store old values
+        {
+            if (File.Exists(penguinFilePath))
+            {
+                File.Delete(penguinFilePath);
+            }
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine("An error occurred: " + ex.Message);
+        }
+
         // Write the data to a CSV file
         using (var writer = new StreamWriter(filename))
         {
@@ -185,6 +200,7 @@ void Start()
             tmp.destination[2] = p.GetComponent<PenguinLogic>().destination.z;
 
             tmp.type = p.GetComponent<PenguinLogic>().type;
+            tmp.isBot = p.GetComponent<PenguinLogic>().isBot;
             SavedPinguins.info.Add(tmp);
         }
 
@@ -315,6 +331,8 @@ void Start()
          public float[] destination = new float[3];
         [SerializeField]
         public int health;
+        [SerializeField]
+        public bool isBot;
     }
 
     [Serializable]

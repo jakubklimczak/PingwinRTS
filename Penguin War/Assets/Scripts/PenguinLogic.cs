@@ -9,6 +9,8 @@ public class PenguinLogic : MonoBehaviour
     public int health = 20;
     public Vector3 destination;
 
+    public bool isBot = false;
+
 
     void Start()
     {

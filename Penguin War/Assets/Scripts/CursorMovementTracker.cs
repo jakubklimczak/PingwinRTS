@@ -68,7 +68,7 @@ public class CursorMovementTracker : MonoBehaviour
         Ray penguinRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(houseRay, out RaycastHit penguinRaycastHit, float.MaxValue, penguinLayerMask))
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !penguinRaycastHit.collider.GetComponentInParent<PenguinLogic>().isBot)
             {
                 penguinSelected = true;
                 selectedPenguin = penguinRaycastHit.collider.GetComponentInParent<PenguinLogic>();
@@ -137,7 +137,7 @@ public class CursorMovementTracker : MonoBehaviour
                     GameObject child = Instantiate(houses[whatToBuild], tmp, new Quaternion(), parent.transform);
                     HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                     childHouseInfo.type = houses[whatToBuild].name;
-                    childHouseInfo.counter = 2;//nwm co to xd
+                    //childHouseInfo.counter = 2;//nwm co to xd
                     gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
 
 
@@ -156,7 +156,7 @@ public class CursorMovementTracker : MonoBehaviour
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, -90, 0), parent.transform);
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
-                        childHouseInfo.counter = 2;//nwm co to xd
+                        //childHouseInfo.counter = 2;//nwm co to xd
                         gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
 
 
@@ -173,7 +173,7 @@ public class CursorMovementTracker : MonoBehaviour
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, 90, 0), parent.transform);
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
-                        childHouseInfo.counter = 2;//nwm co to xd
+                        //childHouseInfo.counter = 2;//nwm co to xd
                         gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
 
 
@@ -190,7 +190,7 @@ public class CursorMovementTracker : MonoBehaviour
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, -180, 0), parent.transform);
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
-                        childHouseInfo.counter = 2;//nwm co to xd
+                        //childHouseInfo.counter = 2;//nwm co to xd
                         gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
 
 
@@ -207,7 +207,7 @@ public class CursorMovementTracker : MonoBehaviour
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, 180, 0), parent.transform);
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
-                        childHouseInfo.counter = 2;//nwm co to xd
+                        //childHouseInfo.counter = 2;//nwm co to xd
                         gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild;
 
 
@@ -246,7 +246,7 @@ public class CursorMovementTracker : MonoBehaviour
                     bool isBetweenX = (p.transform.position.x >= Mathf.Min(firstAreaPoint.x, lastAreaPoint.x)) && (p.transform.position.x <= Mathf.Max(firstAreaPoint.x, lastAreaPoint.x));
                     bool isBetweenZ = (p.transform.position.z >= Mathf.Min(firstAreaPoint.z, lastAreaPoint.z)) && (p.transform.position.z <= Mathf.Max(firstAreaPoint.z, lastAreaPoint.z));
 
-                    if(isBetweenX && isBetweenZ)
+                    if(isBetweenX && isBetweenZ && !p.GetComponent<PenguinLogic>().isBot)
                     {
                         System.Random random = new System.Random();
                         double rand1 = random.NextDouble() * (1.5 - 0.8) + 0.8;

@@ -48,50 +48,11 @@ void Start()
         if(mode=="newGame")
         {
             GenerateCsv("Assets/Save/map.csv");
+            PrepareGame();
 
         }else if(mode=="loadGame")
         {
-            //reads the save "map.csv"
-            using (var reader = new StreamReader(@"..\\Penguin War\\Assets\\Save\\map.csv"))
-            {
-                int iter = 0;
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    var values = line.Split(',');
-
-                    for(int i=0; i < values.Length - 1; i++)
-                    {
-                        map[i, iter] = int.Parse(values[i]);
-                    }
-                    iter++;
-                }
-            }
-
-            //spawns read data
-            StartCoroutine(SpawnHouses());
-
-            //read Pinguin Data
-            if (File.Exists(penguinFilePath))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                FileStream fileStream = File.Open(penguinFilePath, FileMode.Open);
-                PinguData loadedData = (PinguData)formatter.Deserialize(fileStream);
-                fileStream.Close();
-                GameObject zoo = GameObject.Find("Zoo");
-
-                foreach(PinguInfoStruct p in loadedData.info)
-                {
-                    SavedPinguins.info.Add(p);
-                    Vector3 tmpPos = new Vector3(p.position[0], p.position[1], p.position[2]);
-                    Vector3 tmpDest = new Vector3(p.destination[0], p.destination[1], p.destination[2]);
-                    Quaternion tmpRotation = new Quaternion(p.rotation[0], p.rotation[1], p.rotation[2], p.rotation[3]);
-                    GameObject tmpObj = Instantiate(pinguinsPrefabs[p.type], tmpPos, tmpRotation, zoo.transform);
-                    tmpObj.GetComponent<PenguinLogic>().destination = tmpDest;
-                    tmpObj.GetComponent<PenguinLogic>().isBot = p.isBot;
-                }
-            }
-
+           PrepareGame();
         }
     }
 
@@ -123,6 +84,50 @@ void Start()
         return tex;
     }
 
+
+    public void PrepareGame()
+    {
+        //reads the save "map.csv"
+        using (var reader = new StreamReader(@"..\\Penguin War\\Assets\\Save\\map.csv"))
+        {
+            int iter = 0;
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+                var values = line.Split(',');
+
+                for(int i=0; i < values.Length - 1; i++)
+                {
+                    map[i, iter] = int.Parse(values[i]);
+                }
+                iter++;
+            }
+        }
+
+        //spawns read data
+        StartCoroutine(SpawnHouses());
+
+        //read Pinguin Data
+        if (File.Exists(penguinFilePath))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream fileStream = File.Open(penguinFilePath, FileMode.Open);
+            PinguData loadedData = (PinguData)formatter.Deserialize(fileStream);
+            fileStream.Close();
+            GameObject zoo = GameObject.Find("Zoo");
+
+            foreach(PinguInfoStruct p in loadedData.info)
+            {
+                SavedPinguins.info.Add(p);
+                Vector3 tmpPos = new Vector3(p.position[0], p.position[1], p.position[2]);
+                Vector3 tmpDest = new Vector3(p.destination[0], p.destination[1], p.destination[2]);
+                Quaternion tmpRotation = new Quaternion(p.rotation[0], p.rotation[1], p.rotation[2], p.rotation[3]);
+                GameObject tmpObj = Instantiate(pinguinsPrefabs[p.type], tmpPos, tmpRotation, zoo.transform);
+                tmpObj.GetComponent<PenguinLogic>().destination = tmpDest;
+                tmpObj.GetComponent<PenguinLogic>().isBot = p.isBot;
+            }
+        }
+    }
     public IEnumerator SpawnHouses()//change to spawn houses and other stuff          and later mobs
     {
         GameObject parent = GameObject.Find("TilesMap");

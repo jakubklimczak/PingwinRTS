@@ -126,6 +126,22 @@ void Start()
     public IEnumerator SpawnHouses()//change to spawn houses and other stuff          and later mobs
     {
         GameObject parent = GameObject.Find("TilesMap");
+        HouseData loadedData = new HouseData();
+
+        if (File.Exists(houseFilePath))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream fileStream = File.Open(houseFilePath, FileMode.Open);
+            loadedData = (HouseData)formatter.Deserialize(fileStream);
+
+            foreach(HouseInfoStruct h in loadedData.info)
+            {
+                Savedhouses.info.Add(h);
+            }
+
+            fileStream.Close();
+        }
+
         for(int i = 0; i < map.GetLength(0); i++)
         {
             for (int j = 0; j < map.GetLength(1); j++)
@@ -134,47 +150,41 @@ void Start()
                 {
                     //string tmpPath = @"..\\Penguin War\\Assets\\Images\\Tiles\\tile0.png";
                     Vector3 tmpPos = new(Mathf.Floor(i), 0.1f, Mathf.Floor(j));
-                    GameObject tmpObj = Instantiate(housesPrefabs[map[i, j] -1], tmpPos, new Quaternion());//change this later to be able to spawn more things
-                    tmpObj.transform.SetParent(parent.transform);
+
+                    bool foundHouse = false;
+                    HouseInfoStruct tmpInfoStruct = new HouseInfoStruct();
+
+                    foreach(HouseInfoStruct h in loadedData.info)
+                    {
+                        Vector3 tmpLoadedPos = new Vector3((int)h.position[0], 0.1f, (int)h.position[2]);
+                        Quaternion tmpLoadedRotation = new Quaternion(h.rotation[0], h.rotation[1], h.rotation[2], h.rotation[3]);
+
+                        if(tmpPos.x == h.position[0] && tmpPos.z == h.position[2])
+                        {
+                            foundHouse = true;
+                            tmpInfoStruct = h;
+                            break;
+                        }
+                    }
+
+                    GameObject tmpObj = Instantiate(housesPrefabs[map[i, j] -1], tmpPos, new Quaternion(tmpInfoStruct.rotation[0],tmpInfoStruct.rotation[1],tmpInfoStruct.rotation[2],tmpInfoStruct.rotation[3]), parent.transform);//change this later to be able to spawn more things
+                    //tmpObj.transform.SetParent(parent.transform);
                     HouseInfo tmpHouseInfo = tmpObj.GetComponent<HouseInfo>();
+
+                    if(foundHouse)
+                    {
+                        tmpHouseInfo.health = tmpInfoStruct.health;
+                        tmpHouseInfo.resources = tmpInfoStruct.resources;
+                        tmpHouseInfo.hasPinguinAssigned = tmpInfoStruct.hasPinguinAssigned;
+                    }
+
                     tmpHouseInfo.type = housesPrefabs[map[i, j] - 1].name;
+                    //Debug.Log(tmpPos + " , " + tmpHouseInfo.type + " , " + tmpObj.transform.position);
                     //tmpObj.GetComponent<Renderer>().material.mainTexture = LoadPNG(tmpPath);
                 }
             }
             yield return new WaitForSeconds(0);
         }
-
-        if (File.Exists(houseFilePath))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream fileStream = File.Open(houseFilePath, FileMode.Open);
-            HouseData loadedData = (HouseData)formatter.Deserialize(fileStream);
-            fileStream.Close();
-            
-            GameObject[] spawnedHouses = GameObject.FindGameObjectsWithTag("houses");
-
-            foreach(HouseInfoStruct h in loadedData.info)
-            {
-                Savedhouses.info.Add(h);
-                Vector3 tmpPos = new Vector3(h.position[0], h.position[1], h.position[2]);
-                Quaternion tmpRotation = new Quaternion(h.rotation[0], h.rotation[1], h.rotation[2], h.rotation[3]);
-
-                foreach(GameObject GO in spawnedHouses)
-                {
-                    if(GO.transform.position.x == h.position[0] && 
-                     GO.transform.position.y == h.position[1] &&
-                     GO.transform.position.z == h.position[2])
-                    {
-                        GO.transform.rotation = new Quaternion(h.rotation[0], h.rotation[1], h.rotation[2], h.rotation[3]);
-                        GO.GetComponent<HouseInfo>().health = h.health;
-                        GO.GetComponent<HouseInfo>().resources = h.resources;
-                        GO.GetComponent<HouseInfo>().hasPinguinAssigned = h.hasPinguinAssigned;
-                        GO.GetComponent<HouseInfo>().hasPinguinAssigned = h.hasPinguinAssigned;
-                    }
-                }
-            }
-        }
-        
     }
 
     public void SaveWorld(string filename)
@@ -247,6 +257,8 @@ void Start()
 
         // //save houses data
         GameObject[] housesObjs = GameObject.FindGameObjectsWithTag("houses");
+
+        Savedhouses.info.Clear();
 
         foreach(GameObject h in housesObjs)
         {

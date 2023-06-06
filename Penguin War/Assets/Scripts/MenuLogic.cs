@@ -19,7 +19,6 @@ public class MenuLogic : MonoBehaviour
         //we will initialize our game here (so load a new scene), like:
         PlayerPrefs.SetString("GameMode", "newGame");
         UnityEngine.SceneManagement.SceneManager.LoadScene("TheGame");
-        
     }
 
     public void LoadGameButton()
@@ -27,7 +26,7 @@ public class MenuLogic : MonoBehaviour
         //we will initialize our game here (so load a new scene), like:
         PlayerPrefs.SetString("GameMode", "loadGame");
         UnityEngine.SceneManagement.SceneManager.LoadScene("TheGame");
-        
+
     }
 
     public void CreditsButton()

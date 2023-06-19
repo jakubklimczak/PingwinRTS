@@ -151,7 +151,7 @@ void Start()
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                if (map[i, j] != 0 && map[i, j] != 3 && map[i, j] != 4)
+                if (map[i, j] != 0 && map[i, j] != 3 && map[i, j] != 4 && map[i, j] != 6)
                 {
                     //string tmpPath = @"..\\Penguin War\\Assets\\Images\\Tiles\\tile0.png";
                     Vector3 tmpPos = new(Mathf.Floor(i), 0.1f, Mathf.Floor(j));
@@ -292,9 +292,21 @@ void Start()
         formatterForHouses.Serialize(fileStreamForHouses, Savedhouses);
         fileStreamForHouses.Close();
     }
+
+    public static void addSomething(ref int[,] array, int y, int x, int whatToPlaceThere, int howManyX, int howManyY)
+    {
+        for(int k = 0; k < howManyX ; k++)
+        {
+            for(int l = 0; l < howManyY ; l++)
+            {
+                array[x + k, y + l] = whatToPlaceThere;
+            }
+        }
+
+    }
     public void GenerateCsv(string filename)
     {
-        // Create a 100x100 array of zeros
+        // Create a 200x200 array of zeros
         int[,] data = new int[worldSize, worldSize];
 
         // Set the values within the circle to 1
@@ -314,9 +326,10 @@ void Start()
                 double distance4 = Math.Sqrt(Math.Pow(i - worldSize / 2 -2, 2) + Math.Pow(j - worldSize / 2 - 16, 2));
                 double distance5 = Math.Sqrt(Math.Pow(i - worldSize / 2 +2, 2) + Math.Pow(j - worldSize / 2 + 16, 2));
                 //lake
-                if (i==j)
-                    data[i, j] = 1;
-                else if (distance1 < 30)
+                // if (i==j)
+                //     data[i, j] = 1;
+                // else 
+                if (distance1 < 30)
                 {
                     data[i, j] = 3;
                 }else if (distance2 < 26)
@@ -381,6 +394,24 @@ void Start()
                 data[x + k, y + l] = 4;
             }
         }
+
+        //glaciers
+       addSomething(ref data, 37, 11, 6, 3, 4);
+       addSomething(ref data, 67, 31, 6, 3, 4);
+       addSomething(ref data, 107, 15, 6, 3, 4);
+       addSomething(ref data, 147, 6, 6, 3, 4);
+       addSomething(ref data, 167, 45, 6, 3, 4);
+       addSomething(ref data, 117, 62, 6, 3, 4);
+       addSomething(ref data, 172, 102, 6, 3, 4);
+
+       addSomething(ref data, 163, 189, 6, 3, 4);
+       addSomething(ref data, 153, 149, 6, 3, 4);
+       addSomething(ref data, 93, 185, 6, 3, 4);
+       addSomething(ref data, 53, 194, 6, 3, 4);
+       addSomething(ref data, 33, 155, 6, 3, 4);
+       addSomething(ref data, 83, 138, 6, 3, 4);
+       addSomething(ref data, 28, 98, 6, 3, 4);
+
 
         // Write the data to a CSV file
         using (var writer = new StreamWriter(filename))

@@ -13,7 +13,7 @@ public class UI_logic : MonoBehaviour
 
     public GameObject PauseUI;
     public GameObject GameplayUI;
-    public CursorMovementTracker CursorTracker; 
+    public CursorMovementTracker CursorTracker;
 
     // Start is called before the first frame update
     void Start()
@@ -48,30 +48,50 @@ public class UI_logic : MonoBehaviour
         }
     }
 
-    public void SetCursorMode(int new_mode)
+    public void ToggleWhatToBuild(Toggle change)
     {
-        CursorTracker.whatToBuild = new_mode;
+        if(change.isOn)
+            setNewBuildMode(change.name);
+
+        changecolor(change);
     }
 
-    public void SetSelectedButton() 
-    {
-        switch (CursorTracker.whatToBuild)
+    private void setNewBuildMode(string name)
+    { 
+        switch (name)
         {
-            case 0:
-
+            case "IglooButton":
+                CursorTracker.whatToBuild = 1;
             break;
 
-            case 1:
-                GameObject temp = GameplayUI.transform.Find("BuildingListPanel/IglooButton").gameObject;
-                Debug.Log(temp.name);
-                temp.GetComponent<Toggle>().isOn = true;
-                Debug.Log("Fixing igloo");
-             break;
+            case "MoloButton":
+                CursorTracker.whatToBuild = 4;
+            break;
 
-            case 4:
+            default:
 
             break;
         }
+    }
+    
+//change color of toggle button because unity is stupid...
+private void changecolor(Toggle changeToggle)
+    {
+        ColorBlock cb = changeToggle.colors;
+        bool isOn = changeToggle.isOn;
+        if (isOn)
+        {
+            cb.normalColor = Color.white;
+            cb.highlightedColor = Color.white;
+        }
+        else
+        {
+            cb.normalColor = Color.gray;
+            cb.highlightedColor = Color.gray;
+        }
+        Debug.Log("here");
+        Debug.Log(cb.normalColor);
+        changeToggle.colors = cb;
     }
 
 }

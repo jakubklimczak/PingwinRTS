@@ -13,6 +13,7 @@ public class UI_logic : MonoBehaviour
 
     public GameObject PauseUI;
     public GameObject GameplayUI;
+    public CursorMovementTracker CursorTracker; 
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,32 @@ public class UI_logic : MonoBehaviour
             PauseUI.SetActive(true);
             GameplayUI.SetActive(false);
             Debug.Log("enabling pause");
+        }
+    }
+
+    public void SetCursorMode(int new_mode)
+    {
+        CursorTracker.whatToBuild = new_mode;
+    }
+
+    public void SetSelectedButton() 
+    {
+        switch (CursorTracker.whatToBuild)
+        {
+            case 0:
+
+            break;
+
+            case 1:
+                GameObject temp = GameplayUI.transform.Find("BuildingListPanel/IglooButton").gameObject;
+                Debug.Log(temp.name);
+                temp.GetComponent<Toggle>().isOn = true;
+                Debug.Log("Fixing igloo");
+             break;
+
+            case 4:
+
+            break;
         }
     }
 

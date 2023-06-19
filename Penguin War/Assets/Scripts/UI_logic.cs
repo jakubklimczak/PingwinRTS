@@ -60,6 +60,10 @@ public class UI_logic : MonoBehaviour
     { 
         switch (name)
         {
+            case "SelectUnitButton":
+                CursorTracker.whatToBuild = 0;
+            break;
+
             case "IglooButton":
                 CursorTracker.whatToBuild = 1;
             break;

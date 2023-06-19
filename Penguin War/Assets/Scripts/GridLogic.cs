@@ -151,7 +151,7 @@ void Start()
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                if (map[i, j] != 0 && map[i, j] != 3 && map[i, j] != 4 && map[i, j] != 6)
+                if (map[i, j] != 0 && map[i, j] != 3 && map[i, j] != 4 && map[i, j] != 6 && map[i, j] != 7)
                 {
                     //string tmpPath = @"..\\Penguin War\\Assets\\Images\\Tiles\\tile0.png";
                     Vector3 tmpPos = new(Mathf.Floor(i), 0.1f, Mathf.Floor(j));
@@ -352,6 +352,10 @@ void Start()
 
             }
         }
+
+        //nest
+        data[10, 10] = 7;
+        data[190, 190] = 7;
 
         //boat (x6 * z3) 
         int x = 30;

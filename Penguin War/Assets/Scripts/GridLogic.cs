@@ -7,7 +7,6 @@ using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using static Inventory;
-using static UnityEditor.Progress;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public class GridLogic : MonoBehaviour
@@ -88,7 +87,7 @@ void Start()
     public void PrepareGame()
     {
         //reads the save "map.csv"
-        using (var reader = new StreamReader(@"..\\Penguin War\\Assets\\Save\\map.csv"))
+        using (var reader = new StreamReader("Assets/Save/map.csv"))
         {
             int iter = 0;
             while (!reader.EndOfStream)

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
 
 public class CursorMovementTracker : MonoBehaviour
 {
@@ -10,6 +13,12 @@ public class CursorMovementTracker : MonoBehaviour
     public LayerMask groundLayerMask;
     public LayerMask houseLayerMask;
     public LayerMask penguinLayerMask;
+    public LayerMask UILayerMask;
+
+    GraphicRaycaster m_Raycaster;
+    PointerEventData m_PointerEventData;
+    EventSystem m_EventSystem;
+    
     public GameObject[] houses;
     public GameObject invObj;
     Inventory inv;
@@ -33,6 +42,14 @@ public class CursorMovementTracker : MonoBehaviour
         houses = gridScript.housesPrefabs;
         inv = invObj.GetComponent<Inventory>();
 
+        //Fetch the Raycaster from the GameObject (the Canvas)
+        m_Raycaster = GameObject.Find("UI").GetComponent<GraphicRaycaster>();
+        //Fetch the Event System from the Scene
+        m_EventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+
+        Debug.Log(m_Raycaster);
+        Debug.Log(m_EventSystem);
+
         //costs initialization
 
         //names from prefabs
@@ -53,6 +70,17 @@ public class CursorMovementTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //checking if the user clicked on UI
+        m_PointerEventData = new PointerEventData(m_EventSystem);
+        m_PointerEventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        m_Raycaster.Raycast(m_PointerEventData, results);
+   
+        if(results.Count > 0 && Input.GetMouseButtonDown(0))
+        {
+            return;
+        }
+
         //wybieranie domków
         Ray houseRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(houseRay, out RaycastHit houseRaycastHit, float.MaxValue, houseLayerMask))

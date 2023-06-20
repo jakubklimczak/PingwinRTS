@@ -2789,6 +2789,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861661968}
   m_Mesh: {fileID: -5495902117074765545, guid: ce3a5bdc99ecc7941824866ea0dacbaa, type: 3}
+--- !u!1 &893057003 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5451371589509870839, guid: 8962bba64b4d41c4aa9981769362b59b, type: 3}
+  m_PrefabInstance: {fileID: 1664313437}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -6644,6 +6649,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4678388163550654029, guid: 8962bba64b4d41c4aa9981769362b59b, type: 3}
   m_PrefabInstance: {fileID: 1664313437}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1951812869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893057003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe585b1da27e0e4f96d540608bfab65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pinguPrefab: {fileID: 9058214154555395423, guid: dfb3daeae1f484a4a91a75d07e46ecd6, type: 3}
+  timeToSpawn: 300
+  delay: 1
 --- !u!1 &1969828675
 GameObject:
   m_ObjectHideFlags: 0

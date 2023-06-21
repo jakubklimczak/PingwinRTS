@@ -143,6 +143,7 @@ void Start()
                 tmpObj.GetComponent<PenguinLogic>().isBot = p.isBot;
                 tmpObj.GetComponent<PenguinLogic>().shouldAttack = p.shoudlAttack;
                 tmpObj.GetComponent<PenguinLogic>().isWarrior = p.isWarrior;
+                tmpObj.GetComponent<PenguinLogic>().damage = p.damage;
             }
         }
     }
@@ -276,6 +277,8 @@ void Start()
             tmp.isBot = p.GetComponent<PenguinLogic>().isBot;
             tmp.isWarrior = p.GetComponent<PenguinLogic>().isWarrior;
             tmp.shoudlAttack = p.GetComponent<PenguinLogic>().shouldAttack;
+            tmp.damage = p.GetComponent<PenguinLogic>().damage;
+            
             SavedPinguins.info.Add(tmp);
         }
 
@@ -503,6 +506,8 @@ void Start()
          public float[] destination = new float[3];
         [SerializeField]
         public int health;
+        [SerializeField]
+        public int damage;
         [SerializeField]
         public bool isBot;
         [SerializeField]

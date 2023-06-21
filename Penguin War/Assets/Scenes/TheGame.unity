@@ -3093,7 +3093,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1045441241}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e0bc521383a5814ca186fdc87006947, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1045441244
@@ -5046,6 +5046,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8962bba64b4d41c4aa9981769362b59b, type: 3}
+--- !u!1 &1560249646 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5451371589509870839, guid: 8962bba64b4d41c4aa9981769362b59b, type: 3}
+  m_PrefabInstance: {fileID: 1560249645}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1560249647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560249646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe585b1da27e0e4f96d540608bfab65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pinguPrefab: {fileID: 9058214154555395423, guid: dfb3daeae1f484a4a91a75d07e46ecd6, type: 3}
+  health: 1000
+  timeToSpawn: 300
+  delay: 1
+  isBot: 1
+  timerXD: 1000
 --- !u!1 &1578722688
 GameObject:
   m_ObjectHideFlags: 0
@@ -6662,8 +6685,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pinguPrefab: {fileID: 9058214154555395423, guid: dfb3daeae1f484a4a91a75d07e46ecd6, type: 3}
+  health: 1000
   timeToSpawn: 300
   delay: 1
+  isBot: 0
+  timerXD: 1000
 --- !u!1 &1969828675
 GameObject:
   m_ObjectHideFlags: 0

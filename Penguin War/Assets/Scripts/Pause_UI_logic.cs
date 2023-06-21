@@ -12,7 +12,7 @@ public class Pause_UI_logic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Pause start");
+        //Debug.Log("Pause start");
         ReturnToGameplay();
     }
 
@@ -28,7 +28,7 @@ public class Pause_UI_logic : MonoBehaviour
         Time.timeScale = 1.0f;
         PauseUI.SetActive(false);
         GameplayUI.SetActive(true);
-        Debug.Log("returning to gameplay");
+        //Debug.Log("returning to gameplay");
     }
 
     public void ReturnToMenu()

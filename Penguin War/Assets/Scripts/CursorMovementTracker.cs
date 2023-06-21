@@ -47,8 +47,8 @@ public class CursorMovementTracker : MonoBehaviour
         //Fetch the Event System from the Scene
         m_EventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
 
-        Debug.Log(m_Raycaster);
-        Debug.Log(m_EventSystem);
+        //Debug.Log(m_Raycaster);
+        //Debug.Log(m_EventSystem);
 
         //costs initialization
 

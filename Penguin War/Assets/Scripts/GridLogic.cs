@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using static Inventory;
+using static NestSpawner;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public class GridLogic : MonoBehaviour
@@ -18,9 +19,11 @@ public class GridLogic : MonoBehaviour
 
     public PinguData SavedPinguins = new PinguData();
     public HouseData Savedhouses = new HouseData();
+    //public statsData savedStats = new statsData();
 
     string penguinFilePath = "Assets/Save/penguinData.pingu";
     string houseFilePath = "Assets/Save/housesData.pingu";
+    string statsFilePath = "Assets/Save/statsData.pingu";
 
     //This is the grid for 'placed' objects
     //public int[,] grid = new int[worldSize, worldSize];
@@ -46,9 +49,23 @@ void Start()
 
         if(mode=="newGame")
         {
+            if (File.Exists(penguinFilePath))
+            {
+                File.Delete(penguinFilePath);
+            }
+
+            if (File.Exists(houseFilePath))
+            {
+                File.Delete(houseFilePath);
+            }
+
+            if (File.Exists(statsFilePath))
+            {
+                File.Delete(statsFilePath);
+            }
+
             GenerateCsv("Assets/Save/map.csv");
             PrepareGame();
-
         }else if(mode=="loadGame")
         {
            PrepareGame();
@@ -204,6 +221,11 @@ void Start()
             {
                 File.Delete(houseFilePath);
             }
+
+            if (File.Exists(statsFilePath))
+            {
+                File.Delete(statsFilePath);
+            }
         }
         catch (IOException ex)
         {
@@ -290,6 +312,36 @@ void Start()
         FileStream fileStreamForHouses = File.Create(houseFilePath);
         formatterForHouses.Serialize(fileStreamForHouses, Savedhouses);
         fileStreamForHouses.Close();
+
+
+
+
+        //save nest stats
+        NestSpawner koszary = GameObject.Find("koszary").GetComponent<NestSpawner>();
+        NestSpawner koszaryEnemy = GameObject.Find("koszaryEnemy").GetComponent<NestSpawner>();
+
+        statsData savedStats = new statsData();
+
+        statsInfoStruct koszaryStruct = new statsInfoStruct();
+        statsInfoStruct koszaryEnemyStruct = new statsInfoStruct();
+
+        koszaryStruct.isBot = false;
+        koszaryStruct.health = koszary.health;
+        koszaryStruct.delay = koszary.delay;
+        koszaryStruct.timeToSpawn = koszary.timeToSpawn;
+        savedStats.info.Add(koszaryStruct);
+
+        koszaryEnemyStruct.isBot = true;
+        koszaryEnemyStruct.health = koszaryEnemy.health;
+        koszaryEnemyStruct.delay = koszaryEnemy.delay;
+        koszaryEnemyStruct.timeToSpawn = koszaryEnemy.timeToSpawn;
+        savedStats.info.Add(koszaryEnemyStruct);
+
+        BinaryFormatter formatterForStats = new BinaryFormatter();
+
+        FileStream fileStreamforStats = File.Create(statsFilePath);
+        formatterForStats.Serialize(fileStreamforStats, savedStats);
+        fileStreamforStats.Close();
     }
 
     public static void addSomething(ref int[,] array, int y, int x, int whatToPlaceThere, int howManyX, int howManyY)

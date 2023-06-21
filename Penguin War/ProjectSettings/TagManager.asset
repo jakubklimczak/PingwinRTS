@@ -7,6 +7,8 @@ TagManager:
   - MenuButton
   - pingu
   - houses
+  - myNest
+  - EnemyNest
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - Ground
   - House
   - Penguins
-  - 
+  - Nests
   - 
   - 
   - 

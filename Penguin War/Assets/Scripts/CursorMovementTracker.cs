@@ -12,6 +12,7 @@ public class CursorMovementTracker : MonoBehaviour
     public Camera mainCamera;
     public LayerMask groundLayerMask;
     public LayerMask houseLayerMask;
+    public LayerMask nestLayerMask;
     public LayerMask penguinLayerMask;
     public LayerMask UILayerMask;
 
@@ -122,6 +123,60 @@ public class CursorMovementTracker : MonoBehaviour
                     Vector3 tmp2 = new Vector3(((float)Math.Round(houseRaycastHit.point.x)), (float)Math.Round(houseRaycastHit.point.y), ((float)Math.Round(houseRaycastHit.point.z)));
                     selectedPenguin.destination = tmp2;
                     if(houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
+                    {
+                        selectedPenguin.shouldAttack = false;
+                        selectedPenguin.houseToAttack = null;
+                    }
+                    selectedPenguin = null;
+                    return;
+                }
+            }
+            
+
+            return;
+        }
+
+        //nest raycast
+        Ray nestRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(nestRay, out RaycastHit nestRaycastHit, float.MaxValue, nestLayerMask))
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log(nestRaycastHit.collider.GetComponentInParent<NestSpawner>().health);
+            }
+
+            if(penguinSelected && selectedPenguin!=null && Input.GetMouseButtonDown(1) && !areaSelected)
+            {
+                if(selectedPenguin.isWarrior)
+                {
+                    if(!selectedPenguin.isAttacking)
+                    {
+                        Vector3 tmp2 = new Vector3(((float)Math.Round(nestRaycastHit.point.x)), (float)Math.Round(nestRaycastHit.point.y), ((float)Math.Round(nestRaycastHit.point.z)));
+                        selectedPenguin.destination = tmp2;
+                        selectedPenguin.houseToAttack = nestRaycastHit.collider.gameObject;
+                        if(nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
+                        {
+                            selectedPenguin.shouldAttack = true;
+                        }
+                        selectedPenguin = null;
+                        return;
+                    }else
+                    {
+                        Vector3 tmp2 = new Vector3(((float)Math.Round(nestRaycastHit.point.x)), (float)Math.Round(nestRaycastHit.point.y), ((float)Math.Round(nestRaycastHit.point.z)));
+                        selectedPenguin.destination = tmp2;
+                        selectedPenguin.houseToAttack = nestRaycastHit.collider.gameObject;
+                        if(nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
+                        {
+                            selectedPenguin.shouldAttack = true;
+                        }
+                        selectedPenguin = null;
+                        return;
+                    }
+                    
+                }else{
+                    Vector3 tmp2 = new Vector3(((float)Math.Round(nestRaycastHit.point.x)), (float)Math.Round(nestRaycastHit.point.y), ((float)Math.Round(nestRaycastHit.point.z)));
+                    selectedPenguin.destination = tmp2;
+                    if(nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
                     {
                         selectedPenguin.shouldAttack = false;
                         selectedPenguin.houseToAttack = null;

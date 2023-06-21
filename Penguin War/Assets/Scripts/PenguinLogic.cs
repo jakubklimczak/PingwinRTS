@@ -55,7 +55,14 @@ public class PenguinLogic : MonoBehaviour
 
         if(isAttacking && houseToAttack != null && animationTimer == 0)
         {
-            houseToAttack.GetComponent<HouseInfo>().health -= damage;
+            if(houseToAttack.tag=="houses")
+            {
+                houseToAttack.GetComponent<HouseInfo>().health -= damage;
+            }else if(houseToAttack.tag=="EnemyNest")
+            {
+                houseToAttack.GetComponent<NestSpawner>().health -= damage;
+            }
+            
         }
     }
 

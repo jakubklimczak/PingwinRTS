@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.IO;
 
 public class MenuLogic : MonoBehaviour
 {
@@ -11,6 +13,16 @@ public class MenuLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        string currentDirectory = Directory.GetCurrentDirectory();
+        string relativeFolderPath = @"Assets";
+        string folderPath = Path.Combine(currentDirectory, relativeFolderPath);
+        Directory.CreateDirectory(folderPath);
+        
+        relativeFolderPath = @"Assets\Save";
+        folderPath = Path.Combine(currentDirectory, relativeFolderPath);
+        Directory.CreateDirectory(folderPath);
+
         MainMenuButton();
     }
 

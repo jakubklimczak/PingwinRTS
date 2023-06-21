@@ -50,6 +50,18 @@ public class NestSpawner : MonoBehaviour
             timeToSpawn = 300;
         }
         timeToSpawn-=delay;
+
+
+        if(health <=0)
+        {
+            if(isBot == true)
+            {
+                Debug.Log("You won!");
+            }else
+            {
+                Debug.Log("You lost!");
+            }
+        }
     }
 
     void loadStats()

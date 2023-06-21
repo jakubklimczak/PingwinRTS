@@ -89,6 +89,49 @@ public class CursorMovementTracker : MonoBehaviour
             {
                 Debug.Log(houseRaycastHit.collider.GetComponentInParent<HouseInfo>().type);
             }
+
+            if(penguinSelected && selectedPenguin!=null && Input.GetMouseButtonDown(1) && !areaSelected)
+            {
+                if(selectedPenguin.isWarrior)
+                {
+                    if(!selectedPenguin.isAttacking)
+                    {
+                        Vector3 tmp2 = new Vector3(((float)Math.Round(houseRaycastHit.point.x)), (float)Math.Round(houseRaycastHit.point.y), ((float)Math.Round(houseRaycastHit.point.z)));
+                        selectedPenguin.destination = tmp2;
+                        selectedPenguin.houseToAttack = houseRaycastHit.collider.gameObject;
+                        if(houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
+                        {
+                            selectedPenguin.shouldAttack = true;
+                        }
+                        selectedPenguin = null;
+                        return;
+                    }else
+                    {
+                        Vector3 tmp2 = new Vector3(((float)Math.Round(houseRaycastHit.point.x)), (float)Math.Round(houseRaycastHit.point.y), ((float)Math.Round(houseRaycastHit.point.z)));
+                        selectedPenguin.destination = tmp2;
+                        selectedPenguin.houseToAttack = houseRaycastHit.collider.gameObject;
+                        if(houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
+                        {
+                            selectedPenguin.shouldAttack = true;
+                        }
+                        selectedPenguin = null;
+                        return;
+                    }
+                    
+                }else{
+                    Vector3 tmp2 = new Vector3(((float)Math.Round(houseRaycastHit.point.x)), (float)Math.Round(houseRaycastHit.point.y), ((float)Math.Round(houseRaycastHit.point.z)));
+                    selectedPenguin.destination = tmp2;
+                    if(houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
+                    {
+                        selectedPenguin.shouldAttack = false;
+                        selectedPenguin.houseToAttack = null;
+                    }
+                    selectedPenguin = null;
+                    return;
+                }
+            }
+            
+
             return;
         }
 
@@ -129,6 +172,12 @@ public class CursorMovementTracker : MonoBehaviour
             {
                 Vector3 tmp2 = new Vector3(((float)Math.Round(groundRaycastHit.point.x)), (float)Math.Round(groundRaycastHit.point.y), ((float)Math.Round(groundRaycastHit.point.z)));
                 selectedPenguin.destination = tmp2;
+                if(selectedPenguin.isAttacking)
+                {
+                    selectedPenguin.isAttacking = false;
+                    selectedPenguin.shouldAttack = false;
+                    selectedPenguin.houseToAttack = null;
+                }
                 selectedPenguin = null;
                 return;
             }

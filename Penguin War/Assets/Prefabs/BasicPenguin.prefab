@@ -2036,9 +2036,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 216b82659bf0cff428e850e4359adc2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 
+  type: 0
   health: 20
+  damage: 2
   destination: {x: 0, y: 0, z: 0}
+  isBot: 0
+  isWarrior: 0
+  shouldAttack: 0
+  isAttacking: 0
+  animationTimer: 0
+  houseToAttack: {fileID: 0}
 --- !u!65 &530874778435997682
 BoxCollider:
   m_ObjectHideFlags: 0

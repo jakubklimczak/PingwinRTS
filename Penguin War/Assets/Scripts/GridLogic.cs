@@ -141,6 +141,8 @@ void Start()
                 GameObject tmpObj = Instantiate(pinguinsPrefabs[p.type], tmpPos, tmpRotation, zoo.transform);
                 tmpObj.GetComponent<PenguinLogic>().destination = tmpDest;
                 tmpObj.GetComponent<PenguinLogic>().isBot = p.isBot;
+                tmpObj.GetComponent<PenguinLogic>().shouldAttack = p.shoudlAttack;
+                tmpObj.GetComponent<PenguinLogic>().isWarrior = p.isWarrior;
             }
         }
     }
@@ -196,7 +198,7 @@ void Start()
                     {
                         tmpHouseInfo.health = tmpInfoStruct.health;
                         tmpHouseInfo.resources = tmpInfoStruct.resources;
-                        tmpHouseInfo.hasPinguinAssigned = tmpInfoStruct.hasPinguinAssigned;
+                        tmpHouseInfo.isBot = tmpInfoStruct.isBot;
                     }
 
                     tmpHouseInfo.type = housesPrefabs[map[i, j] - 1].name;
@@ -272,6 +274,8 @@ void Start()
 
             tmp.type = p.GetComponent<PenguinLogic>().type;
             tmp.isBot = p.GetComponent<PenguinLogic>().isBot;
+            tmp.isWarrior = p.GetComponent<PenguinLogic>().isWarrior;
+            tmp.shoudlAttack = p.GetComponent<PenguinLogic>().shouldAttack;
             SavedPinguins.info.Add(tmp);
         }
 
@@ -301,7 +305,7 @@ void Start()
 
             tmp.type = h.GetComponent<HouseInfo>().type;
             tmp.health = h.GetComponent<HouseInfo>().health;
-            tmp.hasPinguinAssigned = h.GetComponent<HouseInfo>().hasPinguinAssigned;
+            tmp.isBot = h.GetComponent<HouseInfo>().isBot;
             tmp.resources = h.GetComponent<HouseInfo>().resources;
 
             Savedhouses.info.Add(tmp);
@@ -501,6 +505,10 @@ void Start()
         public int health;
         [SerializeField]
         public bool isBot;
+        [SerializeField]
+        public bool shoudlAttack;
+        [SerializeField]
+        public bool isWarrior;
     }
 
     [Serializable]
@@ -517,7 +525,7 @@ void Start()
         [SerializeField]
         public string type;
         [SerializeField]
-        public bool hasPinguinAssigned;
+        public bool isBot;
         [SerializeField]
         public int health;
         [SerializeField]

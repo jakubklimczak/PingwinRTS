@@ -6,7 +6,7 @@ public class HouseInfo : MonoBehaviour
 {
 
     public string type;
-    public bool hasPinguinAssigned = false;
+    public bool isBot = false;
     public int health = 50;
     public int resources = 0;
 

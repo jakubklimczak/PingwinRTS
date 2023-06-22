@@ -16,6 +16,7 @@ public class PenguinLogic : MonoBehaviour
     public int animationTimer = 0;
 
     public GameObject houseToAttack = null;
+    Inventory inv;
 
     int ofs = 1;
 
@@ -23,6 +24,7 @@ public class PenguinLogic : MonoBehaviour
     void Start()
     {
         destination = this.gameObject.transform.position;
+        inv = GameObject.Find("Inventory").GetComponent<Inventory>();
     }
 
     // Update is called once per frame
@@ -48,19 +50,36 @@ public class PenguinLogic : MonoBehaviour
         }
 
         if (pos.x < destination.x + ofs && pos.x > destination.x - ofs &&
-            pos.z < destination.z + ofs && pos.z > destination.z - ofs && isWarrior && shouldAttack)
+            pos.z < destination.z + ofs && pos.z > destination.z - ofs && shouldAttack)
         {
             isAttacking = true;
         }
 
         if(isAttacking && houseToAttack != null && animationTimer == 0)
         {
-            if(houseToAttack.tag=="houses")
+            if(houseToAttack.tag=="houses" && isWarrior)
             {
                 houseToAttack.GetComponent<HouseInfo>().health -= damage;
-            }else if(houseToAttack.tag=="EnemyNest")
+            }else if(houseToAttack.tag=="EnemyNest" && isWarrior)
             {
                 houseToAttack.GetComponent<NestSpawner>().health -= damage;
+            }else if((houseToAttack.tag=="resource" && !isWarrior) || (!isWarrior && houseToAttack.GetComponent<ResourceLogic>().type=="molo"))
+            {
+                if(houseToAttack.GetComponent<ResourceLogic>().type!="molo")
+                {
+                    inv.inventory[houseToAttack.GetComponent<ResourceLogic>().type] += damage;
+                }else if(houseToAttack.GetComponent<ResourceLogic>().type=="molo")
+                {
+                    System.Random rnd = new System.Random();
+
+                    if(rnd.Next(0,2) == 1)
+                    {
+                        inv.inventory["fish"] += 1;
+                    }else
+                    {
+                        inv.inventory["wood"] += damage;
+                    }
+                }
             }
             
         }

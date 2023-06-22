@@ -9,6 +9,7 @@ TagManager:
   - houses
   - myNest
   - EnemyNest
+  - resource
   layers:
   - Default
   - TransparentFX

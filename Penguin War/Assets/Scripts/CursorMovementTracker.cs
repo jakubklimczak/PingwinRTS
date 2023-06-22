@@ -93,7 +93,7 @@ public class CursorMovementTracker : MonoBehaviour
 
             if(penguinSelected && selectedPenguin!=null && Input.GetMouseButtonDown(1) && !areaSelected)
             {
-                if(selectedPenguin.isWarrior)
+                if(selectedPenguin.isWarrior || !selectedPenguin.isWarrior)
                 {
                     if(!selectedPenguin.isAttacking)
                     {
@@ -101,6 +101,11 @@ public class CursorMovementTracker : MonoBehaviour
                         selectedPenguin.destination = tmp2;
                         selectedPenguin.houseToAttack = houseRaycastHit.collider.gameObject;
                         if(houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
+                        {
+                            selectedPenguin.shouldAttack = true;
+                        }
+                        if(!houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot && 
+                            houseRaycastHit.collider.gameObject.name == "molo(Clone)")
                         {
                             selectedPenguin.shouldAttack = true;
                         }
@@ -112,6 +117,11 @@ public class CursorMovementTracker : MonoBehaviour
                         selectedPenguin.destination = tmp2;
                         selectedPenguin.houseToAttack = houseRaycastHit.collider.gameObject;
                         if(houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
+                        {
+                            selectedPenguin.shouldAttack = true;
+                        }
+                        if(!houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot && 
+                            houseRaycastHit.collider.gameObject.name == "molo(Clone)")
                         {
                             selectedPenguin.shouldAttack = true;
                         }
@@ -142,19 +152,21 @@ public class CursorMovementTracker : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log(nestRaycastHit.collider.GetComponentInParent<NestSpawner>().health);
+                if(nestRaycastHit.collider.GetComponentInParent<NestSpawner>()!=null)
+                    Debug.Log(nestRaycastHit.collider.GetComponentInParent<NestSpawner>().health);
             }
 
             if(penguinSelected && selectedPenguin!=null && Input.GetMouseButtonDown(1) && !areaSelected)
             {
-                if(selectedPenguin.isWarrior)
+                if(selectedPenguin.isWarrior || !selectedPenguin.isWarrior)
                 {
                     if(!selectedPenguin.isAttacking)
                     {
                         Vector3 tmp2 = new Vector3(((float)Math.Round(nestRaycastHit.point.x)), (float)Math.Round(nestRaycastHit.point.y), ((float)Math.Round(nestRaycastHit.point.z)));
                         selectedPenguin.destination = tmp2;
                         selectedPenguin.houseToAttack = nestRaycastHit.collider.gameObject;
-                        if(nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
+                        if(nestRaycastHit.collider.gameObject.GetComponent<ResourceLogic>()!=null || 
+                            nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
                         {
                             selectedPenguin.shouldAttack = true;
                         }
@@ -165,7 +177,8 @@ public class CursorMovementTracker : MonoBehaviour
                         Vector3 tmp2 = new Vector3(((float)Math.Round(nestRaycastHit.point.x)), (float)Math.Round(nestRaycastHit.point.y), ((float)Math.Round(nestRaycastHit.point.z)));
                         selectedPenguin.destination = tmp2;
                         selectedPenguin.houseToAttack = nestRaycastHit.collider.gameObject;
-                        if(nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
+                        if(nestRaycastHit.collider.gameObject.GetComponent<ResourceLogic>()!=null || 
+                            nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
                         {
                             selectedPenguin.shouldAttack = true;
                         }
@@ -176,7 +189,8 @@ public class CursorMovementTracker : MonoBehaviour
                 }else{
                     Vector3 tmp2 = new Vector3(((float)Math.Round(nestRaycastHit.point.x)), (float)Math.Round(nestRaycastHit.point.y), ((float)Math.Round(nestRaycastHit.point.z)));
                     selectedPenguin.destination = tmp2;
-                    if(nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
+                    if(nestRaycastHit.collider.gameObject.GetComponent<ResourceLogic>()!=null ||
+                        nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
                     {
                         selectedPenguin.shouldAttack = false;
                         selectedPenguin.houseToAttack = null;

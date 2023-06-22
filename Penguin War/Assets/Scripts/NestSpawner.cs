@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 
 
 public class NestSpawner : MonoBehaviour
@@ -20,6 +21,10 @@ public class NestSpawner : MonoBehaviour
     public int timerXD = 1000;
 
     string statsFile = "Assets/Save/statsData.pingu";
+
+    public int howManyIglos = 0;
+    public int howManyPingus = 0;
+
 
 
     void Start()
@@ -38,14 +43,33 @@ public class NestSpawner : MonoBehaviour
 
         if(timeToSpawn <= 0)
         {
-            System.Random rnd = new System.Random();
-            Vector3 randPosAroundNest = new Vector3(nestPos.x + rnd.Next(1, 2) * (rnd.Next(0,2) == 0 ? 1 : -1),
-            nestPos.y, nestPos.z + rnd.Next(1, 2) * (rnd.Next(0,2) == 0 ? 1 : -1));
+            CountIgloos();//and pingus
 
-            GameObject tmpPingu = Instantiate(pinguPrefab, randPosAroundNest, new Quaternion(), zoo.transform);
+            if(howManyPingus < howManyIglos * 4)
+            {
+                System.Random rnd = new System.Random();
+                Vector3 randPosAroundNest = new Vector3(nestPos.x + rnd.Next(1, 2) * (rnd.Next(0,2) == 0 ? 1 : -1),
+                nestPos.y, nestPos.z + rnd.Next(1, 2) * (rnd.Next(0,2) == 0 ? 1 : -1));
 
-            tmpPingu.GetComponent<PenguinLogic>().isBot = isBot;
-            tmpPingu.GetComponent<PenguinLogic>().type = 0;
+                GameObject tmpPingu = Instantiate(pinguPrefab, randPosAroundNest, new Quaternion(), zoo.transform);
+
+                tmpPingu.GetComponent<PenguinLogic>().isBot = isBot;
+                tmpPingu.GetComponent<PenguinLogic>().type = 0;
+            }
+
+            if(howManyPingus > howManyIglos * 4)
+            {
+                GameObject[] tmpGO = GameObject.FindGameObjectsWithTag("pingu");
+
+                for(int i = 0; i < tmpGO.Length; i++)
+                {
+                    if(tmpGO[i].GetComponent<PenguinLogic>().isBot == isBot)
+                    {
+                        Destroy(tmpGO[i]);
+                        break;
+                    }
+                }
+            }
 
             timeToSpawn = 300;
         }
@@ -104,5 +128,48 @@ public class NestSpawner : MonoBehaviour
     {
         [SerializeField]
         public List<statsInfoStruct> info = new List<statsInfoStruct>();
+    }
+
+
+    void CountIgloos()
+    {
+        List<GameObject> tmpIgloos = new List<GameObject>();
+        int tmpICount = 0;
+        int tmpPCount = 0;
+
+        GameObject Inf = GameObject.Find("Infrastructure");
+        GameObject TM = GameObject.Find("TilesMap");
+        GameObject Zoo = GameObject.Find("Zoo");
+
+        //get igloos
+        for(int i = 0; i < Inf.transform.childCount; i++)
+        {
+            if(Inf.transform.GetChild(i).name == "Igloo(Clone)" && Inf.transform.GetChild(i).GetComponent<HouseInfo>().isBot == isBot)
+            {
+                tmpICount++;
+            }
+        }
+
+        for(int i = 0; i < TM.transform.childCount; i++)
+        {
+            if(TM.transform.GetChild(i).name == "Igloo(Clone)" && TM.transform.GetChild(i).GetComponent<HouseInfo>().isBot == isBot)
+            {
+                tmpICount++;
+            }
+        }
+
+        //get pingus
+        for(int i = 0; i < Zoo.transform.childCount; i++)
+        {
+            if(Zoo.transform.GetChild(i).name == "BasicPenguin(Clone)" && Zoo.transform.GetChild(i).GetComponent<PenguinLogic>().isBot == isBot)
+            {
+                tmpPCount++;
+            }
+        }
+
+        howManyIglos = tmpICount;
+        howManyPingus = tmpPCount;
+
+        //Debug.Log("B" + isBot + " : " + tmpCount);
     }
 }

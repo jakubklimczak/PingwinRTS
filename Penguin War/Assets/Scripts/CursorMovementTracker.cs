@@ -66,6 +66,21 @@ public class CursorMovementTracker : MonoBehaviour
         costs.Add("molo", new Dictionary<string, int>() {
             {"wood", -20}
         });
+
+        costs.Add("ice-wall", new Dictionary<string, int>() {
+            {"ice", -50}
+        });
+
+        costs.Add("huta_igloo", new Dictionary<string, int>() {
+            {"ice", -50},
+            {"wood", -40}
+        });
+
+        costs.Add("upgr", new Dictionary<string, int>() {
+            {"ice", -80},
+            {"scraps", -50},
+            {"wood", -20}
+        });
     }
 
     // Update is called once per frame

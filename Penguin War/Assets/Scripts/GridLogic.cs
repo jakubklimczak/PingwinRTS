@@ -13,7 +13,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class GridLogic : MonoBehaviour
 {
     const int worldSize = 200;
-    public GameObject[] housesPrefabs = new GameObject[10];
+    public GameObject[] housesPrefabs = new GameObject[15];
     public GameObject[] pinguinsPrefabs = new GameObject[5];
     [SerializeField]
 

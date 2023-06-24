@@ -149,7 +149,7 @@ public class NestSpawner : MonoBehaviour
             if(Inf.transform.GetChild(i).name == "Igloo(Clone)" && Inf.transform.GetChild(i).GetComponent<HouseInfo>().isBot == isBot)
             {
                 tmpICount++;
-                yield return null;
+                yield return 0.1f;
             }
         }
 
@@ -158,7 +158,7 @@ public class NestSpawner : MonoBehaviour
             if(TM.transform.GetChild(i).name == "Igloo(Clone)" && TM.transform.GetChild(i).GetComponent<HouseInfo>().isBot == isBot)
             {
                 tmpICount++;
-                yield return null;
+                yield return 0.1f;
             }
         }
 
@@ -168,7 +168,7 @@ public class NestSpawner : MonoBehaviour
             if(Zoo.transform.GetChild(i).GetComponent<PenguinLogic>().isBot == isBot)
             {
                 tmpPCount++;
-                yield return null;
+                yield return 0.1f;
             }
         }
 

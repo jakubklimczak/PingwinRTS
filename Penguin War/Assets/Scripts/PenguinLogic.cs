@@ -64,9 +64,23 @@ public class PenguinLogic : MonoBehaviour
             if(houseToAttack.tag=="houses" && isWarrior)
             {
                 houseToAttack.GetComponent<HouseInfo>().health -= damage;
+                if(houseToAttack==null || houseToAttack.GetComponent<HouseInfo>()==null || houseToAttack.GetComponent<HouseInfo>().health <= 0)
+                {
+                    houseToAttack = null;
+                    shouldAttack = false;
+                    isAttacking = false;
+                }
+            }else if(houseToAttack.tag=="houses" && !isWarrior && houseToAttack.name=="huta_igloo(Clone)")
+            {
+                if(inv.inventory["scraps"] > 5 && inv.inventory["wood"] > 2 && !isBot)
+                {
+                    inv.inventory["scraps"] -= 5;
+                    inv.inventory["wood"] -= 2;
+                    inv.inventory["ingots"] += 1;
+                }
             }else if(houseToAttack.tag=="houses" && !isWarrior)
             {//change to warrior
-                if(inv.inventory["ingots"] > ingotsNeededForWarrior && inv.inventory["fish"] > fishNeededForWarrior)
+                if(inv.inventory["ingots"] > ingotsNeededForWarrior && inv.inventory["fish"] > fishNeededForWarrior && !isBot)
                 {
                     inv.inventory["ingots"] -= ingotsNeededForWarrior;
                     inv.inventory["fish"] -= fishNeededForWarrior;
@@ -100,10 +114,10 @@ public class PenguinLogic : MonoBehaviour
                 houseToAttack.GetComponent<NestSpawner>().health -= damage;
             }else if((houseToAttack.tag=="resource" && !isWarrior) || (!isWarrior && houseToAttack.GetComponent<ResourceLogic>().type=="molo"))
             {
-                if(houseToAttack.GetComponent<ResourceLogic>().type!="molo")
+                if(houseToAttack.GetComponent<ResourceLogic>().type!="molo" && !isBot)
                 {
                     inv.inventory[houseToAttack.GetComponent<ResourceLogic>().type] += damage;
-                }else if(houseToAttack.GetComponent<ResourceLogic>().type=="molo")
+                }else if(houseToAttack.GetComponent<ResourceLogic>().type=="molo" && !isBot)
                 {
                     System.Random rnd = new System.Random();
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7273526112451813307}
   - component: {fileID: 8264696230878821839}
   - component: {fileID: 6573548219279700821}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 8102604973589704450}
   - component: {fileID: 8221019906027088527}
   - component: {fileID: 5659219147203587218}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Torus.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 806543538152061188}
   - component: {fileID: 8272050952743014298}
   - component: {fileID: 561322024743572293}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,9 +259,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4557868777111134817}
   - component: {fileID: 3066795068309174841}
-  m_Layer: 0
+  - component: {fileID: 999655109486519752}
+  m_Layer: 7
   m_Name: huta_igloo
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -303,6 +304,20 @@ MonoBehaviour:
   isBot: 0
   health: 50
   resources: 0
+--- !u!136 &999655109486519752
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3750123196146120923}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.04
+  m_Height: 2.1850395
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.0525198, z: 0}
 --- !u!1 &4619575540920583578
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +329,7 @@ GameObject:
   - component: {fileID: 27573918154398759}
   - component: {fileID: 1552191139271769610}
   - component: {fileID: 6012888406512560027}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +412,7 @@ GameObject:
   - component: {fileID: 8135995456422305743}
   - component: {fileID: 527890122315320950}
   - component: {fileID: 6671199011360797507}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Torus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -480,7 +495,7 @@ GameObject:
   - component: {fileID: 5692916979515478892}
   - component: {fileID: 6005038704787600623}
   - component: {fileID: 8027376559124865264}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -115,12 +115,18 @@ public class CursorMovementTracker : MonoBehaviour
                         Vector3 tmp2 = new Vector3(((float)Math.Round(houseRaycastHit.point.x)), (float)Math.Round(houseRaycastHit.point.y), ((float)Math.Round(houseRaycastHit.point.z)));
                         selectedPenguin.destination = tmp2;
                         selectedPenguin.houseToAttack = houseRaycastHit.collider.gameObject;
+                        
                         if(houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
                         {
                             selectedPenguin.shouldAttack = true;
                         }
                         if(!houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot && 
                             houseRaycastHit.collider.gameObject.name == "molo(Clone)")
+                        {
+                            selectedPenguin.shouldAttack = true;
+                        }
+                        if(!houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot && 
+                            houseRaycastHit.collider.gameObject.name == "huta_igloo(Clone)")
                         {
                             selectedPenguin.shouldAttack = true;
                         }
@@ -137,6 +143,11 @@ public class CursorMovementTracker : MonoBehaviour
                         }
                         if(!houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot && 
                             houseRaycastHit.collider.gameObject.name == "molo(Clone)")
+                        {
+                            selectedPenguin.shouldAttack = true;
+                        }
+                        if(!houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot && 
+                            houseRaycastHit.collider.gameObject.name == "huta(Clone)")
                         {
                             selectedPenguin.shouldAttack = true;
                         }

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 public class NestSpawner : MonoBehaviour
 {
     public GameObject pinguPrefab;
-    GameObject zoo;
     public int health = 1000;
     public int timeToSpawn = 3000;
     public int delay = 1;
@@ -22,19 +21,26 @@ public class NestSpawner : MonoBehaviour
 
     string statsFile = "Assets/Save/statsData.pingu";
 
-    public int howManyIglos = 0;
-    public int howManyPingus = 0;
+    public int howManyIglos = 1;
+    public int howManyPingus = 1;
+
+     GameObject Inf;
+    GameObject TM;
+    GameObject Zoo;
 
 
 
     void Start()
     {
         nestPos = new Vector3(this.transform.position.x, 0.1f, this.transform.position.z);
-        zoo = GameObject.Find("Zoo");
         if(isBot == false)
         {
             loadStats();
         }
+
+        Inf = GameObject.Find("Infrastructure");
+        TM = GameObject.Find("TilesMap");
+        Zoo = GameObject.Find("Zoo");
     }
 
     // Update is called once per frame
@@ -43,7 +49,7 @@ public class NestSpawner : MonoBehaviour
 
         if(timeToSpawn <= 0)
         {
-            CountIgloos();//and pingus
+            StartCoroutine(CountIgloos());//and pingus
 
             if(howManyPingus < howManyIglos * 4)
             {
@@ -51,7 +57,7 @@ public class NestSpawner : MonoBehaviour
                 Vector3 randPosAroundNest = new Vector3(nestPos.x + rnd.Next(1, 2) * (rnd.Next(0,2) == 0 ? 1 : -1),
                 nestPos.y, nestPos.z + rnd.Next(1, 2) * (rnd.Next(0,2) == 0 ? 1 : -1));
 
-                GameObject tmpPingu = Instantiate(pinguPrefab, randPosAroundNest, new Quaternion(), zoo.transform);
+                GameObject tmpPingu = Instantiate(pinguPrefab, randPosAroundNest, new Quaternion(), Zoo.transform);
 
                 tmpPingu.GetComponent<PenguinLogic>().isBot = isBot;
                 tmpPingu.GetComponent<PenguinLogic>().type = 0;
@@ -131,15 +137,11 @@ public class NestSpawner : MonoBehaviour
     }
 
 
-    void CountIgloos()
+    IEnumerator CountIgloos()
     {
         List<GameObject> tmpIgloos = new List<GameObject>();
         int tmpICount = 0;
         int tmpPCount = 0;
-
-        GameObject Inf = GameObject.Find("Infrastructure");
-        GameObject TM = GameObject.Find("TilesMap");
-        GameObject Zoo = GameObject.Find("Zoo");
 
         //get igloos
         for(int i = 0; i < Inf.transform.childCount; i++)
@@ -147,6 +149,7 @@ public class NestSpawner : MonoBehaviour
             if(Inf.transform.GetChild(i).name == "Igloo(Clone)" && Inf.transform.GetChild(i).GetComponent<HouseInfo>().isBot == isBot)
             {
                 tmpICount++;
+                yield return null;
             }
         }
 
@@ -155,15 +158,17 @@ public class NestSpawner : MonoBehaviour
             if(TM.transform.GetChild(i).name == "Igloo(Clone)" && TM.transform.GetChild(i).GetComponent<HouseInfo>().isBot == isBot)
             {
                 tmpICount++;
+                yield return null;
             }
         }
 
         //get pingus
         for(int i = 0; i < Zoo.transform.childCount; i++)
         {
-            if(Zoo.transform.GetChild(i).name == "BasicPenguin(Clone)" && Zoo.transform.GetChild(i).GetComponent<PenguinLogic>().isBot == isBot)
+            if(Zoo.transform.GetChild(i).GetComponent<PenguinLogic>().isBot == isBot)
             {
                 tmpPCount++;
+                yield return null;
             }
         }
 

@@ -180,7 +180,8 @@ public class CursorMovementTracker : MonoBehaviour
                         Vector3 tmp2 = new Vector3(((float)Math.Round(nestRaycastHit.point.x)), (float)Math.Round(nestRaycastHit.point.y), ((float)Math.Round(nestRaycastHit.point.z)));
                         selectedPenguin.destination = tmp2;
                         selectedPenguin.houseToAttack = nestRaycastHit.collider.gameObject;
-                        if(nestRaycastHit.collider.gameObject.GetComponent<ResourceLogic>()!=null || 
+                        if(nestRaycastHit.collider.gameObject.name == "upgr(Clone)" || 
+                            nestRaycastHit.collider.gameObject.GetComponent<ResourceLogic>()!=null || 
                             nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
                         {
                             selectedPenguin.shouldAttack = true;
@@ -192,7 +193,8 @@ public class CursorMovementTracker : MonoBehaviour
                         Vector3 tmp2 = new Vector3(((float)Math.Round(nestRaycastHit.point.x)), (float)Math.Round(nestRaycastHit.point.y), ((float)Math.Round(nestRaycastHit.point.z)));
                         selectedPenguin.destination = tmp2;
                         selectedPenguin.houseToAttack = nestRaycastHit.collider.gameObject;
-                        if(nestRaycastHit.collider.gameObject.GetComponent<ResourceLogic>()!=null || 
+                        if(nestRaycastHit.collider.gameObject.name == "upgr(Clone)" || 
+                            nestRaycastHit.collider.gameObject.GetComponent<ResourceLogic>()!=null || 
                             nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
                         {
                             selectedPenguin.shouldAttack = true;
@@ -204,7 +206,8 @@ public class CursorMovementTracker : MonoBehaviour
                 }else{
                     Vector3 tmp2 = new Vector3(((float)Math.Round(nestRaycastHit.point.x)), (float)Math.Round(nestRaycastHit.point.y), ((float)Math.Round(nestRaycastHit.point.z)));
                     selectedPenguin.destination = tmp2;
-                    if(nestRaycastHit.collider.gameObject.GetComponent<ResourceLogic>()!=null ||
+                    if(nestRaycastHit.collider.gameObject.name == "upgr(Clone)" || 
+                        nestRaycastHit.collider.gameObject.GetComponent<ResourceLogic>()!=null ||
                         nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
                     {
                         selectedPenguin.shouldAttack = false;

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 833817405201413970}
   - component: {fileID: 2387966313499927991}
   - component: {fileID: 5930222582917276920}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.015
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 2425271236400450041}
   - component: {fileID: 7366904087646682303}
   - component: {fileID: 1521288458272088145}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 4808954623993808405}
   - component: {fileID: 2653049230707458533}
   - component: {fileID: 2548998962957043805}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.041
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 5885963743850636042}
   - component: {fileID: 1585077479721886524}
   - component: {fileID: 8100407268453221258}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 5600134077702222734}
   - component: {fileID: 2312266639037526201}
   - component: {fileID: 3275307435785842849}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mirror
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 6619720483319436061}
   - component: {fileID: 9222075708252622108}
   - component: {fileID: 5621709173025884499}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.018
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 7445716825735147682}
   - component: {fileID: 6084407864757184382}
   - component: {fileID: 2658873210955174279}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -626,7 +626,7 @@ GameObject:
   - component: {fileID: 9118491004635511463}
   - component: {fileID: 6281548013120487150}
   - component: {fileID: 3183910760866345751}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -738,7 +738,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8134254119394579523}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: upgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +793,7 @@ GameObject:
   - component: {fileID: 1428634532814309603}
   - component: {fileID: 7444724120254325808}
   - component: {fileID: 3596849601723318953}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.014
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -876,7 +876,7 @@ GameObject:
   - component: {fileID: 2382563310366560011}
   - component: {fileID: 6086446302425615012}
   - component: {fileID: 946075034265275331}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.016
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -959,7 +959,7 @@ GameObject:
   - component: {fileID: 7195172631059076416}
   - component: {fileID: 7580205127797146313}
   - component: {fileID: 6773463343923915283}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1043,7 +1043,7 @@ GameObject:
   - component: {fileID: 7189586256512267379}
   - component: {fileID: 7450955990352395227}
   - component: {fileID: 5026080210595532725}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.017
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1126,7 +1126,7 @@ GameObject:
   - component: {fileID: 1634729905734958944}
   - component: {fileID: 2565579497754855286}
   - component: {fileID: 2675519341229150289}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1210,7 +1210,7 @@ GameObject:
   - component: {fileID: 3548931076721486980}
   - component: {fileID: 7007841160839011694}
   - component: {fileID: 2983679214233387466}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1296,7 +1296,7 @@ GameObject:
   - component: {fileID: 744058664731802167}
   - component: {fileID: 6066687642512079470}
   - component: {fileID: 3892855859754620274}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: gate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1378,9 +1378,10 @@ GameObject:
   m_Component:
   - component: {fileID: 850415511758690590}
   - component: {fileID: 4735534964291887978}
-  m_Layer: 0
+  - component: {fileID: 2464680307303912746}
+  m_Layer: 9
   m_Name: upgr
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1417,6 +1418,19 @@ MonoBehaviour:
   isBot: 0
   health: 50
   resources: 0
+--- !u!65 &2464680307303912746
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5835826452886045964}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8858042, y: 1, z: 0.900177}
+  m_Center: {x: -0.05709791, y: 0, z: -0.0499115}
 --- !u!1 &6022835460954896132
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,7 +1442,7 @@ GameObject:
   - component: {fileID: 3874976256668967027}
   - component: {fileID: 286406360463408637}
   - component: {fileID: 4639156140277987241}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1511,7 +1525,7 @@ GameObject:
   - component: {fileID: 8836469650894562489}
   - component: {fileID: 4966007602505505468}
   - component: {fileID: 754410514867678023}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.011
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1594,7 +1608,7 @@ GameObject:
   - component: {fileID: 7471075371121516515}
   - component: {fileID: 5613648820943591826}
   - component: {fileID: 3000563444710905694}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1678,7 +1692,7 @@ GameObject:
   - component: {fileID: 5659375965927471155}
   - component: {fileID: 8604980191897851354}
   - component: {fileID: 3093461128092215055}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.013
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1761,7 +1775,7 @@ GameObject:
   - component: {fileID: 363575747328979439}
   - component: {fileID: 9064074052515511554}
   - component: {fileID: 2172927322955243777}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1845,7 +1859,7 @@ GameObject:
   - component: {fileID: 2333063757362158307}
   - component: {fileID: 8965268347017802482}
   - component: {fileID: 7052873303699372027}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: arch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1928,7 +1942,7 @@ GameObject:
   - component: {fileID: 8673867342896063411}
   - component: {fileID: 2081118939888022289}
   - component: {fileID: 5595268416501756678}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ice Cube.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}

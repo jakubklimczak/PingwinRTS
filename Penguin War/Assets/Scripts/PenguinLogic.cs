@@ -16,7 +16,11 @@ public class PenguinLogic : MonoBehaviour
     public int animationTimer = 0;
 
     public GameObject houseToAttack = null;
+    public GameObject warriorPrefab;
     Inventory inv;
+
+    int ingotsNeededForWarrior = 10;
+    int fishNeededForWarrior = 20;
 
     int ofs = 1;
 
@@ -60,6 +64,37 @@ public class PenguinLogic : MonoBehaviour
             if(houseToAttack.tag=="houses" && isWarrior)
             {
                 houseToAttack.GetComponent<HouseInfo>().health -= damage;
+            }else if(houseToAttack.tag=="houses" && !isWarrior)
+            {//change to warrior
+                if(inv.inventory["ingots"] > ingotsNeededForWarrior && inv.inventory["fish"] > fishNeededForWarrior)
+                {
+                    inv.inventory["ingots"] -= ingotsNeededForWarrior;
+                    inv.inventory["fish"] -= fishNeededForWarrior;
+
+                    System.Random rnd1 = new System.Random();
+                    Vector3 p1 = houseToAttack.gameObject.transform.position;
+                    destination = new Vector3(rnd1.Next((int)p1.x + 1, (int)p1.x + 3), 0.1f, rnd1.Next((int)p1.z + 1, (int)p1.z + 3));
+                    //isWarrior = true;
+
+                    GameObject tmpP = Instantiate(warriorPrefab, gameObject.transform.position, gameObject.transform.rotation, gameObject.transform.parent);
+                    tmpP.GetComponent<PenguinLogic>().isBot=isBot;
+                    tmpP.GetComponent<PenguinLogic>().damage=damage;
+                    tmpP.GetComponent<PenguinLogic>().destination=destination;
+                    tmpP.GetComponent<PenguinLogic>().health=health;
+                    tmpP.GetComponent<PenguinLogic>().houseToAttack=null;
+                    tmpP.GetComponent<PenguinLogic>().isAttacking=false;
+                    tmpP.GetComponent<PenguinLogic>().shouldAttack=false;
+                    tmpP.GetComponent<PenguinLogic>().isWarrior=true;
+                    tmpP.GetComponent<PenguinLogic>().type=type;
+                    Destroy(gameObject);
+                }
+                System.Random rnd = new System.Random();
+                Vector3 p = houseToAttack.gameObject.transform.position;
+                destination = new Vector3(rnd.Next((int)p.x + 1, (int)p.x + 3), 0.1f, rnd.Next((int)p.z + 1, (int)p.z + 3));
+                //houseToAttack.GetComponent<HouseInfo>().health -= damage;
+                isAttacking=false;
+                shouldAttack=false;
+                houseToAttack=null;
             }else if(houseToAttack.tag=="EnemyNest" && isWarrior)
             {
                 houseToAttack.GetComponent<NestSpawner>().health -= damage;

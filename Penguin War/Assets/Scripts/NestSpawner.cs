@@ -11,6 +11,7 @@ public class NestSpawner : MonoBehaviour
 {
     public GameObject pinguPrefab;
     public int health = 1000;
+    public int maxHealth = 1000;
     public int timeToSpawn = 3000;
     public int delay = 1;
     Vector3 nestPos;

@@ -7,6 +7,7 @@ public class PenguinLogic : MonoBehaviour
 
     public int type;
     public int health = 20;
+    public int maxHealth = 20;
     public int damage = 2;
     public Vector3 destination;
     public bool isBot = false;
@@ -14,6 +15,7 @@ public class PenguinLogic : MonoBehaviour
     public bool shouldAttack = false;
     public bool isAttacking = false;
     public int animationTimer = 0;
+    
 
     public GameObject houseToAttack = null;
     public GameObject warriorPrefab;

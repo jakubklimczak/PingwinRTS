@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour
         inventory.Add("ice", 100);
         inventory.Add("fish", 1000);
         inventory.Add("scraps", 200);
-        inventory.Add("ingots", 0);
+        inventory.Add("ingots", 1000);
     }
 
     // Update is called once per frame

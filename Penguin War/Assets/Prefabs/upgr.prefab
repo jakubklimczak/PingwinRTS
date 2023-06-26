@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5930222582917276920}
   m_Layer: 9
   m_Name: Ice Cube.015
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 1521288458272088145}
   m_Layer: 9
   m_Name: Ice Cube.006
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 2548998962957043805}
   m_Layer: 9
   m_Name: Ice Cube.041
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 8100407268453221258}
   m_Layer: 9
   m_Name: Ice Cube.008
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 3275307435785842849}
   m_Layer: 9
   m_Name: mirror
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 5621709173025884499}
   m_Layer: 9
   m_Name: Ice Cube.018
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 2658873210955174279}
   m_Layer: 9
   m_Name: Ice Cube.004
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -628,7 +628,7 @@ GameObject:
   - component: {fileID: 3183910760866345751}
   m_Layer: 9
   m_Name: Ice Cube.001
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -740,7 +740,7 @@ GameObject:
   - component: {fileID: 8134254119394579523}
   m_Layer: 9
   m_Name: upgrade
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -795,7 +795,7 @@ GameObject:
   - component: {fileID: 3596849601723318953}
   m_Layer: 9
   m_Name: Ice Cube.014
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -878,7 +878,7 @@ GameObject:
   - component: {fileID: 946075034265275331}
   m_Layer: 9
   m_Name: Ice Cube.016
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -961,7 +961,7 @@ GameObject:
   - component: {fileID: 6773463343923915283}
   m_Layer: 9
   m_Name: Ice Cube.009
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1045,7 +1045,7 @@ GameObject:
   - component: {fileID: 5026080210595532725}
   m_Layer: 9
   m_Name: Ice Cube.017
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1128,7 +1128,7 @@ GameObject:
   - component: {fileID: 2675519341229150289}
   m_Layer: 9
   m_Name: Ice Cube.003
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1212,7 +1212,7 @@ GameObject:
   - component: {fileID: 2983679214233387466}
   m_Layer: 9
   m_Name: Ice Cube.005
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1298,7 +1298,7 @@ GameObject:
   - component: {fileID: 3892855859754620274}
   m_Layer: 9
   m_Name: gate
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1444,7 +1444,7 @@ GameObject:
   - component: {fileID: 4639156140277987241}
   m_Layer: 9
   m_Name: Ice Cube.012
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1527,7 +1527,7 @@ GameObject:
   - component: {fileID: 754410514867678023}
   m_Layer: 9
   m_Name: Ice Cube.011
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1610,7 +1610,7 @@ GameObject:
   - component: {fileID: 3000563444710905694}
   m_Layer: 9
   m_Name: Ice Cube.010
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1694,7 +1694,7 @@ GameObject:
   - component: {fileID: 3093461128092215055}
   m_Layer: 9
   m_Name: Ice Cube.013
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1777,7 +1777,7 @@ GameObject:
   - component: {fileID: 2172927322955243777}
   m_Layer: 9
   m_Name: Ice Cube.007
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1861,7 +1861,7 @@ GameObject:
   - component: {fileID: 7052873303699372027}
   m_Layer: 9
   m_Name: arch
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1944,7 +1944,7 @@ GameObject:
   - component: {fileID: 5595268416501756678}
   m_Layer: 9
   m_Name: Ice Cube.002
-  m_TagString: Untagged
+  m_TagString: houses
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

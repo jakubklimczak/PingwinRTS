@@ -103,7 +103,7 @@ public class CursorMovementTracker : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log(houseRaycastHit.collider.GetComponentInParent<HouseInfo>().type);
+                //Debug.Log(houseRaycastHit.collider.GetComponentInParent<HouseInfo>().type);
             }
 
             if(penguinSelected && selectedPenguin!=null && Input.GetMouseButtonDown(1) && !areaSelected)
@@ -178,8 +178,8 @@ public class CursorMovementTracker : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if(nestRaycastHit.collider.GetComponentInParent<NestSpawner>()!=null)
-                    Debug.Log(nestRaycastHit.collider.GetComponentInParent<NestSpawner>().health);
+                //if(nestRaycastHit.collider.GetComponentInParent<NestSpawner>()!=null)
+                //    Debug.Log(nestRaycastHit.collider.GetComponentInParent<NestSpawner>().health);
             }
 
             if(penguinSelected && selectedPenguin!=null && Input.GetMouseButtonDown(1) && !areaSelected)
@@ -289,7 +289,7 @@ public class CursorMovementTracker : MonoBehaviour
             {
                 bool canPlace = true;
 
-                Debug.Log(gridScript.map[(int)tmp.x, (int)tmp.z]);
+                //Debug.Log(gridScript.map[(int)tmp.x, (int)tmp.z]);
 
                 //check if has enough resources
                 foreach (KeyValuePair<string, Dictionary<String, int>> houseCost in costs)

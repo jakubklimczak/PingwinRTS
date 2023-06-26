@@ -22,6 +22,7 @@ public class CursorMovementTracker : MonoBehaviour
     
     public GameObject[] houses;
     public GameObject invObj;
+    public GameObject mark;
     Inventory inv;
     GridLogic gridScript;
     int worldSize = 200;
@@ -29,6 +30,7 @@ public class CursorMovementTracker : MonoBehaviour
 
     bool penguinSelected = false;
     PenguinLogic selectedPenguin = null;
+    List<GameObject> selectedPenguins = new List<GameObject>();
 
     bool selectingArea = false;
     bool areaSelected = false;
@@ -91,6 +93,21 @@ public class CursorMovementTracker : MonoBehaviour
         m_PointerEventData.position = Input.mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
         m_Raycaster.Raycast(m_PointerEventData, results);
+
+        if(selectedPenguin!=null && selectedPenguin.transform.childCount == 2)
+        {
+            Vector3 pos = selectedPenguin.transform.position;
+            Instantiate(mark, pos, new Quaternion(),selectedPenguin.transform);
+        }
+
+        if(selectedPenguins.Count > 0 && selectedPenguins[0].transform.childCount == 2)
+        {
+            for(int i=0;i<selectedPenguins.Count; i++)
+            {
+                Vector3 pos = selectedPenguins[i].transform.position;
+                Instantiate(mark, pos, new Quaternion(), selectedPenguins[i].transform);
+            }
+        }
    
         if(results.Count > 0 && Input.GetMouseButtonDown(0))
         {
@@ -130,6 +147,8 @@ public class CursorMovementTracker : MonoBehaviour
                         {
                             selectedPenguin.shouldAttack = true;
                         }
+                        if(selectedPenguin.transform.childCount > 2)
+                            Destroy(selectedPenguin.transform.GetChild(2).gameObject);
                         selectedPenguin = null;
                         return;
                     }else
@@ -151,6 +170,8 @@ public class CursorMovementTracker : MonoBehaviour
                         {
                             selectedPenguin.shouldAttack = true;
                         }
+                        if(selectedPenguin.transform.childCount > 2)
+                            Destroy(selectedPenguin.transform.GetChild(2).gameObject);
                         selectedPenguin = null;
                         return;
                     }
@@ -163,6 +184,8 @@ public class CursorMovementTracker : MonoBehaviour
                         selectedPenguin.shouldAttack = false;
                         selectedPenguin.houseToAttack = null;
                     }
+                    if(selectedPenguin.transform.childCount > 2)
+                            Destroy(selectedPenguin.transform.GetChild(2).gameObject);
                     selectedPenguin = null;
                     return;
                 }
@@ -197,6 +220,8 @@ public class CursorMovementTracker : MonoBehaviour
                         {
                             selectedPenguin.shouldAttack = true;
                         }
+                        if(selectedPenguin.transform.childCount > 2)
+                            Destroy(selectedPenguin.transform.GetChild(2).gameObject);
                         selectedPenguin = null;
                         return;
                     }else
@@ -210,6 +235,8 @@ public class CursorMovementTracker : MonoBehaviour
                         {
                             selectedPenguin.shouldAttack = true;
                         }
+                        if(selectedPenguin.transform.childCount > 2)
+                            Destroy(selectedPenguin.transform.GetChild(2).gameObject);
                         selectedPenguin = null;
                         return;
                     }
@@ -224,6 +251,8 @@ public class CursorMovementTracker : MonoBehaviour
                         selectedPenguin.shouldAttack = false;
                         selectedPenguin.houseToAttack = null;
                     }
+                    if(selectedPenguin.transform.childCount > 2)
+                            Destroy(selectedPenguin.transform.GetChild(2).gameObject);
                     selectedPenguin = null;
                     return;
                 }
@@ -257,7 +286,21 @@ public class CursorMovementTracker : MonoBehaviour
             {
                 selectingArea = false;
                 lastAreaPoint = areaRaycastHit.point;
+
                 areaSelected = true;
+
+                GameObject[] pinguins = GameObject.FindGameObjectsWithTag("pingu");
+
+                foreach(GameObject p in pinguins)
+                {
+                    bool isBetweenX = (p.transform.position.x >= Mathf.Min(firstAreaPoint.x, lastAreaPoint.x)) && (p.transform.position.x <= Mathf.Max(firstAreaPoint.x, lastAreaPoint.x));
+                    bool isBetweenZ = (p.transform.position.z >= Mathf.Min(firstAreaPoint.z, lastAreaPoint.z)) && (p.transform.position.z <= Mathf.Max(firstAreaPoint.z, lastAreaPoint.z));
+
+                    if(isBetweenX && isBetweenZ && !p.GetComponent<PenguinLogic>().isBot)
+                    {
+                        selectedPenguins.Add(p);
+                    }
+                }
             }
         }
 
@@ -276,6 +319,8 @@ public class CursorMovementTracker : MonoBehaviour
                     selectedPenguin.shouldAttack = false;
                     selectedPenguin.houseToAttack = null;
                 }
+                if(selectedPenguin.transform.childCount > 2)
+                            Destroy(selectedPenguin.transform.GetChild(2).gameObject);
                 selectedPenguin = null;
                 return;
             }
@@ -428,10 +473,41 @@ public class CursorMovementTracker : MonoBehaviour
                         System.Random random = new System.Random();
                         double rand1 = random.NextDouble() * (1.5 - 0.8) + 0.8;
                         double rand2 = random.NextDouble() * (1.5 - 0.8) + 0.8;
+
+                        if(p.transform.childCount > 2)
+                        {
+                            Destroy(p.transform.GetChild(2).gameObject);
+                        }
+                        selectedPenguins.Clear();
+
                         p.GetComponent<PenguinLogic>().destination = new Vector3((float)(tmp2.x + rand1), tmp2.y, (float)(tmp.z + rand2));
                     }
                 }
+
                 areaSelected = false;
+            }
+        }
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            if(areaSelected == true)
+            {
+                foreach(GameObject s in selectedPenguins)
+                {
+                    if(s.transform.childCount > 2)
+                    {
+                        Destroy(s.transform.GetChild(2).gameObject);
+                    }
+                }
+                selectedPenguins.Clear();
+                areaSelected = false;
+            }
+
+            if(selectedPenguin!=null)
+            {
+                if(selectedPenguin.transform.childCount > 2)
+                    Destroy(selectedPenguin.transform.GetChild(2).gameObject);
+                selectedPenguin = null;
             }
         }
     }

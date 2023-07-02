@@ -8,7 +8,7 @@ using System.Net.NetworkInformation;
 public class UI_logic : MonoBehaviour
 {
     Inventory inv;
-    public TextMeshProUGUI text_fish, text_ice, text_wood;
+    public TextMeshProUGUI text_fish, text_ice, text_wood,text_scrap,text_iron;
 
     public Slider hp_value_slider;
 
@@ -49,6 +49,8 @@ public class UI_logic : MonoBehaviour
         text_wood.text = inv.inventory["wood"].ToString();
         text_ice.text = inv.inventory["ice"].ToString();
         text_fish.text = inv.inventory["fish"].ToString();
+        text_scrap.text = inv.inventory["scraps"].ToString();
+        text_iron.text = inv.inventory["ingots"].ToString();
     }
 
     private void CheckForPause() 

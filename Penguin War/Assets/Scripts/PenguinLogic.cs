@@ -1,4 +1,8 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+using UnityEngine.UIElements;
 
 
 public class PenguinLogic : MonoBehaviour
@@ -14,11 +18,12 @@ public class PenguinLogic : MonoBehaviour
     public bool isWarrior = false;
     public bool shouldAttack = false;
     public bool isAttacking = false;
-    public int animationTimer = 0;
+    public int animationTimer = 100;
     
 
     public GameObject houseToAttack = null;
     public GameObject warriorPrefab;
+    public GameObject lapka, lapka2, lapka3, lapka4;
     Inventory inv;
 
     int ingotsNeededForWarrior = 10;
@@ -31,6 +36,13 @@ public class PenguinLogic : MonoBehaviour
     {
         destination = this.gameObject.transform.position;
         inv = GameObject.Find("Inventory").GetComponent<Inventory>();
+
+        animationTimer = 100;
+        Debug.Log(gameObject.transform.Find("Penguin/pelvis").GetChild(2).gameObject.name);
+        lapka = gameObject.transform.Find("Penguin/pelvis").GetChild(2).GetChild(1).gameObject;
+        lapka2 = gameObject.transform.Find("Penguin/pelvis").GetChild(2).GetChild(1).GetChild(0).gameObject;
+        lapka3 = gameObject.transform.Find("Penguin/pelvis/spine/shoulder.R/shoulder.L.001/shoulder.L.002").gameObject;
+        lapka4 = gameObject.transform.Find("Penguin/pelvis/spine/shoulder.R/shoulder.L.001/shoulder.L.002/shoulder.L.003").gameObject;
     }
 
     // Update is called once per frame
@@ -137,18 +149,35 @@ public class PenguinLogic : MonoBehaviour
     }
 
     void Update() {
-        if(isAttacking)
+        if(isAttacking || true)
         {
             if(animationTimer > 0)
             {
                 //tukej animejszons
-
+                if (isWarrior == true)
+                {
+                    if (animationTimer >50)
+                    {
+                        lapka.transform.Translate(-0.002f, 0, -0.0001f);
+                        lapka2.transform.Translate(-0.002f, 0, -0.0001f);
+                        lapka3.transform.Translate(-0.002f, 0, -0.0001f);
+                        lapka4.transform.Translate(-0.002f, 0, -0.0001f);
+                    }
+                    else
+                    {
+                        lapka.transform.Translate(0.002f, 0, 0.0001f);
+                        lapka2.transform.Translate(0.002f, 0, 0.0001f);
+                        lapka3.transform.Translate(0.002f, 0, 0.0001f);
+                        lapka4.transform.Translate(0.002f, 0, 0.0001f);
+                    }
+                }
                 animationTimer--;
             }else
             {
                 animationTimer = 100;//nwm czy tyle wystarczy na animacje
             }
-        }else
+        }
+    else
         {
             animationTimer = 0;
         }

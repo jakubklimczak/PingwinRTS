@@ -10,6 +10,8 @@ public class UI_logic : MonoBehaviour
     Inventory inv;
     public TextMeshProUGUI text_fish, text_ice, text_wood,text_scrap,text_iron;
 
+    public GameObject unit_panel;
+
     public Slider hp_value_slider;
 
     public Camera mainCamera;
@@ -119,7 +121,10 @@ private void changecolor(Toggle changeToggle)
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit pinguRayHit, float.MaxValue, 1 << 8))//8 bo 8 layer to pingwiny
         {
+            unit_panel.SetActive(true);
             current_penguin = pinguRayHit.collider.gameObject.GetComponent<PenguinLogic>();
+            current_house = null;
+            current_nest = null;
             current_health = current_penguin.health;
             current_max_health = current_penguin.maxHealth;
             current_attack = current_penguin.damage;
@@ -130,7 +135,10 @@ private void changecolor(Toggle changeToggle)
 
         if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit hatkaRayHit, float.MaxValue, 1 << 7))//8 bo 8 layer to pingwiny
         {
+            unit_panel.SetActive(true);
             current_house = hatkaRayHit.collider.gameObject.GetComponent<HouseInfo>();
+            current_penguin = null;
+            current_nest = null;
             current_health = current_house.health;
             current_max_health = current_house.maxHealth;
             current_attack = 0;
@@ -143,7 +151,10 @@ private void changecolor(Toggle changeToggle)
         {
             if (nestRayHit.collider.gameObject.GetComponent<NestSpawner>() != null)
             {
+                unit_panel.SetActive(true);
                 current_nest = nestRayHit.collider.gameObject.GetComponent<NestSpawner>();
+                current_house = null;
+                current_penguin = null;
                 current_health = current_nest.health;
                 current_max_health = current_nest.maxHealth;
                 current_attack = 0;
@@ -154,7 +165,10 @@ private void changecolor(Toggle changeToggle)
 
             if (nestRayHit.collider.gameObject.GetComponent<HouseInfo>() != null)//trochê to skoplikowane wiêc ³atwiej ¿eby by³ kod zdublowany
             {
+                unit_panel.SetActive(true);
                 current_house = nestRayHit.collider.gameObject.GetComponent<HouseInfo>();
+                current_penguin = null;
+                current_nest = null;
                 current_health = current_house.health;
                 current_max_health = current_house.maxHealth;
                 current_attack = 0;
@@ -178,6 +192,12 @@ private void changecolor(Toggle changeToggle)
             current_health = current_penguin.health;
             current_max_health = current_penguin.maxHealth;
         }
+
+        if (Input.GetMouseButtonDown(0)) 
+        {
+            unit_panel.SetActive(false);
+        }
+
         setCurrentHealth();
         setCurrentAttack();
         setCurrentOwner();

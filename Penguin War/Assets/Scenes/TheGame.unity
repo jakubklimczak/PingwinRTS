@@ -10142,6 +10142,8 @@ MonoBehaviour:
   text_fish: {fileID: 311680135}
   text_ice: {fileID: 1190037287}
   text_wood: {fileID: 1092887279}
+  text_scrap: {fileID: 0}
+  text_iron: {fileID: 0}
   hp_value_slider: {fileID: 1189561022}
   mainCamera: {fileID: 963194227}
   IsPaused: 0

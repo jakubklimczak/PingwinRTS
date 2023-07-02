@@ -2047,7 +2047,7 @@ MonoBehaviour:
   isAttacking: 0
   animationTimer: 0
   houseToAttack: {fileID: 0}
-  warriorPrefab: {fileID: 6995279339387380858, guid: b8399b027dbc09a4e87e065a8a7f7cb2, type: 3}
+  warriorPrefab: {fileID: 5352423822862476522, guid: 880864d7557e5b14d8fe55e18c7ba340, type: 3}
 --- !u!65 &530874778435997682
 BoxCollider:
   m_ObjectHideFlags: 0

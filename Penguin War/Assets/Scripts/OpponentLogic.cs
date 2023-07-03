@@ -12,33 +12,38 @@ public class OpponentLogic : MonoBehaviour
     IEnumerator ChooseAction()
     {
         /*
-        
-        if () //enemy has enough resources (we will pick a value) && random number in good range
-        {
-            //build a random thing they can afford (upgrades, buildings etc) - priority - igloo
-        }
+        if(NOT GAME OVER) {
 
-        if() { //idle worker penguin
-            // random - send for a resource bot has the least, make a warrior (smaller chance)
-        }
+            if () //enemy has enough resources (we will pick a value) && random number in good range
+            {
+                //build a random thing they can afford (upgrades, buildings etc) - priority - igloo
+                //buildings can be created near the opponents base (2 tiles from their last building AND away from the nest) OR in case of the bridge - nearest water tile
+            }
 
-        if() { //idle warrior
-            //move near other warrior
-        }
+            if() { //idle worker penguin
+                // random - send for a resource bot has the least, make a warrior (smaller chance)
+            }
 
-        if() { //enemy near && more than 1 warrior
-            //send warriors near the enemy penguins
-        }
+            if() { //idle warrior
+                //move near other warrior
+            }
 
-        if() { //a lot of warriors in bots possesion
-            //send warriors near the players base
-        }
+            if() { //enemy near && more than 1 warrior
+                //send warriors near the enemy penguins
+            }
 
-        if() { //bot has more than X of a resource (too much)
-            //change one worker from that resource to one they have the least of
-        }
+            if() { //a lot of warriors in bots possesion
+                //send warriors near the players base
+            }
 
+            if() { //bot has more than X of a resource (too much)
+                //change one worker from that resource to one they have the least of
+            }
+
+        }
         */
+
+
 
         yield return new WaitForSeconds(.1f);
     }

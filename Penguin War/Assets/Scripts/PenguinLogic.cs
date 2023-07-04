@@ -38,7 +38,7 @@ public class PenguinLogic : MonoBehaviour
         inv = GameObject.Find("Inventory").GetComponent<Inventory>();
 
         animationTimer = 100;
-        Debug.Log(gameObject.transform.Find("Penguin/pelvis").GetChild(2).gameObject.name);
+        //Debug.Log(gameObject.transform.Find("Penguin/pelvis").GetChild(2).gameObject.name);
         lapka = gameObject.transform.Find("Penguin/pelvis").GetChild(2).GetChild(1).gameObject;
         lapka2 = gameObject.transform.Find("Penguin/pelvis").GetChild(2).GetChild(1).GetChild(0).gameObject;
         lapka3 = gameObject.transform.Find("Penguin/pelvis/spine/shoulder.R/shoulder.L.001/shoulder.L.002").gameObject;
@@ -48,8 +48,19 @@ public class PenguinLogic : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //bede umieral
+        if(health<=0)
+        {
+            Destroy(gameObject);
+        }
+
         Vector3 pos = this.gameObject.transform.position;
         float step = 0.1f;
+
+        if(houseToAttack !=null && houseToAttack.tag == "pingu")//goń pingwina
+        {
+            destination = houseToAttack.GetComponent<PenguinLogic>().destination;
+        }
 
         if (pos.x != destination.x || pos.y!=destination.y || pos.z != destination.z)
         {
@@ -126,6 +137,18 @@ public class PenguinLogic : MonoBehaviour
             }else if(houseToAttack.tag=="EnemyNest" && isWarrior)
             {
                 houseToAttack.GetComponent<NestSpawner>().health -= damage;
+            }else if(houseToAttack.tag=="pingu")
+            {
+
+                houseToAttack.GetComponent<PenguinLogic>().health -=damage;
+
+                if(houseToAttack.GetComponent<PenguinLogic>() == null || houseToAttack.GetComponent<PenguinLogic>().health <= 0)//jak atakowany zdechnie
+                {
+                    houseToAttack = null;
+                    shouldAttack = false;
+                    isAttacking = false;
+                }
+
             }else if((houseToAttack.tag=="resource" && !isWarrior) || (!isWarrior && houseToAttack.GetComponent<ResourceLogic>().type=="molo"))
             {
                 if(houseToAttack.GetComponent<ResourceLogic>().type!="molo" && !isBot)
@@ -154,7 +177,7 @@ public class PenguinLogic : MonoBehaviour
             if(animationTimer > 0)
             {
                 //tukej animejszons
-                if (isWarrior == true)
+                if (isWarrior == true && isAttacking == true)
                 {
                     if (animationTimer >50)
                     {

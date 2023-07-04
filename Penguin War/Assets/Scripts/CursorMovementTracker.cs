@@ -94,6 +94,8 @@ public class CursorMovementTracker : MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         m_Raycaster.Raycast(m_PointerEventData, results);
 
+
+        //podświetlenie pingwinów
         if(selectedPenguin!=null && selectedPenguin.transform.childCount == 2)
         {
             Vector3 pos = selectedPenguin.transform.position;
@@ -266,8 +268,25 @@ public class CursorMovementTracker : MonoBehaviour
         Ray penguinRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(penguinRay, out RaycastHit penguinRaycastHit, float.MaxValue, penguinLayerMask))
         {
+            //atakowanie innego pingwina
+            if (selectedPenguin != null && selectedPenguin.GetComponent<PenguinLogic>().isWarrior && Input.GetMouseButtonDown(1) && penguinRaycastHit.collider.GetComponentInParent<PenguinLogic>().isBot)
+            {
+                selectedPenguin.GetComponent<PenguinLogic>().shouldAttack = true;
+                selectedPenguin.GetComponent<PenguinLogic>().destination = penguinRaycastHit.collider.gameObject.transform.position;
+                selectedPenguin.GetComponent<PenguinLogic>().houseToAttack = penguinRaycastHit.collider.gameObject;
+
+                if(selectedPenguin.transform.childCount > 2)
+                            Destroy(selectedPenguin.transform.GetChild(2).gameObject);
+                selectedPenguin = null;
+                return;
+            }
+
             if (Input.GetMouseButtonDown(0) && !penguinRaycastHit.collider.GetComponentInParent<PenguinLogic>().isBot)
             {
+                if(selectedPenguin != null)
+                    if(selectedPenguin.transform.childCount > 2)
+                            Destroy(selectedPenguin.transform.GetChild(2).gameObject);
+
                 penguinSelected = true;
                 selectedPenguin = penguinRaycastHit.collider.GetComponentInParent<PenguinLogic>();
             }

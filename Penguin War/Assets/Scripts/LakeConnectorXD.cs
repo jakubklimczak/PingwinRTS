@@ -10,8 +10,6 @@ public class LakeConnectorXD : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(gameObject.name);
-        Debug.Log(gameObject.transform.Find("watah1").gameObject.name);
     }
 
     // Update is called once per frame

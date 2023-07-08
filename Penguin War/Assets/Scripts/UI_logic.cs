@@ -91,6 +91,18 @@ public class UI_logic : MonoBehaviour
                 CursorTracker.whatToBuild = 4;
             break;
 
+            case "HutaButton":
+                CursorTracker.whatToBuild = 8;
+            break;
+
+            case "IceWallButton":
+                CursorTracker.whatToBuild = 10;
+            break;
+
+            case "UpgradeButton":
+                CursorTracker.whatToBuild = 9;
+            break;
+
             default:
 
             break;
@@ -163,7 +175,7 @@ private void changecolor(Toggle changeToggle)
                 return;
             }
 
-            if (nestRayHit.collider.gameObject.GetComponent<HouseInfo>() != null)//trochê to skoplikowane wiêc ³atwiej ¿eby by³ kod zdublowany
+            if (nestRayHit.collider.gameObject.GetComponent<HouseInfo>() != null)//trochï¿½ to skoplikowane wiï¿½c ï¿½atwiej ï¿½eby byï¿½ kod zdublowany
             {
                 unit_panel.SetActive(true);
                 current_house = nestRayHit.collider.gameObject.GetComponent<HouseInfo>();

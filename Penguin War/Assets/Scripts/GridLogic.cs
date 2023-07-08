@@ -19,7 +19,7 @@ public class GridLogic : MonoBehaviour
 
     public PinguData SavedPinguins = new PinguData();
     public HouseData Savedhouses = new HouseData();
-    //public statsData savedStats = new statsData();
+    
 
     string penguinFilePath = "Assets/Save/penguinData.pingu";
     string houseFilePath = "Assets/Save/housesData.pingu";
@@ -144,6 +144,8 @@ void Start()
                 tmpObj.GetComponent<PenguinLogic>().shouldAttack = p.shoudlAttack;
                 tmpObj.GetComponent<PenguinLogic>().isWarrior = p.isWarrior;
                 tmpObj.GetComponent<PenguinLogic>().damage = p.damage;
+
+                SetObjectAtPosition(tmpPos, 13);
             }
         }
     }
@@ -170,7 +172,8 @@ void Start()
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                if (map[i, j] != 0 && map[i, j] != 3 && map[i, j] != 4 && map[i, j] != 6 && map[i, j] != 7)
+                int cur_mp_id = map[i, j];
+                if (cur_mp_id != 0 && cur_mp_id != 3 && cur_mp_id != 4 && cur_mp_id != 6 && cur_mp_id != 7 && cur_mp_id != 13) //pingwin to 13
                 {
                     //string tmpPath = @"..\\Penguin War\\Assets\\Images\\Tiles\\tile0.png";
                     Vector3 tmpPos = new(Mathf.Floor(i), 0.1f, Mathf.Floor(j));
@@ -178,10 +181,12 @@ void Start()
                     bool foundHouse = false;
                     HouseInfoStruct tmpInfoStruct = new HouseInfoStruct();
 
-                    foreach(HouseInfoStruct h in loadedData.info)
+                    Quaternion tmpLoadedRotation = new Quaternion();
+
+                    foreach (HouseInfoStruct h in loadedData.info)
                     {
                         Vector3 tmpLoadedPos = new Vector3((int)h.position[0], 0.1f, (int)h.position[2]);
-                        Quaternion tmpLoadedRotation = new Quaternion(h.rotation[0], h.rotation[1], h.rotation[2], h.rotation[3]);
+                        tmpLoadedRotation = new Quaternion(h.rotation[0], h.rotation[1], h.rotation[2], h.rotation[3]);
 
                         if(tmpPos.x == h.position[0] && tmpPos.z == h.position[2])
                         {
@@ -191,7 +196,7 @@ void Start()
                         }
                     }
 
-                    GameObject tmpObj = Instantiate(housesPrefabs[map[i, j] -1], tmpPos, new Quaternion(tmpInfoStruct.rotation[0],tmpInfoStruct.rotation[1],tmpInfoStruct.rotation[2],tmpInfoStruct.rotation[3]), parent.transform);//change this later to be able to spawn more things
+                    GameObject tmpObj = Instantiate(housesPrefabs[map[i, j] -1], tmpPos, tmpLoadedRotation, parent.transform);//change this later to be able to spawn more things
                     //tmpObj.transform.SetParent(parent.transform);
                     HouseInfo tmpHouseInfo = tmpObj.GetComponent<HouseInfo>();
 
@@ -490,6 +495,39 @@ void Start()
                 }
                 writer.WriteLine();
             }
+        }
+    }
+    //can you move into given position
+    public bool IsTraversable(Vector3 position) 
+    {
+        int chosen_object = map[(int)position.x, (int)position.z];
+        Debug.Log("at("+ position.x+";"+ position.z +") there is:"+ chosen_object);
+        if (chosen_object == 0 || chosen_object == 4)
+        {
+            return true;
+        }
+        return false;
+    }
+    public int GetObjectAtPosition(Vector3 position) 
+    {
+        return map[(int)position.x, (int)position.z];
+    }
+
+    public void SetObjectAtPosition(Vector3 position, int object_type)
+    {
+        map[(int)position.x, (int)position.z] = object_type;
+    }
+
+    //Brak sprawdzania!
+    public void UpdatePosition(Vector3 initial,Vector3 destination, int objectType) 
+    {
+        Debug.Log("destination: "+destination.x + " " + destination.z);
+        Debug.Log("source: " + initial.x + " " + initial.z);
+        map[(int)destination.x, (int)destination.z] += objectType;
+        map[(int)initial.x, (int)initial.z] -= objectType;
+        if(map[(int)initial.x, (int)initial.z] < 0)
+        {
+            map[(int)initial.x, (int)initial.z] = 0;
         }
     }
 

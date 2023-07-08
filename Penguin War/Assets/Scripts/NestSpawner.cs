@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 public class NestSpawner : MonoBehaviour
 {
     public GameObject pinguPrefab;
+    public GridLogic gridLogic;
     public int health = 1000;
     public int maxHealth = 1000;
     public int timeToSpawn = 3000;
@@ -28,7 +29,7 @@ public class NestSpawner : MonoBehaviour
     GameObject Inf;
     GameObject TM;
     GameObject Zoo;
-
+    
 
 
     void Start()
@@ -55,13 +56,23 @@ public class NestSpawner : MonoBehaviour
             if(howManyPingus < howManyIglos * 4)
             {
                 System.Random rnd = new System.Random();
-                Vector3 randPosAroundNest = new Vector3(nestPos.x + rnd.Next(1, 2) * (rnd.Next(0,2) == 0 ? 1 : -1),
-                nestPos.y, nestPos.z + rnd.Next(1, 2) * (rnd.Next(0,2) == 0 ? 1 : -1));
+                Vector3 randPosAroundNest;
+                int timeout_counter = 10;
+                while (!gridLogic.IsTraversable(randPosAroundNest = new Vector3(nestPos.x + rnd.Next(1, 2) * (rnd.Next(0, 2) == 0 ? 1 : -1),
+                        nestPos.y, nestPos.z + rnd.Next(1, 2) * (rnd.Next(0, 2) == 0 ? 1 : -1)))
+                    ) 
+                {
+                    timeout_counter--;
+                    if (timeout_counter <= 0)
+                        return;
+                }
+                 
 
                 GameObject tmpPingu = Instantiate(pinguPrefab, randPosAroundNest, new Quaternion(), Zoo.transform);
 
                 tmpPingu.GetComponent<PenguinLogic>().isBot = isBot;
                 tmpPingu.GetComponent<PenguinLogic>().type = 0;
+                gridLogic.SetObjectAtPosition(randPosAroundNest, 13);
             }
 
             if(howManyPingus > howManyIglos * 4)

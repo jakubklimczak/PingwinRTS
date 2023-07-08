@@ -134,8 +134,29 @@ public class CursorMovementTracker : MonoBehaviour
                         Vector3 tmp2 = new Vector3(((float)Math.Round(houseRaycastHit.point.x)), (float)Math.Round(houseRaycastHit.point.y), ((float)Math.Round(houseRaycastHit.point.z)));
                         selectedPenguin.destination = tmp2;
                         selectedPenguin.houseToAttack = houseRaycastHit.collider.gameObject;
-                        
-                        if(houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
+                        if (!houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
+                        {
+                            //selectedPenguin.destination = tmp2;
+                            for(int i = -1; i <= 1; i++)
+                            {
+                                for(int j = -1; i <= 1; i ++)
+                                {
+                                    if (i != j) 
+                                    {
+                                        if (gridScript.IsTraversable(new Vector3(tmp2.x + i, tmp2.y, tmp2.z + j))) 
+                                        {
+                                            selectedPenguin.destination.x += i;
+                                            selectedPenguin.destination.y += j;
+                                            break;
+                                        }
+                                    }
+                                        
+                                }
+                            }
+                            
+
+                        }
+                        if (houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
                         {
                             selectedPenguin.shouldAttack = true;
                         }
@@ -331,17 +352,25 @@ public class CursorMovementTracker : MonoBehaviour
             if(penguinSelected && selectedPenguin!=null && Input.GetMouseButtonDown(1) && !areaSelected)
             {
                 Vector3 tmp2 = new Vector3(((float)Math.Round(groundRaycastHit.point.x)), (float)Math.Round(groundRaycastHit.point.y), ((float)Math.Round(groundRaycastHit.point.z)));
-                selectedPenguin.destination = tmp2;
-                if(selectedPenguin.isAttacking)
+                if (gridScript.IsTraversable(tmp2))
                 {
-                    selectedPenguin.isAttacking = false;
-                    selectedPenguin.shouldAttack = false;
-                    selectedPenguin.houseToAttack = null;
+                    selectedPenguin.destination = tmp2;
+                    gridScript.UpdatePosition(selectedPenguin.transform.position, tmp2, 13); //13 bo pingiwn
+                    if (selectedPenguin.isAttacking)
+                    {
+                        selectedPenguin.isAttacking = false;
+                        selectedPenguin.shouldAttack = false;
+                        selectedPenguin.houseToAttack = null;
+                    }
+                    if (selectedPenguin.transform.childCount > 2)
+                        Destroy(selectedPenguin.transform.GetChild(2).gameObject);
+                    selectedPenguin = null;
+                    return;
                 }
-                if(selectedPenguin.transform.childCount > 2)
-                            Destroy(selectedPenguin.transform.GetChild(2).gameObject);
-                selectedPenguin = null;
-                return;
+                else
+                {
+                    //tutaj feedback jak nie wolno się przesunąć
+                }
             }
 
             //ustawianie objectu pod cursorem

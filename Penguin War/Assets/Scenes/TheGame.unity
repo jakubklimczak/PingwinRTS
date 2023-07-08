@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12263,6 +12263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pinguPrefab: {fileID: 9058214154555395423, guid: dfb3daeae1f484a4a91a75d07e46ecd6, type: 3}
+  gridLogic: {fileID: 1142890381}
   health: 1000
   maxHealth: 1000
   timeToSpawn: 300
@@ -14125,6 +14126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pinguPrefab: {fileID: 9058214154555395423, guid: dfb3daeae1f484a4a91a75d07e46ecd6, type: 3}
+  gridLogic: {fileID: 1142890381}
   health: 1000
   maxHealth: 1000
   timeToSpawn: 300

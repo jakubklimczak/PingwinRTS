@@ -25,7 +25,7 @@ public class NestSpawner : MonoBehaviour
     public int howManyIglos = 1;
     public int howManyPingus = 1;
 
-     GameObject Inf;
+    GameObject Inf;
     GameObject TM;
     GameObject Zoo;
 
@@ -173,9 +173,7 @@ public class NestSpawner : MonoBehaviour
             }
         }
 
-        howManyIglos = tmpICount;
-        howManyPingus = tmpPCount;
-
-        //Debug.Log("B" + isBot + " : " + tmpCount);
+        howManyIglos = tmpICount == 0 ? 1 : tmpICount;
+        howManyPingus = tmpPCount == 0 ? 1 : tmpPCount;
     }
 }

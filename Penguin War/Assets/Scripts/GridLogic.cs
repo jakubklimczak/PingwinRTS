@@ -9,6 +9,8 @@ using UnityEngine;
 using static Inventory;
 using static NestSpawner;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.UIElements;
+using System.Linq;
 
 public class GridLogic : MonoBehaviour
 {
@@ -70,6 +72,8 @@ void Start()
         {
            PrepareGame();
         }
+        IEnumerator PinguDataCor = UpdateAllPenguinePos(.2f);
+        StartCoroutine(PinguDataCor);
     }
 
     // Update is called once per frame
@@ -497,11 +501,12 @@ void Start()
             }
         }
     }
+    //=============================================GRID OPERATIONS===================================================================
     //can you move into given position
     public bool IsTraversable(Vector3 position) 
     {
-        int chosen_object = map[(int)position.x, (int)position.z];
-        Debug.Log("at("+ position.x+";"+ position.z +") there is:"+ chosen_object);
+        int chosen_object = map[Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.z)];
+        //Debug.Log("at("+ position.x+";"+ position.z +") there is:"+ chosen_object);
         if (chosen_object == 0 || chosen_object == 4)
         {
             return true;
@@ -518,20 +523,89 @@ void Start()
         map[(int)position.x, (int)position.z] = object_type;
     }
 
-    //Brak sprawdzania!
-    public void UpdatePosition(Vector3 initial,Vector3 destination, int objectType) 
+    ////Brak sprawdzania!
+    //public void UpdatePosition(Vector3 initial,Vector3 destination, int objectType) 
+    //{
+    //    //Debug.Log("destination: "+destination.x + " " + destination.z);
+    //    //Debug.Log("source: " + initial.x + " " + initial.z);
+    //    map[(int)destination.x, (int)destination.z] += objectType;
+    //    map[(int)initial.x, (int)initial.z] -= objectType;
+    //    if(map[(int)initial.x, (int)initial.z] < 0)
+    //    {
+    //        map[(int)initial.x, (int)initial.z] = 0;
+    //    }
+    //}
+    //mapping penguins corutine
+    private IEnumerator UpdateAllPenguinePos(float period)
     {
-        Debug.Log("destination: "+destination.x + " " + destination.z);
-        Debug.Log("source: " + initial.x + " " + initial.z);
-        map[(int)destination.x, (int)destination.z] += objectType;
-        map[(int)initial.x, (int)initial.z] -= objectType;
-        if(map[(int)initial.x, (int)initial.z] < 0)
+        while (true)
         {
-            map[(int)initial.x, (int)initial.z] = 0;
+            GameObject[] pinguinsObjs = GameObject.FindGameObjectsWithTag("pingu");
+            int[,] new_map = new int [200,200];
+            Array.Copy(map, new_map, map.Length);
+
+            for(int i = 0; i < 200; i++)
+            {
+                for(int j = 0; j < 200; j++)
+                {
+                    new_map[i, j] = (new_map[i, j] == 13 || new_map[i, j] == 17) ? new_map[i, j] - 13 : new_map[i, j];
+                    //Debug.Log(new_map[i, j]);
+                    if (new_map[i, j]>13)
+                    {
+                        Debug.Log(new_map[i, j]);
+                    }
+                }
+            }
+
+            DateTime currentTime = DateTime.Now;
+            string filename = currentTime.ToString().Replace(":","_");
+            SaveArrayToFile(new_map, filename);
+
+
+            foreach (GameObject p in pinguinsObjs)
+            {
+              
+                if (IsTraversable(p.transform.position))
+                    new_map[Mathf.RoundToInt(p.transform.position.x), Mathf.RoundToInt(p.transform.position.z)] += 13;
+                
+            }
+
+            //map = new_map;
+            Array.Copy(new_map, map, map.Length);
+            yield return new WaitForSeconds(period);
         }
     }
 
-    [Serializable]
+
+
+    //dkgkjldfklgdfjhgl
+    void SaveArrayToFile(int[,] array, string filename)
+    {
+        using (StreamWriter writer = new StreamWriter(filename))
+        {
+            int rows = array.GetLength(0);
+            int columns = array.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    writer.Write(array[i, j]);
+
+                    // Add a delimiter between elements if needed
+                    if (j < columns - 1)
+                    {
+                        writer.Write(",");
+                    }
+                }
+
+                writer.WriteLine(); // Move to the next line
+            }
+        }
+    }
+        //=====================
+
+        [Serializable]
     public class PinguInfoStruct
     {
         [SerializeField]

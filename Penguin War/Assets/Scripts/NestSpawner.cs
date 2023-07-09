@@ -58,13 +58,17 @@ public class NestSpawner : MonoBehaviour
                 System.Random rnd = new System.Random();
                 Vector3 randPosAroundNest;
                 int timeout_counter = 10;
-                while (!gridLogic.IsTraversable(randPosAroundNest = new Vector3(nestPos.x + rnd.Next(1, 2) * (rnd.Next(0, 2) == 0 ? 1 : -1),
-                        nestPos.y, nestPos.z + rnd.Next(1, 2) * (rnd.Next(0, 2) == 0 ? 1 : -1)))
+                while (!gridLogic.IsTraversable(randPosAroundNest = new Vector3(Mathf.RoundToInt(nestPos.x) + rnd.Next(1, 2) * (rnd.Next(0, 2) == 0 ? 1 : -1),
+                        Mathf.RoundToInt(nestPos.y), Mathf.RoundToInt(nestPos.z) + rnd.Next(1, 2) * (rnd.Next(0, 2) == 0 ? 1 : -1)))
                     ) 
                 {
                     timeout_counter--;
                     if (timeout_counter <= 0)
+                    {
+                        Debug.Log("thank you, gud buy");
                         return;
+                    }
+                        
                 }
                  
 

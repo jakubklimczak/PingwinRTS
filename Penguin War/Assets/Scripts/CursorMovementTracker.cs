@@ -143,10 +143,13 @@ public class CursorMovementTracker : MonoBehaviour
                                 {
                                     if (i != j) 
                                     {
-                                        if (gridScript.IsTraversable(new Vector3(tmp2.x + i, tmp2.y, tmp2.z + j))) 
+                                        Vector3 correct_dest_proposition = new Vector3(tmp2.x + i, tmp2.y, tmp2.z + j);
+                                        if (gridScript.IsTraversable(correct_dest_proposition)) 
                                         {
-                                            selectedPenguin.destination.x += i;
-                                            selectedPenguin.destination.y += j;
+                                            //selectedPenguin.destination.x += i;
+                                            //selectedPenguin.destination.y += j;
+                                            selectedPenguin.destination = correct_dest_proposition;
+                                            //gridScript.UpdatePosition(selectedPenguin.transform.position, correct_dest_proposition, 13); //13 bo pingiwn
                                             break;
                                         }
                                     }
@@ -355,7 +358,7 @@ public class CursorMovementTracker : MonoBehaviour
                 if (gridScript.IsTraversable(tmp2))
                 {
                     selectedPenguin.destination = tmp2;
-                    gridScript.UpdatePosition(selectedPenguin.transform.position, tmp2, 13); //13 bo pingiwn
+                    //gridScript.UpdatePosition(selectedPenguin.transform.position, tmp2, 13); //13 bo pingiwn
                     if (selectedPenguin.isAttacking)
                     {
                         selectedPenguin.isAttacking = false;

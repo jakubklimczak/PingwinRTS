@@ -72,8 +72,9 @@ void Start()
         {
            PrepareGame();
         }
-        IEnumerator PinguDataCor = UpdateAllPenguinePos(.2f);
-        StartCoroutine(PinguDataCor);
+        //IEnumerator PinguDataCor = UpdateAllPenguinePos(.2f);
+        //StartCoroutine(PinguDataCor);
+        //UpdateAllPenguinePos(.2f);
     }
 
     // Update is called once per frame
@@ -84,6 +85,8 @@ void Start()
             Debug.Log("Saving");
             SaveWorld("Assets/Save/map.csv");
         }
+
+        UpdateAllPenguinePos(.2f);
     }
 
     public Texture2D LoadPNG(string filePath)//load a texture from png
@@ -118,7 +121,7 @@ void Start()
 
                 for(int i=0; i < values.Length - 1; i++)
                 {
-                    map[i, iter] = int.Parse(values[i]);
+                    map[iter, i] = int.Parse(values[i]);
                 }
                 iter++;
             }
@@ -176,7 +179,7 @@ void Start()
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                int cur_mp_id = map[i, j];
+                int cur_mp_id = map[j, i];
                 if (cur_mp_id != 0 && cur_mp_id != 3 && cur_mp_id != 4 && cur_mp_id != 6 && cur_mp_id != 7 && cur_mp_id != 13) //pingwin to 13
                 {
                     //string tmpPath = @"..\\Penguin War\\Assets\\Images\\Tiles\\tile0.png";
@@ -200,7 +203,7 @@ void Start()
                         }
                     }
 
-                    GameObject tmpObj = Instantiate(housesPrefabs[map[i, j] -1], tmpPos, tmpLoadedRotation, parent.transform);//change this later to be able to spawn more things
+                    GameObject tmpObj = Instantiate(housesPrefabs[map[j, i] -1], tmpPos, tmpLoadedRotation, parent.transform);//change this later to be able to spawn more things
                     //tmpObj.transform.SetParent(parent.transform);
                     HouseInfo tmpHouseInfo = tmpObj.GetComponent<HouseInfo>();
 
@@ -211,7 +214,7 @@ void Start()
                         tmpHouseInfo.isBot = tmpInfoStruct.isBot;
                     }
 
-                    tmpHouseInfo.type = housesPrefabs[map[i, j] - 1].name;
+                    tmpHouseInfo.type = housesPrefabs[map[j, i] - 1].name;
                     //Debug.Log(tmpPos + " , " + tmpHouseInfo.type + " , " + tmpObj.transform.position);
                     //tmpObj.GetComponent<Renderer>().material.mainTexture = LoadPNG(tmpPath);
                 }
@@ -251,7 +254,7 @@ void Start()
             {
                 for (int j = 0; j < worldSize; j++)
                 {
-                    writer.Write(map[j, i]);
+                    writer.Write(map[i, j]);
                     if (j < worldSize - 1)
                     {
                         writer.Write(",");
@@ -536,50 +539,100 @@ void Start()
     //    }
     //}
     //mapping penguins corutine
-    private IEnumerator UpdateAllPenguinePos(float period)
+    //private IEnumerator UpdateAllPenguinePos(float period)
+    void UpdateAllPenguinePos(float period)
     {
-        while (true)
-        {
+        //while (true)
+        //{
             GameObject[] pinguinsObjs = GameObject.FindGameObjectsWithTag("pingu");
             int[,] new_map = new int [200,200];
-            Array.Copy(map, new_map, map.Length);
+            
+            //Array.Copy(map, new_map, map.Length);
+
+            for(int i = 0;i<200 ;i++)
+            {
+                for(int j = 0;j<200 ;j++)
+                {
+                    if(map[i,j]==13)
+                    {
+                        //Debug.Log("kurwa jest " + i + ", " + j);
+                    }
+                    new_map[i,j] = map[i,j];
+                }
+            }
+
 
             for(int i = 0; i < 200; i++)
             {
                 for(int j = 0; j < 200; j++)
                 {
-                    new_map[i, j] = (new_map[i, j] == 13 || new_map[i, j] == 17) ? new_map[i, j] - 13 : new_map[i, j];
-                    //Debug.Log(new_map[i, j]);
-                    if (new_map[i, j]>13)
+                    if (map[j, i]==13)
                     {
-                        Debug.Log(new_map[i, j]);
+                        //Debug.Log(map[j, i] + "at i:  " + i + " j: " + j);
                     }
+                    new_map[j, i] = (new_map[j, i] == 13 || new_map[j, i] == 17) ? new_map[j, i] - 13 : new_map[j, i];
+                    //Debug.Log(new_map[i, j]);
+                    
+                }
+            }            
+
+
+            // foreach (GameObject p in pinguinsObjs)
+            // {
+            //     if (IsTraversable(p.transform.position))
+            //     {
+            //         Debug.Log(p.transform.position);
+            //         new_map[Mathf.RoundToInt(p.transform.position.x), Mathf.RoundToInt(p.transform.position.z)] += 13;
+            //         Debug.Log(new_map[Mathf.RoundToInt(p.transform.position.x), Mathf.RoundToInt(p.transform.position.z)]);
+            //     }
+            // }
+
+
+            for(int j = 0; j < pinguinsObjs.Length; j++)
+            {
+                if (new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.x), Mathf.RoundToInt(pinguinsObjs[j].transform.position.z)] != 13)
+                {
+                    Debug.Log(new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.x), Mathf.RoundToInt(pinguinsObjs[j].transform.position.z)]);
+                    new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.x), Mathf.RoundToInt(pinguinsObjs[j].transform.position.z)] += 13;
                 }
             }
+
+            //Debug.Log(new_map[x,y]);
+           
 
             DateTime currentTime = DateTime.Now;
             string filename = currentTime.ToString().Replace(":","_");
             SaveArrayToFile(new_map, filename);
 
-
-            foreach (GameObject p in pinguinsObjs)
+            //map = new_map;
+            //Array.Copy(new_map, map, map.Length);
+            
+            for(int i = 0;i<200 ;i++)
             {
-              
-                if (IsTraversable(p.transform.position))
-                    new_map[Mathf.RoundToInt(p.transform.position.x), Mathf.RoundToInt(p.transform.position.z)] += 13;
-                
+                for(int j = 0;j<200 ;j++)
+                {
+                    if(map[i,j]==13)
+                    {
+                        //Debug.Log("a tu już nie " + i + ", " + j);
+                    }
+                    map[i,j] = new_map[i,j];
+                }
             }
 
-            //map = new_map;
-            Array.Copy(new_map, map, map.Length);
-            yield return new WaitForSeconds(period);
-        }
+
+            Debug.Log("====");
+            
+
+            // DateTime currentTime = DateTime.Now;
+            // string filename = currentTime.ToString().Replace(":","_");
+            // SaveArrayToFile(new_map, filename);
+
+            //yield return new WaitForSeconds(period);
+        //}
     }
 
-
-
     //dkgkjldfklgdfjhgl
-    void SaveArrayToFile(int[,] array, string filename)
+    public void SaveArrayToFile(int[,] array, string filename)
     {
         using (StreamWriter writer = new StreamWriter(filename))
         {

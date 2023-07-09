@@ -58,6 +58,11 @@ public class NestSpawner : MonoBehaviour
                 System.Random rnd = new System.Random();
                 Vector3 randPosAroundNest;
                 int timeout_counter = 10;
+
+                // DateTime currentTime = DateTime.Now;
+                // string filename = currentTime.ToString().Replace(":","_");
+                // gridLogic.SaveArrayToFile(gridLogic.map, filename);
+
                 while (!gridLogic.IsTraversable(randPosAroundNest = new Vector3(Mathf.RoundToInt(nestPos.x) + rnd.Next(1, 2) * (rnd.Next(0, 2) == 0 ? 1 : -1),
                         Mathf.RoundToInt(nestPos.y), Mathf.RoundToInt(nestPos.z) + rnd.Next(1, 2) * (rnd.Next(0, 2) == 0 ? 1 : -1)))
                     ) 

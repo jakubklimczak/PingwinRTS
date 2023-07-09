@@ -411,7 +411,8 @@ public class CursorMovementTracker : MonoBehaviour
                     HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                     childHouseInfo.type = houses[whatToBuild].name;
                     //childHouseInfo.counter = 2;//nwm co to xd
-                    gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild +1;
+                    //gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild +1;
+                    gridScript.map[(int)tmp.z, (int)tmp.x] = whatToBuild +1;
 
 
                     //removing from inventory
@@ -421,16 +422,16 @@ public class CursorMovementTracker : MonoBehaviour
                     {
                         inv.inventory[resource.Key] += resource.Value;
                     }
-                }else if(gridScript.map[(int)tmp.x, (int)tmp.z] == 0 && canPlace && whatToBuild == 4)
+                }else if(gridScript.map[(int)tmp.z, (int)tmp.x] == 0 && canPlace && whatToBuild == 4)
                 {
-                    if(gridScript.map[(int)tmp.x, (int)tmp.z - 1] == 3)
+                    if(gridScript.map[(int)tmp.z - 1, (int)tmp.x] == 3)
                     {
                         GameObject parent = GameObject.Find("Infrastructure");
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, -90, 0), parent.transform);
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
                         //childHouseInfo.counter = 2;//nwm co to xd
-                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild +1;
+                        gridScript.map[(int)tmp.z, (int)tmp.x] = whatToBuild +1;
 
 
                         //removing from inventory
@@ -440,14 +441,14 @@ public class CursorMovementTracker : MonoBehaviour
                         {
                             inv.inventory[resource.Key] += resource.Value;
                         }
-                    }else if(gridScript.map[(int)tmp.x, (int)tmp.z + 1] == 3)
+                    }else if(gridScript.map[(int)tmp.z + 1, (int)tmp.x] == 3)
                     {
                         GameObject parent = GameObject.Find("Infrastructure");
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, 90, 0), parent.transform);
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
                         //childHouseInfo.counter = 2;//nwm co to xd
-                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild +1;
+                        gridScript.map[(int)tmp.z, (int)tmp.x] = whatToBuild +1;
 
 
                         //removing from inventory
@@ -457,14 +458,14 @@ public class CursorMovementTracker : MonoBehaviour
                         {
                             inv.inventory[resource.Key] += resource.Value;
                         }
-                    }else if(gridScript.map[(int)tmp.x + 1, (int)tmp.z] == 3)
+                    }else if(gridScript.map[(int)tmp.z + 1, (int)tmp.x] == 3)
                     {
                         GameObject parent = GameObject.Find("Infrastructure");
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, -180, 0), parent.transform);
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
                         //childHouseInfo.counter = 2;//nwm co to xd
-                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild +1;
+                        gridScript.map[(int)tmp.z, (int)tmp.x] = whatToBuild +1;
 
 
                         //removing from inventory
@@ -481,7 +482,7 @@ public class CursorMovementTracker : MonoBehaviour
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
                         //childHouseInfo.counter = 2;//nwm co to xd
-                        gridScript.map[(int)tmp.x, (int)tmp.z] = whatToBuild +1;
+                        gridScript.map[(int)tmp.z, (int)tmp.x] = whatToBuild +1;
 
 
                         //removing from inventory

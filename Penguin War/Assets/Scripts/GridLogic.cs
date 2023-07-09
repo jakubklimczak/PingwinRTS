@@ -592,18 +592,13 @@ void Start()
             {
                 if (new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.x), Mathf.RoundToInt(pinguinsObjs[j].transform.position.z)] != 13)
                 {
-                    Debug.Log(new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.x), Mathf.RoundToInt(pinguinsObjs[j].transform.position.z)]);
+                    //Debug.Log(new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.x), Mathf.RoundToInt(pinguinsObjs[j].transform.position.z)]);
                     new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.x), Mathf.RoundToInt(pinguinsObjs[j].transform.position.z)] += 13;
                 }
             }
 
             //Debug.Log(new_map[x,y]);
            
-
-            DateTime currentTime = DateTime.Now;
-            string filename = currentTime.ToString().Replace(":","_");
-            SaveArrayToFile(new_map, filename);
-
             //map = new_map;
             //Array.Copy(new_map, map, map.Length);
             
@@ -620,7 +615,7 @@ void Start()
             }
 
 
-            Debug.Log("====");
+            //Debug.Log("====");
             
 
             // DateTime currentTime = DateTime.Now;

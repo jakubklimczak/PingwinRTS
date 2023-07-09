@@ -136,27 +136,32 @@ public class CursorMovementTracker : MonoBehaviour
                         selectedPenguin.houseToAttack = houseRaycastHit.collider.gameObject;
                         if (!houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
                         {
-                            //selectedPenguin.destination = tmp2;
+                            bool should_exit = false;
                             for(int i = -1; i <= 1; i++)
                             {
-                                for(int j = -1; i <= 1; i ++)
+                                for(int j = -1; j <= 1; j ++)
                                 {
-                                    if (i != j) 
+                                    
+                                    if (i!=0 || j!=0) 
                                     {
                                         Vector3 correct_dest_proposition = new Vector3(tmp2.x + i, tmp2.y, tmp2.z + j);
                                         if (gridScript.IsTraversable(correct_dest_proposition)) 
                                         {
-                                            //selectedPenguin.destination.x += i;
-                                            //selectedPenguin.destination.y += j;
                                             selectedPenguin.destination = correct_dest_proposition;
-                                            //gridScript.UpdatePosition(selectedPenguin.transform.position, correct_dest_proposition, 13); //13 bo pingiwn
+                                            should_exit = true;
                                             break;
                                         }
                                     }
                                         
                                 }
+                                if (should_exit)
+                                    break;
                             }
-                            
+                            if(!should_exit)
+                            {
+                                selectedPenguin.destination = selectedPenguin.transform.position; //nie ma miejsca w destynacji, error.mp3
+                                Debug.Log("error.mp3");
+                            }
 
                         }
                         if (houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)

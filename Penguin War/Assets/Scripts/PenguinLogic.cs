@@ -83,7 +83,7 @@ public class PenguinLogic : MonoBehaviour
     {
         destination = this.gameObject.transform.position;
         inv = GameObject.Find("Inventory").GetComponent<Inventory>();
-        pathfinding = GameObject.Find("Pathfinding").GetComponent<PathfindingXD>();
+        pathfinding = GameObject.Find("EventSystem").GetComponent<PathfindingXD>();
 
         animationTimer = 100;
         //Debug.Log(gameObject.transform.Find("Penguin/pelvis").GetChild(2).gameObject.name);

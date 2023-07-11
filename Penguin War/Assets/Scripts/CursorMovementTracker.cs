@@ -38,6 +38,8 @@ public class CursorMovementTracker : MonoBehaviour
 
     public Dictionary<string, Dictionary<string, int>> costs = new Dictionary<string, Dictionary<string, int>>();
 
+    SoundEffectsPlayer sounds;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -83,6 +85,8 @@ public class CursorMovementTracker : MonoBehaviour
             {"scraps", -50},
             {"wood", -20}
         });
+
+        sounds = GameObject.Find("CameraObject").GetComponent<SoundEffectsPlayer>();
     }
 
     // Update is called once per frame
@@ -99,6 +103,7 @@ public class CursorMovementTracker : MonoBehaviour
         if(selectedPenguin!=null && selectedPenguin.transform.childCount == 2)
         {
             Vector3 pos = selectedPenguin.transform.position;
+            pos.y = 0.2f;
             Instantiate(mark, pos, new Quaternion(),selectedPenguin.transform);
         }
 
@@ -107,6 +112,7 @@ public class CursorMovementTracker : MonoBehaviour
             for(int i=0;i<selectedPenguins.Count; i++)
             {
                 Vector3 pos = selectedPenguins[i].transform.position;
+                pos.y = 0.2f;
                 Instantiate(mark, pos, new Quaternion(), selectedPenguins[i].transform);
             }
         }
@@ -413,6 +419,7 @@ public class CursorMovementTracker : MonoBehaviour
                 {
                     GameObject parent = GameObject.Find("Infrastructure");
                     GameObject child = Instantiate(houses[whatToBuild], tmp, new Quaternion(), parent.transform);
+                    sounds.ply_build();
                     HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                     childHouseInfo.type = houses[whatToBuild].name;
                     //childHouseInfo.counter = 2;//nwm co to xd
@@ -433,6 +440,7 @@ public class CursorMovementTracker : MonoBehaviour
                     {
                         GameObject parent = GameObject.Find("Infrastructure");
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, -90, 0), parent.transform);
+                        sounds.ply_build();
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
                         //childHouseInfo.counter = 2;//nwm co to xd
@@ -450,6 +458,7 @@ public class CursorMovementTracker : MonoBehaviour
                     {
                         GameObject parent = GameObject.Find("Infrastructure");
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, 90, 0), parent.transform);
+                        sounds.ply_build();
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
                         //childHouseInfo.counter = 2;//nwm co to xd
@@ -467,6 +476,7 @@ public class CursorMovementTracker : MonoBehaviour
                     {
                         GameObject parent = GameObject.Find("Infrastructure");
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, -180, 0), parent.transform);
+                        sounds.ply_build();
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
                         //childHouseInfo.counter = 2;//nwm co to xd
@@ -484,6 +494,7 @@ public class CursorMovementTracker : MonoBehaviour
                     {
                         GameObject parent = GameObject.Find("Infrastructure");
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, 180, 0), parent.transform);
+                        sounds.ply_build();
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;
                         //childHouseInfo.counter = 2;//nwm co to xd

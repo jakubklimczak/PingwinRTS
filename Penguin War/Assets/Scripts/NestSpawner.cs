@@ -29,6 +29,10 @@ public class NestSpawner : MonoBehaviour
     GameObject Inf;
     GameObject TM;
     GameObject Zoo;
+
+    SoundEffectsPlayer sounds;
+
+    bool finished = false;
     
 
 
@@ -43,6 +47,7 @@ public class NestSpawner : MonoBehaviour
         Inf = GameObject.Find("Infrastructure");
         TM = GameObject.Find("TilesMap");
         Zoo = GameObject.Find("Zoo");
+        sounds = GameObject.Find("CameraObject").GetComponent<SoundEffectsPlayer>();
     }
 
     // Update is called once per frame
@@ -78,6 +83,8 @@ public class NestSpawner : MonoBehaviour
                  
 
                 GameObject tmpPingu = Instantiate(pinguPrefab, randPosAroundNest, new Quaternion(), Zoo.transform);
+                sounds.ply_spawned();
+
 
                 tmpPingu.GetComponent<PenguinLogic>().isBot = isBot;
                 tmpPingu.GetComponent<PenguinLogic>().type = 0;
@@ -103,14 +110,17 @@ public class NestSpawner : MonoBehaviour
         timeToSpawn-=delay;
 
 
-        if(health <=0)
+        if(health <=0 && !finished)
         {
+            finished = true;
             if(isBot == true)
             {
                 Debug.Log("You won!");
+                sounds.ply_won();
             }else
             {
                 Debug.Log("You lost!");
+                sounds.ply_lost();
             }
         }
     }

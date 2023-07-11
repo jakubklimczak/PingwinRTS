@@ -10,11 +10,13 @@ public class HouseInfo : MonoBehaviour
     public int health = 50;
     public int maxHealth = 50;
     public int resources = 0;
+    SoundEffectsPlayer sounds;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        sounds = GameObject.Find("CameraObject").GetComponent<SoundEffectsPlayer>();
     }
 
     // Update is called once per frame
@@ -22,6 +24,7 @@ public class HouseInfo : MonoBehaviour
     {
         if(health <= 0)
         {
+            sounds.ply_colapse();
             Destroy(gameObject);
         }
     }

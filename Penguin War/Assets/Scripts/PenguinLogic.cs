@@ -26,6 +26,8 @@ public class PenguinLogic : MonoBehaviour
     public GameObject lapka, lapka2, lapka3, lapka4;
     Inventory inv;
 
+    SoundEffectsPlayer sounds;
+
     int ingotsNeededForWarrior = 10;
     int fishNeededForWarrior = 20;
 
@@ -43,6 +45,8 @@ public class PenguinLogic : MonoBehaviour
         lapka2 = gameObject.transform.Find("Penguin/pelvis").GetChild(2).GetChild(1).GetChild(0).gameObject;
         lapka3 = gameObject.transform.Find("Penguin/pelvis/spine/shoulder.R/shoulder.L.001/shoulder.L.002").gameObject;
         lapka4 = gameObject.transform.Find("Penguin/pelvis/spine/shoulder.R/shoulder.L.001/shoulder.L.002/shoulder.L.003").gameObject;
+
+        sounds = GameObject.Find("CameraObject").GetComponent<SoundEffectsPlayer>();
     }
 
     // Update is called once per frame
@@ -51,6 +55,7 @@ public class PenguinLogic : MonoBehaviour
         //bede umieral
         if(health<=0)
         {
+            sounds.ply_died();
             Destroy(gameObject);
         }
 

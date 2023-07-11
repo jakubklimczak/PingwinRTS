@@ -90,8 +90,10 @@ public class CursorMovementTracker : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        //jeśli się nie rusza - tu kombinować
+        //Vector3 finalDestination = selectedPenguin.transform.position;
         //checking if the user clicked on UI
         m_PointerEventData = new PointerEventData(m_EventSystem);
         m_PointerEventData.position = Input.mousePosition;
@@ -138,7 +140,8 @@ public class CursorMovementTracker : MonoBehaviour
                     if(!selectedPenguin.isAttacking)
                     {
                         Vector3 tmp2 = new Vector3(((float)Math.Round(houseRaycastHit.point.x)), (float)Math.Round(houseRaycastHit.point.y), ((float)Math.Round(houseRaycastHit.point.z)));
-                        selectedPenguin.destination = tmp2;
+                        //selectedPenguin.destination = tmp2;
+                        selectedPenguin.penguinWannaMove(selectedPenguin.transform.position, tmp2);
                         selectedPenguin.houseToAttack = houseRaycastHit.collider.gameObject;
                         if (!houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
                         {
@@ -153,7 +156,10 @@ public class CursorMovementTracker : MonoBehaviour
                                         Vector3 correct_dest_proposition = new Vector3(tmp2.x + i, tmp2.y, tmp2.z + j);
                                         if (gridScript.IsTraversable(correct_dest_proposition)) 
                                         {
-                                            selectedPenguin.destination = correct_dest_proposition;
+                                            //selectedPenguin.destination = correct_dest_proposition;
+                                            //finalDestination = correct_dest_proposition;
+                                            selectedPenguin.penguinWannaMove(selectedPenguin.transform.position, correct_dest_proposition);
+
                                             should_exit = true;
                                             break;
                                         }
@@ -191,7 +197,8 @@ public class CursorMovementTracker : MonoBehaviour
                     }else
                     {
                         Vector3 tmp2 = new Vector3(((float)Math.Round(houseRaycastHit.point.x)), (float)Math.Round(houseRaycastHit.point.y), ((float)Math.Round(houseRaycastHit.point.z)));
-                        selectedPenguin.destination = tmp2;
+                        //selectedPenguin.destination = tmp2;
+                        selectedPenguin.penguinWannaMove(selectedPenguin.transform.position, tmp2);
                         selectedPenguin.houseToAttack = houseRaycastHit.collider.gameObject;
                         if(houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
                         {
@@ -215,8 +222,9 @@ public class CursorMovementTracker : MonoBehaviour
                     
                 }else{
                     Vector3 tmp2 = new Vector3(((float)Math.Round(houseRaycastHit.point.x)), (float)Math.Round(houseRaycastHit.point.y), ((float)Math.Round(houseRaycastHit.point.z)));
-                    selectedPenguin.destination = tmp2;
-                    if(houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
+                    //selectedPenguin.destination = tmp2;
+                    selectedPenguin.penguinWannaMove(selectedPenguin.transform.position, tmp2);
+                    if (houseRaycastHit.collider.gameObject.GetComponent<HouseInfo>().isBot)
                     {
                         selectedPenguin.shouldAttack = false;
                         selectedPenguin.houseToAttack = null;
@@ -249,7 +257,8 @@ public class CursorMovementTracker : MonoBehaviour
                     if(!selectedPenguin.isAttacking)
                     {
                         Vector3 tmp2 = new Vector3(((float)Math.Round(nestRaycastHit.point.x)), (float)Math.Round(nestRaycastHit.point.y), ((float)Math.Round(nestRaycastHit.point.z)));
-                        selectedPenguin.destination = tmp2;
+                        //selectedPenguin.destination = tmp2;
+                        selectedPenguin.penguinWannaMove(selectedPenguin.transform.position, tmp2);
                         selectedPenguin.houseToAttack = nestRaycastHit.collider.gameObject;
                         if(nestRaycastHit.collider.gameObject.name == "upgr(Clone)" || 
                             nestRaycastHit.collider.gameObject.GetComponent<ResourceLogic>()!=null || 
@@ -264,7 +273,8 @@ public class CursorMovementTracker : MonoBehaviour
                     }else
                     {
                         Vector3 tmp2 = new Vector3(((float)Math.Round(nestRaycastHit.point.x)), (float)Math.Round(nestRaycastHit.point.y), ((float)Math.Round(nestRaycastHit.point.z)));
-                        selectedPenguin.destination = tmp2;
+                        //selectedPenguin.destination = tmp2;
+                        selectedPenguin.penguinWannaMove(selectedPenguin.transform.position, tmp2);
                         selectedPenguin.houseToAttack = nestRaycastHit.collider.gameObject;
                         if(nestRaycastHit.collider.gameObject.name == "upgr(Clone)" || 
                             nestRaycastHit.collider.gameObject.GetComponent<ResourceLogic>()!=null || 
@@ -280,8 +290,9 @@ public class CursorMovementTracker : MonoBehaviour
                     
                 }else{
                     Vector3 tmp2 = new Vector3(((float)Math.Round(nestRaycastHit.point.x)), (float)Math.Round(nestRaycastHit.point.y), ((float)Math.Round(nestRaycastHit.point.z)));
-                    selectedPenguin.destination = tmp2;
-                    if(nestRaycastHit.collider.gameObject.name == "upgr(Clone)" || 
+                    //selectedPenguin.destination = tmp2;
+                    selectedPenguin.penguinWannaMove(selectedPenguin.transform.position, tmp2);
+                    if (nestRaycastHit.collider.gameObject.name == "upgr(Clone)" || 
                         nestRaycastHit.collider.gameObject.GetComponent<ResourceLogic>()!=null ||
                         nestRaycastHit.collider.gameObject.GetComponent<NestSpawner>().isBot)
                     {
@@ -307,9 +318,10 @@ public class CursorMovementTracker : MonoBehaviour
             if (selectedPenguin != null && selectedPenguin.GetComponent<PenguinLogic>().isWarrior && Input.GetMouseButtonDown(1) && penguinRaycastHit.collider.GetComponentInParent<PenguinLogic>().isBot)
             {
                 selectedPenguin.GetComponent<PenguinLogic>().shouldAttack = true;
-                selectedPenguin.GetComponent<PenguinLogic>().destination = penguinRaycastHit.collider.gameObject.transform.position;
+                selectedPenguin.GetComponent<PenguinLogic>().penguinWannaMove(selectedPenguin.GetComponent<PenguinLogic>().transform.position, penguinRaycastHit.collider.gameObject.transform.position);
+                //selectedPenguin.GetComponent<PenguinLogic>().destination = penguinRaycastHit.collider.gameObject.transform.position;
                 selectedPenguin.GetComponent<PenguinLogic>().houseToAttack = penguinRaycastHit.collider.gameObject;
-
+                ///////TU PAUZOWAŁEM
                 if(selectedPenguin.transform.childCount > 2)
                             Destroy(selectedPenguin.transform.GetChild(2).gameObject);
                 selectedPenguin = null;

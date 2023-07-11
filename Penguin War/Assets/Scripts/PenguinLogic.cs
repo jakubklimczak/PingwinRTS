@@ -70,7 +70,7 @@ public class PenguinLogic : MonoBehaviour
         yield return null;
     }
 
-    private void penguinWannaMove(Vector3 origin, Vector3 destination)
+    public void penguinWannaMove(Vector3 origin, Vector3 destination)
     {
         int originX = Mathf.RoundToInt(origin.x);
         int originY = Mathf.RoundToInt(origin.y);

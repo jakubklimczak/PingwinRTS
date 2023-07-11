@@ -19,12 +19,15 @@ public class PenguinLogic : MonoBehaviour
     public bool shouldAttack = false;
     public bool isAttacking = false;
     public int animationTimer = 100;
-    
+
+    List<string> directionList = new List<string>(); 
 
     public GameObject houseToAttack = null;
     public GameObject warriorPrefab;
     public GameObject lapka, lapka2, lapka3, lapka4;
     Inventory inv;
+
+    PathfindingXD pathfinding;
 
     SoundEffectsPlayer sounds;
 
@@ -33,11 +36,54 @@ public class PenguinLogic : MonoBehaviour
 
     int ofs = 1;
 
+    /*
+     *  wywołujemy algorytm z PathfindingXD i wpisujemy do jakiejś tam listy
+     *  mamy korutyne -> ma delay taki, że nie doleci do tego "następnego" pola
+     *  w korutynie bierze pierwszą rzecz z listy, usuwa i ustawia destination tak żeby tam poleciał
+     * */
+
+    public IEnumerator setNextDestination()
+    {
+        if(directionList.Count > 0)
+        {
+            string currentDirection = directionList[0];
+            switch (currentDirection)
+            {
+                case "Left":
+                    destination = destination + new Vector3(-1, 0, 0 );
+                    break;
+                case "Right":
+                    destination = destination + new Vector3(1, 0, 0);
+                    break;
+                case "Up":
+                    destination = destination + new Vector3(0, 0, -1);
+                    break;
+                case "Down":
+                    destination = destination + new Vector3(0, 0, 1);
+                    break;
+                default:
+                    Debug.Log("uh oh, stinky - coś nie tak z pathfindingiem");
+                    break;
+            }
+            directionList.RemoveAt(0);
+        }
+        yield return null;
+    }
+
+    private void penguinWannaMove(Vector3 origin, Vector3 destination)
+    {
+        int originX = Mathf.RoundToInt(origin.x);
+        int originY = Mathf.RoundToInt(origin.y);
+        int destinationX = Mathf.RoundToInt(destination.x);
+        int destinationY = Mathf.RoundToInt(destination.y);
+        directionList = pathfinding.FindPath(originX, originY, destinationX, destinationY);
+    }
 
     void Start()
     {
         destination = this.gameObject.transform.position;
         inv = GameObject.Find("Inventory").GetComponent<Inventory>();
+        pathfinding = GameObject.Find("Pathfinding").GetComponent<PathfindingXD>();
 
         animationTimer = 100;
         //Debug.Log(gameObject.transform.Find("Penguin/pelvis").GetChild(2).gameObject.name);

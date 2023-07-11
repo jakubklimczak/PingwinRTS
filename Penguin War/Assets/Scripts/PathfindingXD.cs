@@ -5,68 +5,68 @@ using UnityEngine;
 
 public class Cell
 {
-    public int X { get; set; }
-    public int Y { get; set; }
-    public int G { get; set; }
-    public int H { get; set; }
-    public int F => G + H;
+    public int arrayCoordinateX { get; set; }
+    public int arrayCoordinateY { get; set; }
+    public int costOfMoving { get; set; }
+    public int sumOfCosts { get; set; }
+    public int costUsingCurrentCell => costOfMoving + sumOfCosts;
     public Cell Parent { get; set; }
 }
 
 public class PathfindingXD : MonoBehaviour
 {
     private int[,] grid;
-    private int gridSize;
+    private int gridSize = 400000;
+    public GridLogic gridLogic;
 
-
-    public PathfindingXD(int[,] grid, int gridSize)
+    private void Start()
     {
-        this.grid = grid;
-        this.gridSize = gridSize;
+        gridLogic = GameObject.Find("Grid").GetComponent<GridLogic>();
+        grid = gridLogic.map;
     }
 
     public List<string> FindPath(int originX, int originY, int destinationX, int destinationY)
     {
-        Cell origin = new Cell { X = originX, Y = originY, G = 0, H = CalculateH(originX, originY, destinationX, destinationY), Parent = null };
-        Cell destination = new Cell { X = destinationX, Y = destinationY };
+        Cell origin = new Cell { arrayCoordinateX = originX, arrayCoordinateY = originY, costOfMoving = 0, sumOfCosts = CalculateSumOfCosts(originX, originY, destinationX, destinationY), Parent = null };
+        Cell destination = new Cell { arrayCoordinateX = destinationX, arrayCoordinateY = destinationY };
 
-        List<Cell> openList = new List<Cell>();
-        List<Cell> closedList = new List<Cell>();
+        List<Cell> unevaluatedCells = new List<Cell>();
+        List<Cell> evaluatedCells = new List<Cell>();
 
-        openList.Add(origin);
+        unevaluatedCells.Add(origin);
 
-        while (openList.Count > 0)
+        while (unevaluatedCells.Count > 0) 
         {
-            Cell currentCell = GetLowestFCell(openList);
+            Cell currentCell = GetLowestFCell(unevaluatedCells);
 
-            if (currentCell.X == destination.X && currentCell.Y == destination.Y)
+            if (currentCell.arrayCoordinateX == destination.arrayCoordinateX && currentCell.arrayCoordinateY == destination.arrayCoordinateY)
             {
                 return GeneratePath(currentCell);
             }
 
-            openList.Remove(currentCell);
-            closedList.Add(currentCell);
+            unevaluatedCells.Remove(currentCell);
+            evaluatedCells.Add(currentCell);
 
             List<Cell> neighbors = GetNeighbors(currentCell);
 
             foreach (Cell neighbor in neighbors)
             {
-                if (closedList.Contains(neighbor) || grid[neighbor.X, neighbor.Y] > 0)
+                if (evaluatedCells.Contains(neighbor) || grid[neighbor.arrayCoordinateX, neighbor.arrayCoordinateY] > 0)
                 {
                     continue;
                 }
 
-                int tentativeG = currentCell.G + 1;
+                int tentativeG = currentCell.costOfMoving + 1; //tu pokombinowaæ +0.001
 
-                if (!openList.Contains(neighbor) || tentativeG < neighbor.G)
+                if (!unevaluatedCells.Contains(neighbor) || tentativeG < neighbor.costOfMoving)
                 {
                     neighbor.Parent = currentCell;
-                    neighbor.G = tentativeG;
-                    neighbor.H = CalculateH(neighbor.X, neighbor.Y, destinationX, destinationY);
+                    neighbor.costOfMoving = tentativeG;
+                    neighbor.sumOfCosts = CalculateSumOfCosts(neighbor.arrayCoordinateX, neighbor.arrayCoordinateY, destinationX, destinationY);
 
-                    if (!openList.Contains(neighbor))
+                    if (!unevaluatedCells.Contains(neighbor))
                     {
-                        openList.Add(neighbor);
+                        unevaluatedCells.Add(neighbor);
                     }
                 }
             }
@@ -75,7 +75,7 @@ public class PathfindingXD : MonoBehaviour
         return null;
     }
 
-    private int CalculateH(int startX, int startY, int endX, int endY)
+    private int CalculateSumOfCosts(int startX, int startY, int endX, int endY)
     {
         return Math.Abs(endX - startX) + Math.Abs(endY - startY);
     }
@@ -84,24 +84,24 @@ public class PathfindingXD : MonoBehaviour
     {
         List<Cell> neighbors = new List<Cell>();
 
-        if (cell.X > 0)
+        if (cell.arrayCoordinateX > 0)
         {
-            neighbors.Add(new Cell { X = cell.X - 1, Y = cell.Y });
+            neighbors.Add(new Cell { arrayCoordinateX = cell.arrayCoordinateX - 1, arrayCoordinateY = cell.arrayCoordinateY });
         }
 
-        if (cell.X < gridSize - 1)
+        if (cell.arrayCoordinateX < gridSize - 1)
         {
-            neighbors.Add(new Cell { X = cell.X + 1, Y = cell.Y });
+            neighbors.Add(new Cell { arrayCoordinateX = cell.arrayCoordinateX + 1, arrayCoordinateY = cell.arrayCoordinateY });
         }
 
-        if (cell.Y > 0)
+        if (cell.arrayCoordinateY > 0)
         {
-            neighbors.Add(new Cell { X = cell.X, Y = cell.Y - 1 });
+            neighbors.Add(new Cell { arrayCoordinateX = cell.arrayCoordinateX, arrayCoordinateY = cell.arrayCoordinateY - 1 });
         }
 
-        if (cell.Y < gridSize - 1)
+        if (cell.arrayCoordinateY < gridSize - 1)
         {
-            neighbors.Add(new Cell { X = cell.X, Y = cell.Y + 1 });
+            neighbors.Add(new Cell { arrayCoordinateX = cell.arrayCoordinateX, arrayCoordinateY = cell.arrayCoordinateY + 1 });
         }
 
         return neighbors;
@@ -113,7 +113,7 @@ public class PathfindingXD : MonoBehaviour
 
         for (int i = 1; i < cells.Count; i++)
         {
-            if (cells[i].F < lowestFCell.F)
+            if (cells[i].costUsingCurrentCell < lowestFCell.costUsingCurrentCell)
             {
                 lowestFCell = cells[i];
             }
@@ -129,8 +129,8 @@ public class PathfindingXD : MonoBehaviour
 
         while (currentCell.Parent != null)
         {
-            int deltaX = currentCell.X - currentCell.Parent.X;
-            int deltaY = currentCell.Y - currentCell.Parent.Y;
+            int deltaX = currentCell.arrayCoordinateX - currentCell.Parent.arrayCoordinateX;
+            int deltaY = currentCell.arrayCoordinateY - currentCell.Parent.arrayCoordinateY;
 
             if (deltaX == -1)
             {

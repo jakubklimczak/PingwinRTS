@@ -173,6 +173,7 @@ public class CursorMovementTracker : MonoBehaviour
                             {
                                 selectedPenguin.destination = selectedPenguin.transform.position; //nie ma miejsca w destynacji, error.mp3
                                 Debug.Log("error.mp3");
+                                sounds.ply_cant();
                             }
 
                         }
@@ -421,6 +422,7 @@ public class CursorMovementTracker : MonoBehaviour
                             {
                                 canPlace = false;
                                 Debug.Log("Not enough " + resource.Key);
+                                sounds.ply_cant();
                             }
                         }
                     }

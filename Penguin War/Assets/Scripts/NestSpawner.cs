@@ -33,7 +33,7 @@ public class NestSpawner : MonoBehaviour
     SoundEffectsPlayer sounds;
 
     bool finished = false;
-    
+    bool canPlymp = true;
 
 
     void Start()
@@ -72,10 +72,14 @@ public class NestSpawner : MonoBehaviour
                         Mathf.RoundToInt(nestPos.y), Mathf.RoundToInt(nestPos.z) + rnd.Next(1, 2) * (rnd.Next(0, 2) == 0 ? 1 : -1)))
                     ) 
                 {
+                    
                     timeout_counter--;
                     if (timeout_counter <= 0)
                     {
                         Debug.Log("thank you, gud buy");
+                        if(canPlymp == true)
+                            sounds.ply_cant();
+                        canPlymp = false;
                         return;
                     }
                         
@@ -83,6 +87,7 @@ public class NestSpawner : MonoBehaviour
                  
 
                 GameObject tmpPingu = Instantiate(pinguPrefab, randPosAroundNest, new Quaternion(), Zoo.transform);
+                canPlymp = true;
                 sounds.ply_spawned();
 
 

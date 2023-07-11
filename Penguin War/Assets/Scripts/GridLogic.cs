@@ -597,7 +597,7 @@ void Start()
 
             for(int j = 0; j < pinguinsObjs.Length; j++)
             {
-                if (new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.z), Mathf.RoundToInt(pinguinsObjs[j].transform.position.x)] == 4 && new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.z), Mathf.RoundToInt(pinguinsObjs[j].transform.position.x)] == 0)
+                if (new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.z), Mathf.RoundToInt(pinguinsObjs[j].transform.position.x)] == 4 || new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.z), Mathf.RoundToInt(pinguinsObjs[j].transform.position.x)] == 0)
                 {
                     //Debug.Log(new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.x), Mathf.RoundToInt(pinguinsObjs[j].transform.position.z)]);
                     new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.z), Mathf.RoundToInt(pinguinsObjs[j].transform.position.x)] += 13;

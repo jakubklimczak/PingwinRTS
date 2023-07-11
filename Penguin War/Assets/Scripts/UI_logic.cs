@@ -124,8 +124,6 @@ private void changecolor(Toggle changeToggle)
             cb.normalColor = Color.gray;
             cb.highlightedColor = Color.gray;
         }
-        Debug.Log("here");
-        Debug.Log(cb.normalColor);
         changeToggle.colors = cb;
     }
     private void updateUnitPanel()

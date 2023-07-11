@@ -90,7 +90,7 @@ public class CursorMovementTracker : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         //jeśli się nie rusza - tu kombinować
         //Vector3 finalDestination = selectedPenguin.transform.position;
@@ -397,6 +397,7 @@ public class CursorMovementTracker : MonoBehaviour
                 else
                 {
                     //tutaj feedback jak nie wolno się przesunąć
+                    sounds.ply_cant();
                 }
             }
 

@@ -508,7 +508,7 @@ void Start()
     //can you move into given position
     public bool IsTraversable(Vector3 position) 
     {
-        int chosen_object = map[Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.z)];
+        int chosen_object = map[Mathf.RoundToInt(position.z), Mathf.RoundToInt(position.x)];
         //Debug.Log("at("+ position.x+";"+ position.z +") there is:"+ chosen_object);
         if (chosen_object == 0 || chosen_object == 4)
         {
@@ -523,7 +523,7 @@ void Start()
 
     public void SetObjectAtPosition(Vector3 position, int object_type)
     {
-        map[(int)position.x, (int)position.z] = object_type;
+        map[(int)position.z, (int)position.x] = object_type;
     }
 
     ////Brak sprawdzania!
@@ -586,14 +586,21 @@ void Start()
             //         Debug.Log(new_map[Mathf.RoundToInt(p.transform.position.x), Mathf.RoundToInt(p.transform.position.z)]);
             //     }
             // }
+            //
+            // {
+            //  {},
+            //  {}
+            // },
+            //{
+            //}
 
 
             for(int j = 0; j < pinguinsObjs.Length; j++)
             {
-                if (new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.x), Mathf.RoundToInt(pinguinsObjs[j].transform.position.z)] != 13)
+                if (new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.z), Mathf.RoundToInt(pinguinsObjs[j].transform.position.x)] == 4 && new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.z), Mathf.RoundToInt(pinguinsObjs[j].transform.position.x)] == 0)
                 {
                     //Debug.Log(new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.x), Mathf.RoundToInt(pinguinsObjs[j].transform.position.z)]);
-                    new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.x), Mathf.RoundToInt(pinguinsObjs[j].transform.position.z)] += 13;
+                    new_map[Mathf.RoundToInt(pinguinsObjs[j].transform.position.z), Mathf.RoundToInt(pinguinsObjs[j].transform.position.x)] += 13;
                 }
             }
 

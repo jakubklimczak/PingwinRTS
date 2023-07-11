@@ -10,7 +10,6 @@ using static Inventory;
 using static NestSpawner;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.UIElements;
-using System.Linq;
 
 public class GridLogic : MonoBehaviour
 {

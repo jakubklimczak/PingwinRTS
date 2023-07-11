@@ -100,8 +100,9 @@ public class PenguinLogic : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        StartCoroutine(setNextDestination());
         //bede umieral
-        if(health<=0)
+        if (health<=0)
         {
             sounds.ply_died();
             Destroy(gameObject);

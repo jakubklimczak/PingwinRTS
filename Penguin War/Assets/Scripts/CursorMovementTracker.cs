@@ -322,7 +322,6 @@ public class CursorMovementTracker : MonoBehaviour
                 selectedPenguin.GetComponent<PenguinLogic>().penguinWannaMove(selectedPenguin.GetComponent<PenguinLogic>().transform.position, penguinRaycastHit.collider.gameObject.transform.position);
                 //selectedPenguin.GetComponent<PenguinLogic>().destination = penguinRaycastHit.collider.gameObject.transform.position;
                 selectedPenguin.GetComponent<PenguinLogic>().houseToAttack = penguinRaycastHit.collider.gameObject;
-                ///////TU PAUZOWAŁEM
                 if(selectedPenguin.transform.childCount > 2)
                             Destroy(selectedPenguin.transform.GetChild(2).gameObject);
                 selectedPenguin = null;
@@ -381,7 +380,8 @@ public class CursorMovementTracker : MonoBehaviour
                 Vector3 tmp2 = new Vector3(((float)Math.Round(groundRaycastHit.point.x)), (float)Math.Round(groundRaycastHit.point.y), ((float)Math.Round(groundRaycastHit.point.z)));
                 if (gridScript.IsTraversable(tmp2))
                 {
-                    selectedPenguin.destination = tmp2;
+                    //selectedPenguin.destination = tmp2;
+                    selectedPenguin.penguinWannaMove(selectedPenguin.transform.position, tmp2);
                     //gridScript.UpdatePosition(selectedPenguin.transform.position, tmp2, 13); //13 bo pingiwn
                     if (selectedPenguin.isAttacking)
                     {
@@ -562,7 +562,8 @@ public class CursorMovementTracker : MonoBehaviour
                         }
                         selectedPenguins.Clear();
 
-                        p.GetComponent<PenguinLogic>().destination = new Vector3((float)(tmp2.x + rand1), tmp2.y, (float)(tmp.z + rand2));
+                        p.GetComponent<PenguinLogic>().penguinWannaMove(p.GetComponent<PenguinLogic>().transform.position, new Vector3((float)(tmp2.x + rand1), tmp2.y, (float)(tmp.z + rand2)));
+                        //p.GetComponent<PenguinLogic>().destination = new Vector3((float)(tmp2.x + rand1), tmp2.y, (float)(tmp.z + rand2));
                     }
                 }
 

@@ -24,7 +24,7 @@ public class PenguinLogic : MonoBehaviour
 
     public GameObject houseToAttack = null;
     public GameObject warriorPrefab;
-    public GameObject lapka, lapka2, lapka3, lapka4;
+    public GameObject lapka, lapka2, lapka3, lapka4, mieczor;
     Inventory inv;
 
     PathfindingXD pathfinding;
@@ -91,6 +91,8 @@ public class PenguinLogic : MonoBehaviour
         lapka2 = gameObject.transform.Find("Penguin/pelvis").GetChild(2).GetChild(1).GetChild(0).gameObject;
         lapka3 = gameObject.transform.Find("Penguin/pelvis/spine/shoulder.R/shoulder.L.001/shoulder.L.002").gameObject;
         lapka4 = gameObject.transform.Find("Penguin/pelvis/spine/shoulder.R/shoulder.L.001/shoulder.L.002/shoulder.L.003").gameObject;
+        mieczor = gameObject.transform.Find("Penguin/pelvis").GetChild(2).GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(1).gameObject;
+        mieczor.transform.Rotate(0, 0, -40);
 
         sounds = GameObject.Find("CameraObject").GetComponent<SoundEffectsPlayer>();
     }
@@ -222,36 +224,72 @@ public class PenguinLogic : MonoBehaviour
         }
     }
 
-    void Update() {
-        if(isAttacking || true)
+    void Update()
+    {
+        if (isAttacking || true)
         {
-            if(animationTimer > 0)
+            if (animationTimer > 0)
             {
                 //tukej animejszons
                 if (isWarrior == true && isAttacking == true)
                 {
-                    if (animationTimer >50)
+                    if (animationTimer < 25)
                     {
-                        lapka.transform.Translate(-0.002f, 0, -0.0001f);
-                        lapka2.transform.Translate(-0.002f, 0, -0.0001f);
-                        lapka3.transform.Translate(-0.002f, 0, -0.0001f);
-                        lapka4.transform.Translate(-0.002f, 0, -0.0001f);
+                        //lapka.transform.Translate(0.0020579f, 0, -0.0000558976f);
+                        //lapka2.transform.Translate(-0.0005582816f, 0, 0.00013782336f);
+                        //lapka3.transform.Translate(-0.01413232f, 0, 0.00018630092f);
+                        //lapka4.transform.Translate(-0.0006052968f, 0, -0.00037247104f);
+                        lapka.transform.Rotate(0.001f, 1, 0.01f);
+                        lapka2.transform.Rotate(0.001f, 1, 0.01f);
+                        lapka3.transform.Rotate(0.001f, 1, 0.01f);
+                        lapka4.transform.Rotate(0.001f, 1, 0.01f);
+                        mieczor.transform.Rotate(0.0001f, 0.0001f, 0.01f);
+                        lapka.transform.Translate(-0.00002f, 0, -0.00001f);
+                        lapka2.transform.Translate(-0.00002f, 0, -0.00001f);
+                        lapka3.transform.Translate(-0.00002f, 0, -0.00001f);
+                        mieczor.transform.Translate(-0.00002f, -0.00001f, -0.00001f);
+                    }
+                    else if (animationTimer >= 25 && animationTimer < 75)
+                    {
+                        //lapka.transform.Translate(-0.0020579f, 0, 0.0000558976f);
+                        //lapka2.transform.Translate(0.0005582816f, 0, -0.00013782336f);
+                        //lapka3.transform.Translate(0.01413232f, 0, -0.00018630092f);
+                        //lapka4.transform.Translate(0.0006052968f, 0, 0.00037247104f);
+                        lapka.transform.Rotate(-0.001f, -1, -0.01f);
+                        lapka2.transform.Rotate(-0.001f, -1, -0.01f);
+                        lapka3.transform.Rotate(-0.001f, -1, -0.01f);
+                        lapka4.transform.Rotate(-0.001f, -1, -0.01f);
+                        mieczor.transform.Rotate(-0.0001f, -0.0001f, -0.01f);
+                        lapka.transform.Translate(0.00002f, 0, 0.00001f);
+                        lapka2.transform.Translate(0.00002f, 0, 0.00001f);
+                        lapka3.transform.Translate(0.00002f, 0, 0.00001f);
+                        mieczor.transform.Translate(0.00002f, 0.00001f, 0.00001f);
                     }
                     else
                     {
-                        lapka.transform.Translate(0.002f, 0, 0.0001f);
-                        lapka2.transform.Translate(0.002f, 0, 0.0001f);
-                        lapka3.transform.Translate(0.002f, 0, 0.0001f);
-                        lapka4.transform.Translate(0.002f, 0, 0.0001f);
+                        //lapka.transform.Translate(0.0020579f, 0, -0.0000558976f);
+                        //lapka2.transform.Translate(-0.0005582816f, 0, 0.00013782336f);
+                        //lapka3.transform.Translate(-0.01413232f, 0, 0.00018630092f);
+                        //lapka4.transform.Translate(-0.0006052968f, 0, -0.00037247104f);
+                        lapka.transform.Rotate(0.001f, 1, 0.01f);
+                        lapka2.transform.Rotate(0.001f, 1, 0.01f);
+                        lapka3.transform.Rotate(0.001f, 1, 0.01f);
+                        lapka4.transform.Rotate(0.001f, 1, 0.01f);
+                        mieczor.transform.Rotate(0.0001f, 0.0001f, 0.01f);
+                        lapka.transform.Translate(-0.00002f, 0, -0.00001f);
+                        lapka2.transform.Translate(-0.00002f, 0, -0.00001f);
+                        lapka3.transform.Translate(-0.00002f, 0, -0.00001f);
+                        mieczor.transform.Translate(-0.00002f, -0.00001f, -0.00001f);
                     }
                 }
                 animationTimer--;
-            }else
+            }
+            else
             {
                 animationTimer = 100;//nwm czy tyle wystarczy na animacje
             }
         }
-    else
+        else
         {
             animationTimer = 0;
         }

@@ -11,6 +11,9 @@ public class UI_logic : MonoBehaviour
     public TextMeshProUGUI text_fish, text_ice, text_wood,text_scrap,text_iron;
 
     public GameObject unit_panel;
+    public GameObject many_pingu_icon;
+    public GameObject single_pingu_icon;
+    public GameObject warrior_pingu_icon;
 
     public Slider hp_value_slider;
 
@@ -24,9 +27,9 @@ public class UI_logic : MonoBehaviour
     private int current_health = 1, current_max_health = 1;
     private string current_owner = "";
     private int current_attack = 0;
-    private PenguinLogic current_penguin = null;
-    private HouseInfo current_house = null;
-    private NestSpawner current_nest = null;
+    //private PenguinLogic current_penguin = null;
+    //private HouseInfo current_house = null;
+    //private NestSpawner current_nest = null;
 
     public TextMeshProUGUI CurrentMaxHealth, CurrentValueHealth,AttackValue,Owner;
     void Start()
@@ -63,7 +66,6 @@ public class UI_logic : MonoBehaviour
             Time.timeScale = 0.0f;
             PauseUI.SetActive(true);
             GameplayUI.SetActive(false);
-            Debug.Log("enabling pause");
         }
     }
 
@@ -128,82 +130,121 @@ private void changecolor(Toggle changeToggle)
     }
     private void updateUnitPanel()
     {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit pinguRayHit, float.MaxValue, 1 << 8))//8 bo 8 layer to pingwiny
-        {
-            unit_panel.SetActive(true);
-            current_penguin = pinguRayHit.collider.gameObject.GetComponent<PenguinLogic>();
-            current_house = null;
-            current_nest = null;
-            current_health = current_penguin.health;
-            current_max_health = current_penguin.maxHealth;
-            current_attack = current_penguin.damage;
-            current_owner = current_penguin.isBot ? "Enemy" : "Ally";
-            setCurrentHealth();
-            return;
-        }
+        //Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        //if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit pinguRayHit, float.MaxValue, 1 << 8))//8 bo 8 layer to pingwiny
+        //{
+        //    unit_panel.SetActive(true);
+        //    current_penguin = pinguRayHit.collider.gameObject.GetComponent<PenguinLogic>();
+        //    current_house = null;
+        //    current_nest = null;
+        //    current_health = current_penguin.health;
+        //    current_max_health = current_penguin.maxHealth;
+        //    current_attack = current_penguin.damage;
+        //    current_owner = current_penguin.isBot ? "Enemy" : "Ally";
+        //    setCurrentHealth();
+        //    return;
+        //}
 
-        if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit hatkaRayHit, float.MaxValue, 1 << 7))//8 bo 8 layer to pingwiny
-        {
-            unit_panel.SetActive(true);
-            current_house = hatkaRayHit.collider.gameObject.GetComponent<HouseInfo>();
-            current_penguin = null;
-            current_nest = null;
-            current_health = current_house.health;
-            current_max_health = current_house.maxHealth;
-            current_attack = 0;
-            current_owner = current_house.isBot ? "Enemy" : "Ally";
-            setCurrentHealth();
-            return;
-        }
+        //if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit hatkaRayHit, float.MaxValue, 1 << 7))//8 bo 8 layer to pingwiny
+        //{
+        //    unit_panel.SetActive(true);
+        //    current_house = hatkaRayHit.collider.gameObject.GetComponent<HouseInfo>();
+        //    current_penguin = null;
+        //    current_nest = null;
+        //    current_health = current_house.health;
+        //    current_max_health = current_house.maxHealth;
+        //    current_attack = 0;
+        //    current_owner = current_house.isBot ? "Enemy" : "Ally";
+        //    setCurrentHealth();
+        //    return;
+        //}
 
-        if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit nestRayHit, float.MaxValue, 1 << 9))//8 bo 8 layer to pingwiny
+        //if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit nestRayHit, float.MaxValue, 1 << 9))//8 bo 8 layer to pingwiny
+        //{
+        //    if (nestRayHit.collider.gameObject.GetComponent<NestSpawner>() != null)
+        //    {
+        //        unit_panel.SetActive(true);
+        //        current_nest = nestRayHit.collider.gameObject.GetComponent<NestSpawner>();
+        //        current_house = null;
+        //        current_penguin = null;
+        //        current_health = current_nest.health;
+        //        current_max_health = current_nest.maxHealth;
+        //        current_attack = 0;
+        //        current_owner = current_nest.isBot ? "Enemy" : "Ally";
+        //        setCurrentHealth();
+        //        return;
+        //    }
+
+        //    if (nestRayHit.collider.gameObject.GetComponent<HouseInfo>() != null)//troch� to skoplikowane wi�c �atwiej �eby by� kod zdublowany
+        //    {
+        //        unit_panel.SetActive(true);
+        //        current_house = nestRayHit.collider.gameObject.GetComponent<HouseInfo>();
+        //        current_penguin = null;
+        //        current_nest = null;
+        //        current_health = current_house.health;
+        //        current_max_health = current_house.maxHealth;
+        //        current_attack = 0;
+        //        current_owner = current_house.isBot ? "Enemy" : "Ally";
+        //        setCurrentHealth();
+        //        return;
+        //    }
+        //}
+        //if(current_house != null)
+        //{
+        //    current_health = current_house.health;
+        //    current_max_health = current_house.maxHealth;
+        //}
+        //if (current_nest != null)
+        //{
+        //    current_health = current_nest.health;
+        //    current_max_health = current_nest.maxHealth;
+        //}
+        //if (current_penguin != null)
+        //{
+        //    current_health = current_penguin.health;
+        //    current_max_health = current_penguin.maxHealth;
+        //}
+
+        //if (Input.GetMouseButtonDown(0)) 
+        //{
+        //    unit_panel.SetActive(false);
+        //}
+        
+        PenguinLogic temp_pingu_logic = CursorTracker.GetCurrentlySelectedPenguine();
+        if (temp_pingu_logic != null)
         {
-            if (nestRayHit.collider.gameObject.GetComponent<NestSpawner>() != null)
+            current_health = temp_pingu_logic.health;
+            current_max_health = temp_pingu_logic.maxHealth;
+            if (temp_pingu_logic.isWarrior)
             {
-                unit_panel.SetActive(true);
-                current_nest = nestRayHit.collider.gameObject.GetComponent<NestSpawner>();
-                current_house = null;
-                current_penguin = null;
-                current_health = current_nest.health;
-                current_max_health = current_nest.maxHealth;
-                current_attack = 0;
-                current_owner = current_nest.isBot ? "Enemy" : "Ally";
-                setCurrentHealth();
-                return;
+                setCurrentUnitIcon("single_warrior");
+            }
+            else
+            {
+                setCurrentUnitIcon("single_basic");
             }
 
-            if (nestRayHit.collider.gameObject.GetComponent<HouseInfo>() != null)//troch� to skoplikowane wi�c �atwiej �eby by� kod zdublowany
-            {
-                unit_panel.SetActive(true);
-                current_house = nestRayHit.collider.gameObject.GetComponent<HouseInfo>();
-                current_penguin = null;
-                current_nest = null;
-                current_health = current_house.health;
-                current_max_health = current_house.maxHealth;
-                current_attack = 0;
-                current_owner = current_house.isBot ? "Enemy" : "Ally";
-                setCurrentHealth();
-                return;
-            }
-        }
-        if(current_house != null)
-        {
-            current_health = current_house.health;
-            current_max_health = current_house.maxHealth;
-        }
-        if (current_nest != null)
-        {
-            current_health = current_nest.health;
-            current_max_health = current_nest.maxHealth;
-        }
-        if (current_penguin != null)
-        {
-            current_health = current_penguin.health;
-            current_max_health = current_penguin.maxHealth;
+            unit_panel.SetActive(true);
         }
 
-        if (Input.GetMouseButtonDown(0)) 
+        //moim zdaniem takie rozbijanie na list i pojednyczego to dalej średni pomysł
+        List<PenguinLogic> temp_pingu_list = CursorTracker.GetCurrentlySelectedPenguineList();
+        if (temp_pingu_list.Count > 0)
+        {
+            setAveragesPinguStatsFromList(temp_pingu_list);
+            if(temp_pingu_list.Count > 1)
+            {
+                setCurrentUnitIcon("multiple");
+            }
+            else
+            {
+                setCurrentUnitIcon("single_basic");
+            }
+            
+            unit_panel.SetActive(true);
+        }
+
+        if(temp_pingu_logic == null && temp_pingu_list.Count <= 0)
         {
             unit_panel.SetActive(false);
         }
@@ -230,5 +271,54 @@ private void changecolor(Toggle changeToggle)
     private void setCurrentOwner()
     {
         Owner.text = current_owner;
+    }
+
+    private void setAveragesPinguStatsFromList(List<PenguinLogic> pingu_list) 
+    {
+        int avg_max_health = 0;
+        int avg_health = 0;
+        int avg_attack = 0;
+
+        foreach (PenguinLogic p in pingu_list)
+        {
+            avg_max_health += p.maxHealth;
+            avg_health += p.health;
+            avg_attack += p.damage;
+            current_owner = p.isBot ? "Enemy" : "Ally";
+        }
+        int list_count = pingu_list.Count;
+
+        current_max_health = avg_max_health / list_count;
+        current_health = avg_health/list_count;
+        current_attack = avg_attack/list_count;
+
+    }
+
+    private void setCurrentUnitIcon(string unit_type)
+    {
+        switch (unit_type)
+        {
+            case "single_basic":
+                many_pingu_icon.SetActive(true);
+                single_pingu_icon.SetActive(false);
+                warrior_pingu_icon.SetActive(false);
+                break;
+            case "single_warrior":
+                many_pingu_icon.SetActive(false);
+                single_pingu_icon.SetActive(false);
+                warrior_pingu_icon.SetActive(true);
+                break;
+            case "multiple":
+                many_pingu_icon.SetActive(true);
+                single_pingu_icon.SetActive(false);
+                warrior_pingu_icon.SetActive(false);
+                break;
+            default:
+            case "none":
+                many_pingu_icon.SetActive(false);
+                single_pingu_icon.SetActive(false);
+                warrior_pingu_icon.SetActive(false);
+                break;
+        }
     }
 }

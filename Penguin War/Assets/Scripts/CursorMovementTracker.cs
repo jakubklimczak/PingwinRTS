@@ -5,7 +5,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+using System.Linq;
 
 public class CursorMovementTracker : MonoBehaviour
 {
@@ -595,4 +595,23 @@ public class CursorMovementTracker : MonoBehaviour
             }
         }
     }
+
+    public PenguinLogic GetCurrentlySelectedPenguine()
+    {
+        return this.selectedPenguin;
+    }
+
+    //casting gameobject list into PenguineList
+    public List<PenguinLogic> GetCurrentlySelectedPenguineList()
+    {
+        List<PenguinLogic> result = new List<PenguinLogic>();
+        foreach (GameObject p in selectedPenguins)
+        {
+            result.Add(p.GetComponent<PenguinLogic>());
+        }
+
+
+        return result;
+    }
+    
 }

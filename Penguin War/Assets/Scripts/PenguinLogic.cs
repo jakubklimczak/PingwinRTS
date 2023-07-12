@@ -91,8 +91,12 @@ public class PenguinLogic : MonoBehaviour
         lapka2 = gameObject.transform.Find("Penguin/pelvis").GetChild(2).GetChild(1).GetChild(0).gameObject;
         lapka3 = gameObject.transform.Find("Penguin/pelvis/spine/shoulder.R/shoulder.L.001/shoulder.L.002").gameObject;
         lapka4 = gameObject.transform.Find("Penguin/pelvis/spine/shoulder.R/shoulder.L.001/shoulder.L.002/shoulder.L.003").gameObject;
-        mieczor = gameObject.transform.Find("Penguin/pelvis").GetChild(2).GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(1).gameObject;
-        mieczor.transform.Rotate(0, 0, -40);
+        if (this.isWarrior)
+        {
+            mieczor = gameObject.transform.Find("Penguin/pelvis").GetChild(2).GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetChild(1).gameObject;
+            mieczor.transform.Rotate(0, 0, -40);
+        }
+
 
         sounds = GameObject.Find("CameraObject").GetComponent<SoundEffectsPlayer>();
     }

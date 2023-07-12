@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13158,6 +13158,7 @@ GameObject:
   - component: {fileID: 1211620020}
   - component: {fileID: 1211620019}
   - component: {fileID: 1211620021}
+  - component: {fileID: 1211620022}
   m_Layer: 0
   m_Name: CameraObject
   m_TagString: Untagged
@@ -13185,7 +13186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211620018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.156141, y: 8.39, z: 11.958042}
+  m_LocalPosition: {x: 8.72, y: 2.96, z: 11.958042}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13214,6 +13215,19 @@ MonoBehaviour:
   cant_sound: {fileID: 8300000, guid: 501b4ab9048648947bbe2ed43955d499, type: 3}
   lost_sound: {fileID: 8300000, guid: 1cb380b429cafe441a5aca7405e47f70, type: 3}
   won_sound: {fileID: 8300000, guid: 2ab80da9392943c49a1a734e54dbc64a, type: 3}
+--- !u!135 &1211620022
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211620018}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1218920108
 GameObject:
   m_ObjectHideFlags: 0

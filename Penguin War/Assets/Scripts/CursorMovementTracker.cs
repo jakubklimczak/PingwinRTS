@@ -130,7 +130,21 @@ public class CursorMovementTracker : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                //Debug.Log(houseRaycastHit.collider.GetComponentInParent<HouseInfo>().type);
+                Debug.Log(houseRaycastHit.collider.GetComponentInParent<HouseInfo>().type);
+                if(selectedPenguin.transform.childCount > 2)
+                            Destroy(selectedPenguin.transform.GetChild(2).gameObject);
+                selectedPenguin = null;
+
+                foreach(GameObject s in selectedPenguins)
+                {
+                    if(s.transform.childCount > 2)
+                    {
+                        Destroy(s.transform.GetChild(2).gameObject);
+                    }
+                }
+                selectedPenguins.Clear();
+                areaSelected = false;
+                penguinSelected = false;
             }
 
             if(penguinSelected && selectedPenguin!=null && Input.GetMouseButtonDown(1) && !areaSelected)

@@ -18,7 +18,7 @@ public class Cell
 public class PathfindingXD : MonoBehaviour
 {
     private int[,] grid;
-    private int gridSize = 200;
+    private int gridSize;
 
     private void Start()
     {
@@ -27,6 +27,7 @@ public class PathfindingXD : MonoBehaviour
     public List<string> FindPath(int[,] grid, int originX, int originY, int destinationX, int destinationY)
     {
         this.grid = grid;
+        gridSize = (int)Mathf.Sqrt(grid.Length);
 
         Cell origin = new Cell { arrayCoordinateX = originX, arrayCoordinateY = originY, costOfMoving = 0, sumOfCosts = CalculateSumOfCosts(originX, originY, destinationX, destinationY), Parent = null };
         Cell destination = new Cell { arrayCoordinateX = destinationX, arrayCoordinateY = destinationY };
@@ -85,24 +86,28 @@ public class PathfindingXD : MonoBehaviour
     {
         List<Cell> neighbors = new List<Cell>();
 
-        // Check for jump points in all 8 directions
+        int startX = cell.arrayCoordinateX;
+        int startY = cell.arrayCoordinateY;
+
         for (int dx = -1; dx <= 1; dx++)
         {
             for (int dy = -1; dy <= 1; dy++)
             {
+                // Skip the current cell (itself)
                 if (dx == 0 && dy == 0)
-                {
                     continue;
-                }
 
-                int x = cell.arrayCoordinateX + dx;
-                int y = cell.arrayCoordinateY + dy;
+                int newX = startX + dx;
+                int newY = startY + dy;
 
-                Cell jumpPoint = Jump(cell, x, y, dx, dy);
+                // Skip diagonal neighbors if they are not walkable
+                if (dx != 0 && dy != 0 && !IsDiagonalWalkable(startX, startY, dx, dy))
+                    continue;
 
-                if (jumpPoint != null)
+                // Check if the new position is within the grid bounds and not an obstacle
+                if (newX >= 0 && newX < gridSize && newY >= 0 && newY < gridSize && grid[newX, newY] == 0)
                 {
-                    neighbors.Add(jumpPoint);
+                    neighbors.Add(new Cell { arrayCoordinateX = newX, arrayCoordinateY = newY });
                 }
             }
         }
@@ -188,22 +193,37 @@ public class PathfindingXD : MonoBehaviour
             //Debug.Log("DeltaX: " + deltaX + ", DeltaY: " + deltaY);
 
 
-            if (deltaX == -1)
+            if (deltaX == -1 && deltaY == 0)
             {
                 path.Add("Left");
             }
-            else if (deltaX == 1)
+            else if (deltaX == 1 && deltaY == 0)
             {
                 path.Add("Right");
             }
-
-            if (deltaY == 1)
+            else if (deltaY == 1 && deltaX == 0)
             {
                 path.Add("Up");
             }
-            else if (deltaY == -1)
+            else if (deltaY == -1 && deltaX == 0)
             {
                 path.Add("Down");
+            }
+            else if(deltaX == 1 && deltaY == 1)
+            {
+                path.Add("UpRight");
+            }
+            else if (deltaX == -1 && deltaY == 1)
+            {
+                path.Add("UpLeft");
+            }
+            else if (deltaX == -1 && deltaY == -1)
+            {
+                path.Add("DownLeft");
+            }
+            else if (deltaX == 1 && deltaY == -1)
+            {
+                path.Add("DownRight");
             }
 
             currentCell = currentCell.Parent;

@@ -70,6 +70,18 @@ public class PenguinLogic : MonoBehaviour
                     case "Up":
                         destination = destination + new Vector3(0, 0, 1);
                         break;
+                    case "UpRight":
+                        destination = destination + new Vector3(1, 0, 1);
+                        break;
+                    case "UpLeft":
+                        destination = destination + new Vector3(-1, 0, 1);
+                        break;
+                    case "DownRight":
+                        destination = destination + new Vector3(1, 0, -1);
+                        break;
+                    case "DownLeft":
+                        destination = destination + new Vector3(-1, 0, -1);
+                        break;
                     default:
                         Debug.Log("uh oh, stinky - coś nie tak z pathfindingiem");
                         break;

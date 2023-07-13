@@ -11,6 +11,11 @@ public class OpponentLogic : MonoBehaviour
     bool hasIcingPinguin = false;
     bool hasScrappingPinguin = false;
 
+    int maxIce = 200;
+    int maxFish = 300;
+    int maxWood = 200;
+    int maxScraps = 50;
+
     public Dictionary<string, int> enemyInv = new Dictionary<string, int>();
     public Dictionary<string, Dictionary<string, int>> costs;
     public GameObject[] houses;
@@ -18,12 +23,16 @@ public class OpponentLogic : MonoBehaviour
     public int[,] map;
 
     System.Random random = new System.Random();
+    int numOfPingus;
+
+    int resourceTimer = 10;
     
 
     void Start()
     {
         playerNest = GameObject.Find("koszary").GetComponent<NestSpawner>();
         enemyNest = GameObject.Find("koszary").GetComponent<NestSpawner>();
+        numOfPingus = enemyNest.howManyPingus;
 
         costs = GameObject.Find("CursorObject").GetComponent<CursorMovementTracker>().costs;
         
@@ -111,15 +120,237 @@ public class OpponentLogic : MonoBehaviour
         }
     }
 
+
+    void findPenguinWork(bool worker)
+    {
+        if(worker){
+            GameObject[] houses = GameObject.FindGameObjectsWithTag("houses");
+
+            int resourceDecision = random.Next(0, 3);
+            List<GameObject> resourceStations = new List<GameObject>();
+            List<GameObject> pingusWithoutWork = new List<GameObject>();
+            List<Vector3> workStationsPoints = new List<Vector3>();
+
+            GameObject[] pingus = GameObject.FindGameObjectsWithTag("pingu");
+
+            for(int i = 0; i < pingus.Length; i++){
+                Vector3 dest = pingus[i].GetComponent<PenguinLogic>().destination;
+                float distance = Vector3.Distance(dest, enemyNest.transform.position);
+                if(distance > 10 && pingus[i].GetComponent<PenguinLogic>().isBot){
+                    pingusWithoutWork.Add(pingus[i]);
+                }
+            }
+
+            switch(resourceDecision){
+                case 0://fishing
+                    for(int i = 0; i < houses.Length; i++){
+                        if(houses[i].name == "molo(Clone)" && houses[i].GetComponent<HouseInfo>().isBot){
+                            resourceStations.Add(houses[i]);
+                        }
+                    }
+                break;
+                    
+                case 1://icing
+                    for(int i=199;i>100 ;i--){
+                        for(int j=199;j>100 ;j--){
+                            if(map[i,j] == 5)
+                                workStationsPoints.Add(new Vector3(j, 0.1f, i));
+                        }
+                    }
+                break;
+                    
+                case 2://scrapping
+                    for(int i=199;i>100 ;i--){
+                        for(int j=199;j>100 ;j--){
+                            if(map[i,j] == 4)
+                                workStationsPoints.Add(new Vector3(j, 0.1f, i));
+                        }
+                    }
+                break;
+            }
+
+            if(resourceDecision == 0){
+                int r = random.Next(0, resourceStations.Count);
+                int p = random.Next(0, pingusWithoutWork.Count);
+
+                if(resourceStations.Count == 0 || pingusWithoutWork.Count == 0)
+                {
+                    return;
+                }
+
+
+                hasFishingPinguin = true;
+
+                pingusWithoutWork[p].GetComponent<PenguinLogic>().destination = resourceStations[r].transform.position;
+                pingusWithoutWork[p].GetComponent<PenguinLogic>().shouldAttack = true;
+                pingusWithoutWork[p].GetComponent<PenguinLogic>().houseToAttack = resourceStations[r];
+            }else if (resourceDecision == 1)
+            {
+                int r = random.Next(0, workStationsPoints.Count);
+                int p = random.Next(0, pingusWithoutWork.Count);
+
+                if(resourceStations.Count == 0 || pingusWithoutWork.Count == 0)
+                {
+                    return;
+                }
+
+                hasIcingPinguin = true;
+
+                pingusWithoutWork[p].GetComponent<PenguinLogic>().destination = workStationsPoints[r];
+                pingusWithoutWork[p].GetComponent<PenguinLogic>().shouldAttack = true;
+
+            }else if(resourceDecision == 2){
+                int r = random.Next(0, workStationsPoints.Count);
+                int p = random.Next(0, pingusWithoutWork.Count);
+
+                if(resourceStations.Count == 0 || pingusWithoutWork.Count == 0)
+                {
+                    return;
+                }
+
+                hasScrappingPinguin = true;
+
+                pingusWithoutWork[p].GetComponent<PenguinLogic>().destination = workStationsPoints[r];
+                pingusWithoutWork[p].GetComponent<PenguinLogic>().shouldAttack = true;
+            }
+
+        }else if(!worker && enemyInv["ingots"] > 5){
+            GameObject[] houses = GameObject.FindGameObjectsWithTag("houses");
+            List<GameObject> resourceStations = new List<GameObject>();
+            List<GameObject> pingusWithoutWork = new List<GameObject>();
+            GameObject[] pingus = GameObject.FindGameObjectsWithTag("pingu");
+
+            for(int i = 0; i < pingus.Length; i++){
+                Vector3 dest = pingus[i].GetComponent<PenguinLogic>().destination;
+                float distance = Vector3.Distance(dest, enemyNest.transform.position);
+                if(distance > 10 && pingus[i].GetComponent<PenguinLogic>().isBot){
+                    pingusWithoutWork.Add(pingus[i]);
+                }
+            }
+
+            for(int i = 0; i < houses.Length; i++){
+                if(houses[i].name == "upgr(Clone)" && houses[i].GetComponent<HouseInfo>().isBot){
+                    resourceStations.Add(houses[i]);
+                }
+            }
+
+            int r = random.Next(0, resourceStations.Count);
+            int p = random.Next(0, pingusWithoutWork.Count);
+
+            if(resourceStations.Count == 0 || pingusWithoutWork.Count == 0)
+            {
+                return;
+            }
+
+            hasFishingPinguin = true;
+
+            pingusWithoutWork[p].GetComponent<PenguinLogic>().destination = resourceStations[r].transform.position;
+            pingusWithoutWork[p].GetComponent<PenguinLogic>().shouldAttack = true;
+            pingusWithoutWork[p].GetComponent<PenguinLogic>().houseToAttack = resourceStations[r];
+        }
+    }
+    
+    void moveWarrior(){
+        List<GameObject> pingusWarriors = new List<GameObject>();
+
+        GameObject[] pingus = GameObject.FindGameObjectsWithTag("pingu");
+
+        for(int i = 0; i < pingus.Length; i++){
+            if(pingus[i].GetComponent<PenguinLogic>().isBot && pingus[i].GetComponent<PenguinLogic>().isWarrior){
+                pingusWarriors.Add(pingus[i]);
+            }
+        }
+
+        int first = random.Next(0, pingusWarriors.Count);
+        int second = random.Next(0, pingusWarriors.Count);
+
+        if(first != second){
+            Vector3 dest = pingusWarriors[first].transform.position;
+            Vector3 finalDest = new Vector3(dest.x +random.Next(0,4), 0.1f, dest.z +random.Next(0,4));
+            pingusWarriors[first].GetComponent<PenguinLogic>().destination = finalDest;
+        }
+    }
+
+    void sendWarriorsOver(){
+        List<GameObject> pingusWarriors = new List<GameObject>();
+
+        GameObject[] pingus = GameObject.FindGameObjectsWithTag("pingu");
+
+        for(int i = 0; i < pingus.Length; i++){
+            if(pingus[i].GetComponent<PenguinLogic>().isBot && pingus[i].GetComponent<PenguinLogic>().isWarrior){
+                pingusWarriors.Add(pingus[i]);
+            }
+        }
+
+        if(pingusWarriors.Count > 20){
+            for(int i = 0; i < pingusWarriors.Count; i++){
+                pingusWarriors[i].GetComponent<PenguinLogic>().destination = new Vector3(30, 30); // nwm walić
+            }
+        }
+    }
+
+    void driveBy(){
+        List<GameObject> pingusWarriors = new List<GameObject>();
+        List<GameObject> playersPenguins = new List<GameObject>();
+
+        GameObject[] pingus = GameObject.FindGameObjectsWithTag("pingu");
+
+        for(int i = 0; i < pingus.Length; i++){
+            if(pingus[i].GetComponent<PenguinLogic>().isBot && pingus[i].GetComponent<PenguinLogic>().isWarrior){
+                pingusWarriors.Add(pingus[i]);
+            }else if(!pingus[i].GetComponent<PenguinLogic>().isBot){
+                playersPenguins.Add(pingus[i]);
+            }
+        }
+
+        for(int i = 0; i < playersPenguins.Count; i++){
+            if(playersPenguins[i].transform.position.x > 150 && playersPenguins[i].transform.position.z > 150){
+                int whichOnes = random.Next(0, pingusWarriors.Count - 2);
+
+                if(pingusWarriors.Count > 10){
+                    pingusWarriors[whichOnes].GetComponent<PenguinLogic>().destination = playersPenguins[i].transform.position;
+                    pingusWarriors[whichOnes].GetComponent<PenguinLogic>().shouldAttack = true;
+                    pingusWarriors[whichOnes].GetComponent<PenguinLogic>().houseToAttack = playersPenguins[i];
+
+                    pingusWarriors[whichOnes + 1].GetComponent<PenguinLogic>().destination = playersPenguins[i].transform.position;
+                    pingusWarriors[whichOnes + 1].GetComponent<PenguinLogic>().shouldAttack = true;
+                    pingusWarriors[whichOnes + 1].GetComponent<PenguinLogic>().houseToAttack = playersPenguins[i];
+                }
+            }
+        }
+    }
+    
     IEnumerator ChooseAction()
     {
         while(!isGameFinished){
 
         int decisionNumber = random.Next(0, 6);
 
+
+        if(resourceTimer > 0){
+            resourceTimer--;
+        }else if(resourceTimer == 0){
+            resourceTimer = 10;
+            int resourceId = random.Next(0,4);
+            if(resourceId == 0 && hasFishingPinguin){
+                enemyInv["fish"]+=1;
+                enemyInv["wood"]+=1;
+            }else if(resourceId == 1 && hasIcingPinguin){
+                enemyInv["ice"]+=1;
+            }else if(resourceId == 2 && hasScrappingPinguin){
+                enemyInv["scraps"]+=1;
+            }else if(resourceId == 3 && hasScrappingPinguin && hasIcingPinguin && hasFishingPinguin){
+                if(enemyInv["scraps"]>10){
+                    enemyInv["scraps"]-=5;
+                    enemyInv["wood"]-=5;
+                    enemyInv["ingots"]+=1;
+                }
+            }
+        }
+
         switch(decisionNumber){
             case 0://placing houses
-                int houseNumber = random.Next(0, 6);
+                int houseNumber = random.Next(0, 5);
                 switch(houseNumber){
                     case 0://igloo
                         spawnHouse("igloo", 1);
@@ -137,80 +368,41 @@ public class OpponentLogic : MonoBehaviour
                         spawnHouse("upgr", 9);
                     break;
                 }
-
             break;
 
             case 1:
+                int penguinType = random.Next(0, 2);
+                switch(penguinType){
+                    case 0://go arbeit
+                    case 1:
+                        findPenguinWork(true);
+                    break;
 
-                
-
+                    case 2://make warrior
+                        findPenguinWork(false);
+                    break;
+                }
             break;
-
-            case 2:
-
                 
-
+            case 2:
+                moveWarrior();
             break;
 
             case 3:
-
-                
-
+                sendWarriorsOver();
             break;
 
             case 4:
-
-                
-
-            break;
-
-            case 5:
-
-                
-
+                driveBy();
             break;
         }
-
-
-
-        /*
-
-        if () //enemy has enough resources (we will pick a value) && random number in good range
-        {
-            //build a random thing they can afford (upgrades, buildings etc) - priority - igloo
-            //buildings can be created near the opponents base (2 tiles from their last building AND away from the nest) OR in case of the bridge - nearest water tile
-        }
-
-        if() { //idle worker penguin
-            // random - send for a resource bot has the least, make a warrior (smaller chance)
-        }
-
-        if() { //idle warrior
-            //move near other warrior
-        }
-
-        if() { //enemy near && more than 1 warrior
-            //send warriors near the enemy penguins
-        }
-
-        if() { //a lot of warriors in bots possesion
-            //send warriors near the players base
-        }
-
-        if() { //bot has more than X of a resource (too much)
-            //change one worker from that resource to one they have the least of
-        }
-
-        */
-
-        //Debug.Log("XD");
 
         if(enemyNest.health <= 0 || playerNest.health <= 0)
         {
             isGameFinished = true;
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         }
     }
 
@@ -220,17 +412,6 @@ public class OpponentLogic : MonoBehaviour
 
         houses = GameObject.Find("Grid").GetComponent<GridLogic>().housesPrefabs;
         spawnHouse("igloo", 1);
-        spawnHouse("molo", 4);
-        spawnHouse("molo", 4);
-        spawnHouse("molo", 4);
-        spawnHouse("molo", 4);
-        spawnHouse("molo", 4);
-        spawnHouse("molo", 4);
-        spawnHouse("molo", 4);
-        spawnHouse("molo", 4);
-        spawnHouse("molo", 4);
-        spawnHouse("molo", 4);
-        spawnHouse("molo", 4);
 
         StartCoroutine(ChooseAction());
     }

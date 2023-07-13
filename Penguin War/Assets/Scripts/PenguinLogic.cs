@@ -34,7 +34,7 @@ public class PenguinLogic : MonoBehaviour
     int ingotsNeededForWarrior = 10;
     int fishNeededForWarrior = 20;
 
-    int ofs = 1;
+    int ofs = 2;
 
     /*
      *  wywołujemy algorytm z PathfindingXD i wpisujemy do jakiejś tam listy

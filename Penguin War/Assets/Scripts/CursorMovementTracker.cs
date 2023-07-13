@@ -465,7 +465,7 @@ public class CursorMovementTracker : MonoBehaviour
                     }
                 }else if(gridScript.map[(int)tmp.z, (int)tmp.x] == 0 && canPlace && whatToBuild == 4)
                 {
-                    if(gridScript.map[(int)tmp.z - 1, (int)tmp.x] == 3)
+                    if(gridScript.map[(int)tmp.z - 1, (int)tmp.x] == 3)//dol działa
                     {
                         GameObject parent = GameObject.Find("Infrastructure");
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, -90, 0), parent.transform);
@@ -483,7 +483,7 @@ public class CursorMovementTracker : MonoBehaviour
                         {
                             inv.inventory[resource.Key] += resource.Value;
                         }
-                    }else if(gridScript.map[(int)tmp.z + 1, (int)tmp.x] == 3)
+                    }else if(gridScript.map[(int)tmp.z + 1, (int)tmp.x] == 3)//up działa
                     {
                         GameObject parent = GameObject.Find("Infrastructure");
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, 90, 0), parent.transform);
@@ -501,7 +501,7 @@ public class CursorMovementTracker : MonoBehaviour
                         {
                             inv.inventory[resource.Key] += resource.Value;
                         }
-                    }else if(gridScript.map[(int)tmp.z + 1, (int)tmp.x] == 3)
+                    }else if(gridScript.map[(int)tmp.z, (int)tmp.x + 1] == 3)//Prawo działa
                     {
                         GameObject parent = GameObject.Find("Infrastructure");
                         GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, -180, 0), parent.transform);
@@ -519,10 +519,10 @@ public class CursorMovementTracker : MonoBehaviour
                         {
                             inv.inventory[resource.Key] += resource.Value;
                         }
-                    }else if(gridScript.map[(int)tmp.x - 1, (int)tmp.z] == 3)
+                    }else if(gridScript.map[(int)tmp.z, (int)tmp.x - 1] == 3)//lewo nie działa
                     {
                         GameObject parent = GameObject.Find("Infrastructure");
-                        GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, 180, 0), parent.transform);
+                        GameObject child = Instantiate(houses[whatToBuild], tmp, Quaternion.Euler(0, 0, 0), parent.transform);
                         sounds.ply_build();
                         HouseInfo childHouseInfo = child.GetComponent<HouseInfo>();
                         childHouseInfo.type = houses[whatToBuild].name;

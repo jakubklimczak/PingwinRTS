@@ -185,19 +185,23 @@ public class PathfindingXD : MonoBehaviour
             int deltaX = currentCell.arrayCoordinateX - currentCell.Parent.arrayCoordinateX;
             int deltaY = currentCell.arrayCoordinateY - currentCell.Parent.arrayCoordinateY;
 
-            if (deltaX == -1 && deltaY == 0)
+            //Debug.Log("DeltaX: " + deltaX + ", DeltaY: " + deltaY);
+
+
+            if (deltaX == -1)
             {
                 path.Add("Left");
             }
-            else if (deltaX == 1 && deltaY == 0)
+            else if (deltaX == 1)
             {
                 path.Add("Right");
             }
-            else if (deltaY == -1 && deltaX == 0)
+
+            if (deltaY == 1)
             {
                 path.Add("Up");
             }
-            else if (deltaY == 1 && deltaX == 0)
+            else if (deltaY == -1)
             {
                 path.Add("Down");
             }
@@ -206,6 +210,10 @@ public class PathfindingXD : MonoBehaviour
         }
 
         path.Reverse();
+        //foreach(string s in path) {
+            //Debug.Log(s);
+        //}
+        
         return path;
     }
 }

@@ -76,7 +76,8 @@ public class NestSpawner : MonoBehaviour
                     timeout_counter--;
                     if (timeout_counter <= 0)
                     {
-                        Debug.Log("thank you, gud buy");
+                        //zabi³em bo mnie wkurwia³o ;) Kuba
+                        //Debug.Log("thank you, gud buy");
                         if(canPlymp == true)
                             sounds.ply_cant();
                         canPlymp = false;

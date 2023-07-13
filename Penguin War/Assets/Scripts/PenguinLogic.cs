@@ -64,10 +64,10 @@ public class PenguinLogic : MonoBehaviour
                     case "Right":
                         destination = destination + new Vector3(1, 0, 0);
                         break;
-                    case "Up":
+                    case "Down":
                         destination = destination + new Vector3(0, 0, -1);
                         break;
-                    case "Down":
+                    case "Up":
                         destination = destination + new Vector3(0, 0, 1);
                         break;
                     default:

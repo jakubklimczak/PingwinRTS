@@ -15,17 +15,13 @@ public class Cell
 
 public class PathfindingXD : MonoBehaviour
 {
-    private int[,] grid;
-    private int gridSize = 400000;
-    public GridLogic gridLogic;
+    private int gridSize = 200;
 
     private void Start()
     {
-        gridLogic = GameObject.Find("Grid").GetComponent<GridLogic>();
-        grid = gridLogic.map;
     }
 
-    public List<string> FindPath(int originX, int originY, int destinationX, int destinationY)
+    public List<string> FindPath(int [,] grid, int originX, int originY, int destinationX, int destinationY)
     {
         Cell origin = new Cell { arrayCoordinateX = originX, arrayCoordinateY = originY, costOfMoving = 0, sumOfCosts = CalculateSumOfCosts(originX, originY, destinationX, destinationY), Parent = null };
         Cell destination = new Cell { arrayCoordinateX = destinationX, arrayCoordinateY = destinationY };
@@ -131,22 +127,28 @@ public class PathfindingXD : MonoBehaviour
         {
             int deltaX = currentCell.arrayCoordinateX - currentCell.Parent.arrayCoordinateX;
             int deltaY = currentCell.arrayCoordinateY - currentCell.Parent.arrayCoordinateY;
+            
+            //Debug.Log("DeltaX: " + deltaX + ", DeltaY: " + deltaY);
 
-            if (deltaX == -1)
+            if (deltaX == -1 && deltaY == 0)
             {
                 path.Add("Left");
+                //Debug.Log("lewo");
             }
-            else if (deltaX == 1)
+            else if (deltaX == 1 && deltaY == 0)
             {
                 path.Add("Right");
+                //Debug.Log("prawo");
             }
-            else if (deltaY == -1)
+            else if (deltaY == -1 && deltaX == 0)
             {
                 path.Add("Up");
+                //Debug.Log("góra");
             }
-            else if (deltaY == 1)
+            else if (deltaY == 1 && deltaX == 0)
             {
                 path.Add("Down");
+                //Debug.Log("dó³");
             }
 
             currentCell = currentCell.Parent;

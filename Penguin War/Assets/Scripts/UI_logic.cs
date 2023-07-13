@@ -47,7 +47,7 @@ public class UI_logic : MonoBehaviour
     {
         updateUnitPanel();
     }
-
+    
     private void UpdateResources()
     {
         text_wood.text = inv.inventory["wood"].ToString();

@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using UnityEngine.UIElements;
-
+using static UnityEngine.UI.Image;
+using JetBrains.Annotations;
+using System.Threading;
 
 public class PenguinLogic : MonoBehaviour
 {
     // Start is called before the first frame update
+    private Thread pathfindingThread;
 
     public int type;
     public int health = 20;
@@ -20,20 +23,22 @@ public class PenguinLogic : MonoBehaviour
     public bool isAttacking = false;
     public int animationTimer = 100;
 
-    List<string> directionList = new List<string>(); 
-
+    List<string> directionList = new List<string>();
+    private Vector3 pos;
     public GameObject houseToAttack = null;
     public GameObject warriorPrefab;
     public GameObject lapka, lapka2, lapka3, lapka4, mieczor;
     Inventory inv;
 
     PathfindingXD pathfinding;
-
+    GridLogic gridLogic;
     SoundEffectsPlayer sounds;
+
+    private Coroutine findPath;
 
     int ingotsNeededForWarrior = 10;
     int fishNeededForWarrior = 20;
-
+    bool pathfindingFinished = false;
     int ofs = 1;
 
     /*
@@ -44,43 +49,74 @@ public class PenguinLogic : MonoBehaviour
 
     public IEnumerator setNextDestination()
     {
-        if(directionList.Count > 0)
+        while (true)
         {
-            string currentDirection = directionList[0];
-            switch (currentDirection)
+            if (directionList.Count > 0 /*&& destination == pos*/)
             {
-                case "Left":
-                    destination = destination + new Vector3(-1, 0, 0 );
-                    break;
-                case "Right":
-                    destination = destination + new Vector3(1, 0, 0);
-                    break;
-                case "Up":
-                    destination = destination + new Vector3(0, 0, -1);
-                    break;
-                case "Down":
-                    destination = destination + new Vector3(0, 0, 1);
-                    break;
-                default:
-                    Debug.Log("uh oh, stinky - coś nie tak z pathfindingiem");
-                    break;
+
+                //Debug.Log("zrobiłem ruch! " + Time.time);
+                string currentDirection = directionList[0];
+                switch (currentDirection)
+                {
+                    case "Left":
+                        destination = destination + new Vector3(-1, 0, 0);
+                        break;
+                    case "Right":
+                        destination = destination + new Vector3(1, 0, 0);
+                        break;
+                    case "Up":
+                        destination = destination + new Vector3(0, 0, -1);
+                        break;
+                    case "Down":
+                        destination = destination + new Vector3(0, 0, 1);
+                        break;
+                    default:
+                        Debug.Log("uh oh, stinky - coś nie tak z pathfindingiem");
+                        break;
+                }
+                directionList.RemoveAt(0);
             }
-            directionList.RemoveAt(0);
+            yield return new WaitForSeconds(0.15f);
         }
-        yield return null;
     }
 
     public void penguinWannaMove(Vector3 origin, Vector3 destination)
     {
         int originX = Mathf.RoundToInt(origin.x);
-        int originY = Mathf.RoundToInt(origin.y);
+        int originY = Mathf.RoundToInt(origin.z);
         int destinationX = Mathf.RoundToInt(destination.x);
-        int destinationY = Mathf.RoundToInt(destination.y);
-        directionList = pathfinding.FindPath(originX, originY, destinationX, destinationY);
+        int destinationY = Mathf.RoundToInt(destination.z);
+        int[,] grid = gridLogic.map;
+        pathfindingFinished = false;
+        //findPath = StartCoroutine(FindPath(grid, originX, originY, destinationX, destinationY));
+        //directionList = pathfinding.FindPath(grid, originX, originY, destinationX, destinationY);
+        /*
+        foreach(var direction in directionList)
+        {
+            Debug.Log(direction);
+        }
+        */
+
+        pathfindingThread = new Thread(() => GównoPsieJAPIERDOLEEEEE(grid, originX, originY, destinationX, destinationY));
+        pathfindingThread.Start();
+
+    }
+
+    public void GównoPsieJAPIERDOLEEEEE(int[,] grid, int originX, int originY, int destinationX, int destinationY)
+    {
+        directionList = pathfinding.FindPath(grid, originX, originY, destinationX, destinationY);
+    }
+
+    public IEnumerator FindPath(int[,] grid, int originX, int originY, int destinationX, int destinationY)
+    {
+        directionList = pathfinding.FindPath(grid, originX, originY, destinationX, destinationY);
+        pathfindingFinished = true;
+        yield return null;
     }
 
     void Start()
     {
+        gridLogic = GameObject.Find("Grid").GetComponent<GridLogic>();
         destination = this.gameObject.transform.position;
         inv = GameObject.Find("Inventory").GetComponent<Inventory>();
         pathfinding = GameObject.Find("EventSystem").GetComponent<PathfindingXD>();
@@ -97,6 +133,7 @@ public class PenguinLogic : MonoBehaviour
             mieczor.transform.Rotate(0, 0, -40);
         }
 
+        StartCoroutine(setNextDestination());
 
         sounds = GameObject.Find("CameraObject").GetComponent<SoundEffectsPlayer>();
     }
@@ -104,7 +141,14 @@ public class PenguinLogic : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        StartCoroutine(setNextDestination());
+        /*
+        if(pathfindingFinished)
+        {
+            StopCoroutine(findPath);
+            pathfindingFinished = false;
+        }
+        */
+
         //bede umieral
         if (health<=0)
         {
@@ -112,7 +156,7 @@ public class PenguinLogic : MonoBehaviour
             Destroy(gameObject);
         }
 
-        Vector3 pos = this.gameObject.transform.position;
+        this.pos = this.gameObject.transform.position;
         float step = 0.1f;
 
         if(houseToAttack !=null && houseToAttack.tag == "pingu")//goń pingwina

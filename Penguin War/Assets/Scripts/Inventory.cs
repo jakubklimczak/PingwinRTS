@@ -17,11 +17,11 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        inventory.Add("wood", 100);
-        inventory.Add("ice", 100);
-        inventory.Add("fish", 1000);
-        inventory.Add("scraps", 200);
-        inventory.Add("ingots", 1000);
+        inventory.Add("wood", 30);
+        inventory.Add("ice", 0);
+        inventory.Add("fish", 0);
+        inventory.Add("scraps", 0);
+        inventory.Add("ingots", 0);
     }
 
     // Update is called once per frame

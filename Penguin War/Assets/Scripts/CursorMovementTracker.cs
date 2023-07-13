@@ -72,18 +72,19 @@ public class CursorMovementTracker : MonoBehaviour
         });
 
         costs.Add("ice-wall", new Dictionary<string, int>() {
-            {"ice", -50}
+            {"ice", -20}
         });
 
         costs.Add("huta_igloo", new Dictionary<string, int>() {
-            {"ice", -50},
-            {"wood", -40}
+            {"ice", -80},
+            {"wood", -50}
         });
 
         costs.Add("upgr", new Dictionary<string, int>() {
             {"ice", -80},
             {"scraps", -50},
-            {"wood", -20}
+            {"wood", -60},
+            {"ingots", -5}
         });
 
         sounds = GameObject.Find("CameraObject").GetComponent<SoundEffectsPlayer>();

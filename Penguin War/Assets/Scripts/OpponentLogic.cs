@@ -40,11 +40,11 @@ public class OpponentLogic : MonoBehaviour
 
         map = GameObject.Find("Grid").GetComponent<GridLogic>().map;
 
-        enemyInv.Add("wood", 100);
-        enemyInv.Add("ice", 100);
-        enemyInv.Add("fish", 1000);
-        enemyInv.Add("scraps", 200);
-        enemyInv.Add("ingots", 1000);
+        enemyInv.Add("wood", 30);
+        enemyInv.Add("ice", 0);
+        enemyInv.Add("fish", 0);
+        enemyInv.Add("scraps", 0);
+        enemyInv.Add("ingots", 0);
     }
 
     void spawnHouse(string houseName, int houseId){
@@ -411,7 +411,7 @@ public class OpponentLogic : MonoBehaviour
         yield return new WaitForSeconds(5f);// może nie działać bo chyba powinien czekać aż skończy spawnować bo mu dodaje do spawnowania XDD
 
         houses = GameObject.Find("Grid").GetComponent<GridLogic>().housesPrefabs;
-        spawnHouse("igloo", 1);
+        spawnHouse("molo", 4);
 
         StartCoroutine(ChooseAction());
     }

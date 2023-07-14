@@ -106,7 +106,7 @@ public class CursorMovementTracker : MonoBehaviour
         if(selectedPenguin!=null && selectedPenguin.transform.childCount == 2)
         {
             Vector3 pos = selectedPenguin.transform.position;
-            pos.y = 0.2f;
+            pos.y = 0.01f;
             Instantiate(mark, pos, new Quaternion(),selectedPenguin.transform);
         }
 
@@ -115,7 +115,7 @@ public class CursorMovementTracker : MonoBehaviour
             for(int i=0;i<selectedPenguins.Count; i++)
             {
                 Vector3 pos = selectedPenguins[i].transform.position;
-                pos.y = 0.2f;
+                pos.y = 0.01f;
                 Instantiate(mark, pos, new Quaternion(), selectedPenguins[i].transform);
             }
         }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15468,6 +15468,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3d9a20d447d935c43b41922ea87a8259, type: 3}
   - {fileID: 21300000, guid: 1c27da1c6b238324ab7864e8e37d4e64, type: 3}
   - {fileID: 21300000, guid: 665c23ca4a73f514caf86b88d904c906, type: 3}
+  - {fileID: 21300000, guid: d1602be465b762f4da00978be47bb59a, type: 3}
   hp_value_slider: {fileID: 1189561022}
   mainCamera: {fileID: 963194227}
   IsPaused: 0

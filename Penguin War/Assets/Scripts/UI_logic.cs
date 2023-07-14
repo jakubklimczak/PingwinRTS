@@ -167,7 +167,12 @@ private void changecolor(Toggle changeToggle)
                 current_owner = current_house.isBot ? "Enemy" : "Ally";
             }
             unit_panel.SetActive(true);
-            setCurrentUnitIcon(current_house.name);
+
+            if(current_house!=null)
+                setCurrentUnitIcon(current_house.name);
+
+            if (current_nest != null)
+                setCurrentUnitIcon(current_nest.name);
         }
 
 
@@ -300,6 +305,9 @@ private void changecolor(Toggle changeToggle)
                 break;
             case "upgr(Clone)":
                 unit_icon.sprite = icon_sprites_array[6];
+                break;
+            case "koszary":
+                unit_icon.sprite = icon_sprites_array[7];
                 break;
             default:
             case "none":

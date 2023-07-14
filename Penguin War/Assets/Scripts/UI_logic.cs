@@ -11,6 +11,7 @@ public class UI_logic : MonoBehaviour
     public TextMeshProUGUI text_fish, text_ice, text_wood,text_scrap,text_iron;
 
     public GameObject unit_panel;
+    public GameObject upgrade_btn;
     public Image unit_icon;
     public Sprite[] icon_sprites_array;
 
@@ -140,6 +141,8 @@ private void changecolor(Toggle changeToggle)
             current_owner = current_house.isBot ? "Enemy" : "Ally";
             unit_panel.SetActive(true);
             setCurrentUnitIcon(current_house.name);
+
+
         }
 
         if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out RaycastHit nestRayHit, float.MaxValue, 1 << 9))//8 bo 8 layer to pingwiny
@@ -173,6 +176,8 @@ private void changecolor(Toggle changeToggle)
         {
             current_health = temp_pingu_logic.health;
             current_max_health = temp_pingu_logic.maxHealth;
+            current_attack = temp_pingu_logic.damage;
+            current_owner = temp_pingu_logic.isBot ? "Enemy" : "Ally";
             if (temp_pingu_logic.isWarrior)
             {
                 setCurrentUnitIcon("single_warrior");
@@ -210,6 +215,21 @@ private void changecolor(Toggle changeToggle)
         {
             unit_panel.SetActive(false);
         }
+
+        if(current_house != null)
+        {
+            if (current_house.name == "upgr(Clone)")
+            {
+                upgrade_btn.SetActive(true);
+            }
+        }
+
+        if(current_house == null || current_house.name != "upgr(Clone)")
+        {
+            upgrade_btn.SetActive(false);
+        }
+
+
 
         setCurrentHealth();
         setCurrentAttack();
@@ -262,7 +282,6 @@ private void changecolor(Toggle changeToggle)
         {
             case "single_basic":
                 unit_icon.sprite = icon_sprites_array[0];
-
                 break;
             case "single_warrior":
                 unit_icon.sprite = icon_sprites_array[1];
@@ -279,9 +298,9 @@ private void changecolor(Toggle changeToggle)
             case "ice-wall(Clone)":
                 unit_icon.sprite = icon_sprites_array[5];
                 break;
-            //case "ice-wall(Clone)":
-            //    unit_icon.sprite = icon_sprites_array[6];
-            //    break;
+            case "upgr(Clone)":
+                unit_icon.sprite = icon_sprites_array[6];
+                break;
             default:
             case "none":
                 Debug.Log(unit_type);

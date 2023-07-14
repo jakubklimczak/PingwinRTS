@@ -217,7 +217,7 @@ public class PenguinLogic : MonoBehaviour
                     inv.inventory["wood"] -= 2;
                     inv.inventory["ingots"] += 1;
                 }
-            }else if(houseToAttack.tag=="houses" && !isWarrior)
+            }else if(houseToAttack.tag=="houses" && !isWarrior && houseToAttack.name == "upgr(Clone)")
             {//change to warrior
                 if(inv.inventory["ingots"] > ingotsNeededForWarrior && inv.inventory["fish"] > fishNeededForWarrior && !isBot)
                 {
@@ -245,6 +245,7 @@ public class PenguinLogic : MonoBehaviour
                 Vector3 p = houseToAttack.gameObject.transform.position;
                 destination = new Vector3(rnd.Next((int)p.x + 1, (int)p.x + 3), 0.1f, rnd.Next((int)p.z + 1, (int)p.z + 3));
                 //houseToAttack.GetComponent<HouseInfo>().health -= damage;
+                Debug.Log("co1");
                 isAttacking=false;
                 shouldAttack=false;
                 houseToAttack=null;

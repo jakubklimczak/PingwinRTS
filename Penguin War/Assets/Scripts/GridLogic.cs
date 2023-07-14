@@ -509,7 +509,7 @@ void Start()
     {
         int chosen_object = map[Mathf.RoundToInt(position.z), Mathf.RoundToInt(position.x)];
         //Debug.Log("at("+ position.x+";"+ position.z +") there is:"+ chosen_object);
-        if (chosen_object == 0 || chosen_object == 4)
+        if (chosen_object == 0 || chosen_object == 5)
         {
             return true;
         }

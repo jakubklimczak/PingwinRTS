@@ -5,6 +5,9 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 
 public class NestSpawner : MonoBehaviour
@@ -35,6 +38,10 @@ public class NestSpawner : MonoBehaviour
     bool finished = false;
     bool canPlymp = true;
 
+    public GameObject endGamePanel;
+    int timer = 300;
+    bool finalCountDown = false;
+
 
     void Start()
     {
@@ -48,11 +55,21 @@ public class NestSpawner : MonoBehaviour
         TM = GameObject.Find("TilesMap");
         Zoo = GameObject.Find("Zoo");
         sounds = GameObject.Find("CameraObject").GetComponent<SoundEffectsPlayer>();
+        //endGamePanel = GameObject.Find("EndGamePanel");
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        if(finalCountDown){
+            timer--;
+            if(timer<=0){
+                timer = 300;
+                finalCountDown = false;
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+            }
+        }
 
         if(timeToSpawn <= 0)
         {
@@ -76,7 +93,7 @@ public class NestSpawner : MonoBehaviour
                     timeout_counter--;
                     if (timeout_counter <= 0)
                     {
-                        //zabi³em bo mnie wkurwia³o ;) Kuba
+                        //zabiï¿½em bo mnie wkurwiaï¿½o ;) Kuba
                         //Debug.Log("thank you, gud buy");
                         if(canPlymp == true)
                             sounds.ply_cant();
@@ -123,10 +140,16 @@ public class NestSpawner : MonoBehaviour
             {
                 Debug.Log("You won!");
                 sounds.ply_won();
+                endGamePanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "You Won!";
+                endGamePanel.SetActive(true);
+                finalCountDown = true;
             }else
             {
                 Debug.Log("You lost!");
                 sounds.ply_lost();
+                endGamePanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "You Lost!";
+                endGamePanel.SetActive(true);
+                finalCountDown = true;
             }
         }
     }

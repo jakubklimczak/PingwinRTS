@@ -307,6 +307,7 @@ private void changecolor(Toggle changeToggle)
                 unit_icon.sprite = icon_sprites_array[6];
                 break;
             case "koszary":
+            case "koszaryEnemy":
                 unit_icon.sprite = icon_sprites_array[7];
                 break;
             default:

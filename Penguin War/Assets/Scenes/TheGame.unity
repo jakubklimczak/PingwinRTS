@@ -9403,7 +9403,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5.8473816, y: -1}
+  m_AnchoredPosition: {x: -5.847412, y: -1}
   m_SizeDelta: {x: -611.69476, y: -337.71}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &720309702
@@ -15466,8 +15466,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e3a51f72ce05c824f8cec25897f9b3c8, type: 3}
   - {fileID: 21300000, guid: 49d867a1b43d6b94ea99e6b9b7c20930, type: 3}
   - {fileID: 21300000, guid: 3d9a20d447d935c43b41922ea87a8259, type: 3}
-  - {fileID: 21300000, guid: 1c27da1c6b238324ab7864e8e37d4e64, type: 3}
-  - {fileID: 21300000, guid: 665c23ca4a73f514caf86b88d904c906, type: 3}
+  - {fileID: 21300000, guid: 9c1f6699d117b4b4eb371f4591039ef9, type: 3}
+  - {fileID: 21300000, guid: 47971c205f445fc45a4759f7bb74c08a, type: 3}
   - {fileID: 21300000, guid: d1602be465b762f4da00978be47bb59a, type: 3}
   hp_value_slider: {fileID: 1189561022}
   mainCamera: {fileID: 963194227}

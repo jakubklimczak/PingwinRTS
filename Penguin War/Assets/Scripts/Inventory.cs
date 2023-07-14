@@ -29,4 +29,16 @@ public class Inventory : MonoBehaviour
     {
         
     }
+
+    public bool checkUpgradePos()
+    {
+        if (inventory["fish"]>20 && inventory["ingots"] > 20)
+        {
+            inventory["fish"] -= 20;
+            inventory["ingots"] -= 20;
+            return true;
+        }
+        return false;
+    }
+
 }

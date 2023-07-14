@@ -307,4 +307,15 @@ private void changecolor(Toggle changeToggle)
                 break;
         }
     }
+
+    public void upgradeUnits()
+    {
+        float value = 0.1f;
+        if (inv.checkUpgradePos())
+        {
+            GameObject.Find("koszary").GetComponent<NestSpawner>().upgradeDefaultHP(value);
+        }
+            
+
+    }
 }

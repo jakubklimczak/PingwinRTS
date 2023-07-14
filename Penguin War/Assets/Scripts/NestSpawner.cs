@@ -38,9 +38,11 @@ public class NestSpawner : MonoBehaviour
     bool finished = false;
     bool canPlymp = true;
 
+    float expected_hp_mul = 1.0f;
     public GameObject endGamePanel;
     int timer = 300;
     bool finalCountDown = false;
+
 
 
     void Start()
@@ -111,6 +113,8 @@ public class NestSpawner : MonoBehaviour
 
                 tmpPingu.GetComponent<PenguinLogic>().isBot = isBot;
                 tmpPingu.GetComponent<PenguinLogic>().type = 0;
+                tmpPingu.GetComponent<PenguinLogic>().health = (int)(tmpPingu.GetComponent<PenguinLogic>().health * expected_hp_mul);
+                tmpPingu.GetComponent<PenguinLogic>().maxHealth = (int)(tmpPingu.GetComponent<PenguinLogic>().maxHealth * expected_hp_mul);
                 gridLogic.SetObjectAtPosition(randPosAroundNest, 13);
             }
 
@@ -175,7 +179,11 @@ public class NestSpawner : MonoBehaviour
             koszaryEnemy.timeToSpawn=loadedData.info[1].timeToSpawn;
         }
     }
-    
+
+    public void upgradeDefaultHP(float how_much)
+    {
+        this.expected_hp_mul += how_much;
+    }
     [Serializable]
     public class statsInfoStruct
     {

@@ -417,7 +417,7 @@ public class CursorMovementTracker : MonoBehaviour
             }
 
             //ustawianie objectu pod cursorem
-            Vector3 tmp = new Vector3(((float)Math.Round(groundRaycastHit.point.x)), 0.2f, ((float)Math.Round(groundRaycastHit.point.z)));
+            Vector3 tmp = new Vector3(((float)Math.Round(groundRaycastHit.point.x)), 0.01f, ((float)Math.Round(groundRaycastHit.point.z)));
             transform.position = tmp;
 
             //stawianie domków
